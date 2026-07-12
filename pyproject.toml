@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "api-relay-ranker"
+version = "0.2.0"
+description = "Evidence-aware, bias-resistant aggregation of API relay provider rankings"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "huguangyu"}]
+dependencies = []
+
+[project.scripts]
+relayrank = "relayrank.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

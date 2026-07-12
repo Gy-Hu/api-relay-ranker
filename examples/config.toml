@@ -1,0 +1,47 @@
+[aggregation]
+as_of = "2026-07-12"
+half_life_days = 45
+prior_score = 50
+prior_strength = 0.8
+minimum_sources = 3
+
+[metric_weights]
+rank = 0.40
+score = 0.20
+uptime = 0.20
+cache_rate = 0.10
+price_value = 0.10
+
+[[sources]]
+name = "helpaio"
+published_at = "2026-07-08"
+reliability = 0.90
+independence_group = "helpaio"
+
+[[sources]]
+name = "zhaotutu"
+published_at = "2026-07-12"
+reliability = 0.85
+independence_group = "zhaotutu"
+
+[[sources]]
+name = "apiranking"
+published_at = "2026-07-12"
+reliability = 0.70
+independence_group = "apiranking"
+
+[[sources]]
+name = "tokhub"
+published_at = "2026-07-12"
+reliability = 0.90
+independence_group = "tokhub"
+
+[aliases]
+"Packy Code" = ["PackyCode", "Packy API", "packyapi"]
+"SSSAiCode" = ["SSS AI Code", "SSSAI"]
+"Duck Code" = ["DuckCode"]
+"Micu" = ["Micu API", "micuapi"]
+"Yunwu" = ["云雾", "云雾AI", "Yunwu AI"]
+"Right Code" = ["RightCode", "Right Codes"]
+"Neko Code" = ["NekoCode", "NeKoAPI"]
+"78 Code" = ["78Code"]
