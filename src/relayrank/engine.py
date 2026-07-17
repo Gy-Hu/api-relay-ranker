@@ -74,7 +74,14 @@ def _scores(
         weighted_sum[observation.vendor] += raw_score * weight
         weight_sum[observation.vendor] += weight
         details[observation.vendor].append(
-            {"source": observation.source, "raw_score": round(raw_score, 3), "weight": round(weight, 4), "metrics": metrics}
+            {
+                "source": observation.source,
+                "rank": observation.rank,
+                "total_vendors": observation.total_vendors,
+                "raw_score": round(raw_score, 3),
+                "weight": round(weight, 4),
+                "metrics": metrics,
+            }
         )
 
     scores = {

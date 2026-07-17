@@ -1,0 +1,88 @@
+name: Update ranking and deploy Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: relayrank-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install RelayRank
+        run: python -m pip install -e .
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Fetch four sources and build Top 10
+        run: >-
+          relayrank live
+          --config examples/config.toml
+          --top 10
+          --min-sources 2
+          --timeout 45
+          --snapshot-dir build/snapshots
+          --output build/site/data/ranking.csv
+          --json build/site/data/audit.json
+          --source-report build/site/data/sources.json
+          --site-dir build/site
+          --site-url https://gy-hu.github.io/api-relay-ranker/
+          --og-image assets/relayrank-og.png
+
+      - name: Preserve audit data and raw snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relayrank-audit-${{ github.run_id }}
+          path: |
+            build/site/data
+            build/snapshots
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

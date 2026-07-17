@@ -1,5 +1,9 @@
 # API Relay Ranker
 
+[![Update ranking and deploy Pages](https://github.com/Gy-Hu/api-relay-ranker/actions/workflows/pages.yml/badge.svg)](https://github.com/Gy-Hu/api-relay-ranker/actions/workflows/pages.yml)
+
+**[查看每日自动更新的 Top 10 榜单](https://gy-hu.github.io/api-relay-ranker/)**
+
 一个可审计、抗偏差的 API 中转商实时榜单聚合器。它同时抓取 HelpAIO、zhaotutu、APIRanking 和 TokHub，不把不同网站的名次直接平均，而是把“榜单质量”和“商家表现”分开建模。
 
 > `rank` 子命令用于离线 CSV；`live` 子命令会实时抓取四站。每次响应原文、时间和 SHA-256 都会保存到 `snapshots/`，便于复核。榜单只能降低盲选风险，不能保证服务商不会停服、泄露数据或改变线路。
@@ -47,6 +51,18 @@ PYTHONPATH=src python3 -m relayrank live \
 - 精简排名写入 `outputs/live-ranking.csv`；
 - 每个来源的贡献写入 `outputs/live-audit.json`；
 - 抓取数量、时间与哈希写入 `outputs/live-sources.json`。
+
+生成与 GitHub Pages 相同的静态页面：
+
+```bash
+PYTHONPATH=src python3 -m relayrank live \
+  --config examples/config.toml \
+  --top 10 \
+  --min-sources 2 \
+  --site-dir build/site
+```
+
+线上榜单每天香港时间 09:17 由 GitHub Actions 自动更新，也可以从 Actions 页面手动触发。四站必须全部成功，测试和聚合也必须通过，才会部署新页面；失败时保留上一版有效页面。原始快照和审计数据作为工作流 artifact 保存 30 天。
 
 调查范围较宽时可以加入 `--min-sources 2`。只有明确接受缺站风险时才使用 `--allow-partial`，生成的结果不应称为完整四榜排名。
 
