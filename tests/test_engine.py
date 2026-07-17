@@ -17,6 +17,11 @@ class AggregationTests(unittest.TestCase):
         observations = [Observation("a", "Packy Code", rank=1, total_vendors=2, score=90)]
         self.assertEqual(aggregate(observations, sources, make_config())[0].vendor, "Packy Code")
 
+    def test_vendor_website_is_preserved(self):
+        sources = {"a": Source("a", date(2026, 7, 12))}
+        observations = [Observation("a", "vendor", score=90, website_url="https://vendor.example/")]
+        self.assertEqual(aggregate(observations, sources, make_config())[0].website_url, "https://vendor.example/")
+
     def test_missing_metrics_are_renormalized_not_zeroed(self):
         sources = {"a": Source("a", date(2026, 7, 12))}
         full = Observation("a", "full", score=80, uptime=80)

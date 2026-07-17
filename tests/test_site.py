@@ -27,6 +27,7 @@ class SiteTests(unittest.TestCase):
                     "metrics": {"score": 89.5},
                 },
             ),
+            website_url="https://relay.example/",
         )
         reports = [
             {"name": name, "ok": True, "vendor_count": 10, "fetched_at": "2026-07-17T06:42:23+00:00"}
@@ -38,6 +39,8 @@ class SiteTests(unittest.TestCase):
 
         self.assertIn("Example &lt;Relay&gt;", rendered)
         self.assertNotIn("Example <Relay>", rendered)
+        self.assertIn('href="https://relay.example/"', rendered)
+        self.assertIn('rel="noopener noreferrer external"', rendered)
         self.assertIn("#2 / 19", rendered)
         self.assertIn("4/4 正常", rendered)
         self.assertIn("高置信", rendered)

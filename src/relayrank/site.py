@@ -74,12 +74,19 @@ def _ranking_rows(results: list[RankedVendor]) -> str:
         high_confidence = item.source_count >= 3
         label = "高置信" if high_confidence else "两榜候选"
         badge_class = "badge--high" if high_confidence else "badge--candidate"
+        vendor_name = _escape(item.vendor)
+        vendor_markup = (
+            f'<a href="{_escape(item.website_url)}" target="_blank" rel="noopener noreferrer external" '
+            f'aria-label="访问 {vendor_name} 官网">{vendor_name}<span aria-hidden="true">↗</span></a>'
+            if item.website_url
+            else f"<strong>{vendor_name}</strong>"
+        )
         rows.append(
             '<article class="rank-card">'
             '<details>'
             '<summary>'
             f'<span class="position">{item.rank:02d}</span>'
-            f'<span class="vendor"><strong>{_escape(item.vendor)}</strong><small>{item.source_count}/4 榜覆盖</small></span>'
+            f'<span class="vendor">{vendor_markup}<small>{item.source_count}/4 榜覆盖</small></span>'
             f'<span class="badge {badge_class}">{label}</span>'
             f'<span class="score"><strong>{item.score:.2f}</strong><small>综合分</small></span>'
             '<span class="chevron" aria-hidden="true">＋</span>'
@@ -174,7 +181,7 @@ def write_site(
     summary {{ min-height:76px; padding:12px 18px; display:grid; grid-template-columns:54px minmax(170px,1fr) auto 90px 24px; gap:16px; align-items:center; cursor:pointer; list-style:none; }}
     summary::-webkit-details-marker {{ display:none; }}
     .position {{ color:var(--muted); font:600 18px/1 ui-monospace,SFMono-Regular,monospace; }}
-    .vendor {{ display:flex; flex-direction:column; }} .vendor strong {{ font-size:17px; }}
+    .vendor {{ display:flex; flex-direction:column; }} .vendor strong,.vendor a {{ width:max-content; max-width:100%; color:var(--ink); font-size:17px; font-weight:700; text-decoration:none; }} .vendor a:hover {{ color:var(--acid); text-decoration:underline; text-underline-offset:4px; }} .vendor a span {{ margin-left:6px; color:var(--muted); font-size:12px; }}
     small {{ color:var(--muted); }}
     .badge {{ padding:5px 9px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap; }}
     .badge--high {{ color:#07150d; background:var(--mint); }} .badge--candidate {{ color:#241704; background:var(--amber); }}

@@ -78,6 +78,7 @@ def _scores(
                 "source": observation.source,
                 "rank": observation.rank,
                 "total_vendors": observation.total_vendors,
+                "website_url": observation.website_url,
                 "raw_score": round(raw_score, 3),
                 "weight": round(weight, 4),
                 "metrics": metrics,
@@ -114,6 +115,10 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
         coverage_confidence = min(1.0, source_count / max(1, config.minimum_sources))
         confidence = evidence_confidence * coverage_confidence
         ranges = leave_one_out_ranks[vendor] or [rank]
+        website_url = next(
+            (str(item["website_url"]) for item in details[vendor] if item.get("website_url")),
+            "",
+        )
         results.append(
             RankedVendor(
                 rank=rank,
@@ -125,6 +130,7 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
                 rank_best=min(ranges),
                 rank_worst=max(ranges),
                 contributions=tuple(details[vendor]),
+                website_url=website_url,
             )
         )
     return results

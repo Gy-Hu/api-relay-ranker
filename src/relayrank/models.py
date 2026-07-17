@@ -26,6 +26,7 @@ class Observation:
     uptime: float | None = None
     cache_rate: float | None = None
     price_value: float | None = None
+    website_url: str | None = None
 
 
 @dataclass(frozen=True)
@@ -57,4 +58,4 @@ class RankedVendor:
     rank_best: int
     rank_worst: int
     contributions: tuple[dict[str, object], ...] = ()
-
+    website_url: str = ""

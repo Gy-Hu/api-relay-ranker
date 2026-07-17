@@ -4,7 +4,7 @@ import re
 from statistics import mean
 
 from ..models import Observation
-from .common import escaped_number
+from .common import escaped_number, safe_http_url
 
 
 SOURCE = "zhaotutu"
@@ -14,7 +14,7 @@ START = re.compile(r'\\"id\\":\\"([^"\\]+)\\",\\"name\\":\\"([^"\\]+)\\",\\"name
 def parse_zhaotutu(body: bytes, aliases: dict[str, str]) -> list[Observation]:
     html = body.decode("utf-8", errors="replace")
     starts = list(START.finditer(html))
-    providers: dict[str, tuple[str, float, float | None, float | None]] = {}
+    providers: dict[str, tuple[str, float, float | None, float | None, str | None]] = {}
     for index, match in enumerate(starts):
         provider_id, name = match.group(1), match.group(2).strip()
         if provider_id in providers:
@@ -36,7 +36,9 @@ def parse_zhaotutu(body: bytes, aliases: dict[str, str]) -> list[Observation]:
             if float(value) > 0
         ]
         cache_rate = mean(cache_values) if cache_values else None
-        providers[provider_id] = (name, score, uptime, cache_rate)
+        url_match = re.search(r'\\"url\\":\\"([^"\\]+)\\"', block)
+        website_url = safe_http_url(url_match.group(1)) if url_match else None
+        providers[provider_id] = (name, score, uptime, cache_rate, website_url)
 
     ordered = sorted(providers.values(), key=lambda item: (-item[1], item[0].casefold()))
     total = len(ordered)
@@ -44,13 +46,14 @@ def parse_zhaotutu(body: bytes, aliases: dict[str, str]) -> list[Observation]:
         Observation(
             source=SOURCE,
             vendor=aliases.get(name.casefold(), name),
-            rank=1 + sum(1 for _, other_score, _, _ in ordered if other_score > score),
+            rank=1 + sum(1 for _, other_score, _, _, _ in ordered if other_score > score),
             total_vendors=total,
             score=score,
             uptime=uptime,
             cache_rate=cache_rate,
+            website_url=website_url,
         )
-        for name, score, uptime, cache_rate in ordered
+        for name, score, uptime, cache_rate, website_url in ordered
     ]
     if len(observations) < 10:
         raise ValueError(f"zhaotutu parser returned only {len(observations)} vendors")

@@ -4,6 +4,7 @@ import json
 import re
 from html.parser import HTMLParser
 from typing import Any, Iterable
+from urllib.parse import urlsplit, urlunsplit
 
 
 class JsonLdParser(HTMLParser):
@@ -49,15 +50,28 @@ def walk_json(value: Any) -> Iterable[dict[str, Any]]:
             yield from walk_json(child)
 
 
-def item_list(html: str, name_contains: str | None = None) -> list[tuple[int, str]]:
-    candidates: list[list[tuple[int, str]]] = []
+def safe_http_url(value: object, origin_only: bool = False) -> str | None:
+    if not value:
+        return None
+    try:
+        parsed = urlsplit(str(value).strip())
+    except ValueError:
+        return None
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return None
+    path = "/" if origin_only else parsed.path
+    return urlunsplit((parsed.scheme, parsed.netloc, path, "", ""))
+
+
+def item_list_details(html: str, name_contains: str | None = None) -> list[tuple[int, str, str | None]]:
+    candidates: list[list[tuple[int, str, str | None]]] = []
     for document in json_ld_documents(html):
         for node in walk_json(document):
             if node.get("@type") != "ItemList":
                 continue
             if name_contains and name_contains.casefold() not in str(node.get("name", "")).casefold():
                 continue
-            parsed: list[tuple[int, str]] = []
+            parsed: list[tuple[int, str, str | None]] = []
             for entry in node.get("itemListElement", []):
                 if not isinstance(entry, dict):
                     continue
@@ -65,12 +79,21 @@ def item_list(html: str, name_contains: str | None = None) -> list[tuple[int, st
                 name = item.get("name") if isinstance(item, dict) else entry.get("name")
                 position = entry.get("position")
                 if name and position is not None:
-                    parsed.append((int(position), str(name).strip()))
+                    provider = item.get("provider") if isinstance(item, dict) else None
+                    provider_url = provider.get("url") if isinstance(provider, dict) else None
+                    item_url = item.get("url") if isinstance(item, dict) else None
+                    parsed.append(
+                        (int(position), str(name).strip(), safe_http_url(provider_url or item_url))
+                    )
             if parsed:
                 candidates.append(parsed)
     if not candidates:
         raise ValueError("no JSON-LD ItemList found")
     return max(candidates, key=len)
+
+
+def item_list(html: str, name_contains: str | None = None) -> list[tuple[int, str]]:
+    return [(position, name) for position, name, _ in item_list_details(html, name_contains)]
 
 
 def escaped_number(block: str, name: str) -> float | None:

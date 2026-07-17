@@ -74,9 +74,9 @@ def write_csv(path: str | Path, results: list[RankedVendor]) -> None:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with Path(path).open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["rank", "vendor", "score", "confidence", "sources", "effective_weight", "rank_best", "rank_worst"])
+        writer.writerow(["rank", "vendor", "website_url", "score", "confidence", "sources", "effective_weight", "rank_best", "rank_worst"])
         for item in results:
-            writer.writerow([item.rank, item.vendor, f"{item.score:.2f}", f"{item.confidence:.3f}", item.source_count, f"{item.effective_weight:.3f}", item.rank_best, item.rank_worst])
+            writer.writerow([item.rank, item.vendor, item.website_url, f"{item.score:.2f}", f"{item.confidence:.3f}", item.source_count, f"{item.effective_weight:.3f}", item.rank_best, item.rank_worst])
 
 
 def write_json(path: str | Path, results: list[RankedVendor]) -> None:
@@ -85,6 +85,7 @@ def write_json(path: str | Path, results: list[RankedVendor]) -> None:
         {
             "rank": item.rank,
             "vendor": item.vendor,
+            "website_url": item.website_url,
             "score": round(item.score, 3),
             "confidence": round(item.confidence, 4),
             "source_count": item.source_count,
@@ -95,4 +96,3 @@ def write_json(path: str | Path, results: list[RankedVendor]) -> None:
         for item in results
     ]
     Path(path).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
