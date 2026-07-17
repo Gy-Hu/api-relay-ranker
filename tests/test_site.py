@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from relayrank.models import RankedVendor
-from relayrank.site import write_site
+from relayrank.site import SOURCE_URLS, write_site
 
 
 class SiteTests(unittest.TestCase):
@@ -39,8 +39,11 @@ class SiteTests(unittest.TestCase):
 
         self.assertIn("Example &lt;Relay&gt;", rendered)
         self.assertNotIn("Example <Relay>", rendered)
-        self.assertIn('href="https://relay.example/"', rendered)
+        self.assertIn('class="vendor-link" href="https://relay.example/"', rendered)
         self.assertIn('rel="noopener noreferrer external"', rendered)
+        for source_url in SOURCE_URLS.values():
+            self.assertIn(f'href="{source_url}"', rendered)
+        self.assertEqual(rendered.count('class="source-table-link"'), 4)
         self.assertIn("#2 / 19", rendered)
         self.assertIn("4/4 正常", rendered)
         self.assertIn("高置信", rendered)

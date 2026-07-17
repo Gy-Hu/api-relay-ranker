@@ -16,6 +16,12 @@ SOURCE_LABELS = {
     "apiranking": "APIRanking",
     "tokhub": "TokHub",
 }
+SOURCE_URLS = {
+    "helpaio": "https://www.helpaio.com/transit",
+    "zhaotutu": "https://zhaotutu.ai/",
+    "apiranking": "https://apiranking.com/",
+    "tokhub": "https://www.tokhub.me/channels",
+}
 SOURCE_ORDER = tuple(SOURCE_LABELS)
 
 
@@ -40,6 +46,15 @@ def _report_dict(report: Any) -> dict[str, Any]:
     return dict(report)
 
 
+def _source_link(source: str, css_class: str = "source-link") -> str:
+    label = SOURCE_LABELS[source]
+    return (
+        f'<a class="{css_class}" href="{SOURCE_URLS[source]}" target="_blank" '
+        f'rel="noopener noreferrer external" aria-label="打开 {label} 榜单">'
+        f'{label}<span aria-hidden="true">↗</span></a>'
+    )
+
+
 def _source_details(contributions: Iterable[dict[str, object]]) -> str:
     indexed = {str(item["source"]): item for item in contributions}
     cards: list[str] = []
@@ -47,7 +62,7 @@ def _source_details(contributions: Iterable[dict[str, object]]) -> str:
         item = indexed.get(source)
         if item is None:
             cards.append(
-                f'<div class="source-card source-card--missing"><span>{SOURCE_LABELS[source]}</span><strong>未收录</strong></div>'
+                f'<div class="source-card source-card--missing">{_source_link(source)}<strong>未收录</strong></div>'
             )
             continue
         rank = item.get("rank")
@@ -62,7 +77,7 @@ def _source_details(contributions: Iterable[dict[str, object]]) -> str:
         metric_text = " · ".join(metric_bits) or f"贡献分 {float(item['raw_score']):.2f}"
         cards.append(
             '<div class="source-card">'
-            f'<span>{SOURCE_LABELS[source]}</span><strong>{_escape(rank_text)}</strong>'
+            f'{_source_link(source)}<strong>{_escape(rank_text)}</strong>'
             f'<small>{_escape(metric_text)}</small></div>'
         )
     return "".join(cards)
@@ -76,7 +91,7 @@ def _ranking_rows(results: list[RankedVendor]) -> str:
         badge_class = "badge--high" if high_confidence else "badge--candidate"
         vendor_name = _escape(item.vendor)
         vendor_markup = (
-            f'<a href="{_escape(item.website_url)}" target="_blank" rel="noopener noreferrer external" '
+            f'<a class="vendor-link" href="{_escape(item.website_url)}" target="_blank" rel="noopener noreferrer external" '
             f'aria-label="访问 {vendor_name} 官网">{vendor_name}<span aria-hidden="true">↗</span></a>'
             if item.website_url
             else f"<strong>{vendor_name}</strong>"
@@ -113,7 +128,7 @@ def _source_rows(reports: list[dict[str, Any]]) -> str:
         status_class = "status--ok" if report.get("ok") else "status--error"
         rows.append(
             "<tr>"
-            f"<th>{SOURCE_LABELS[name]}</th>"
+            f"<th>{_source_link(name, 'source-table-link')}</th>"
             f'<td><span class="status {status_class}">{status}</span></td>'
             f"<td>{int(report.get('vendor_count') or 0)} 家</td>"
             f"<td>{_escape(_timestamp(str(report.get('fetched_at') or '')))}</td>"
@@ -191,7 +206,7 @@ def write_site(
     .detail-stats {{ display:flex; flex-wrap:wrap; gap:12px 28px; padding:15px 0; color:var(--muted); font-size:13px; }} .detail-stats strong {{ color:var(--ink); }}
     .source-grid {{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }}
     .source-card {{ min-height:102px; padding:12px; border:1px solid var(--line); border-radius:10px; display:flex; flex-direction:column; }}
-    .source-card span {{ color:var(--muted); font-size:12px; }} .source-card strong {{ margin-top:5px; font:700 17px/1.2 ui-monospace,SFMono-Regular,monospace; }} .source-card small {{ margin-top:auto; font-size:11px; }}
+    .source-link,.source-table-link {{ width:max-content; color:var(--muted); font-size:12px; text-decoration:none; }} .source-link:hover,.source-table-link:hover {{ color:var(--acid); text-decoration:underline; text-underline-offset:3px; }} .source-link span,.source-table-link span {{ margin-left:4px; }} .source-card strong {{ margin-top:5px; font:700 17px/1.2 ui-monospace,SFMono-Regular,monospace; }} .source-card small {{ margin-top:auto; font-size:11px; }}
     .source-card--missing {{ opacity:.48; }}
     .lower-grid {{ display:grid; grid-template-columns:1.25fr .75fr; gap:18px; margin-top:54px; }}
     .panel {{ padding:22px; background:var(--panel); border:1px solid var(--line); border-radius:16px; }} .panel h2 {{ margin-bottom:16px; }}
