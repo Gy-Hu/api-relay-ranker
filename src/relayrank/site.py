@@ -20,7 +20,7 @@ SOURCE_URLS = {
     "helpaio": "https://www.helpaio.com/transit",
     "zhaotutu": "https://zhaotutu.ai/",
     "apiranking": "https://apiranking.com/",
-    "tokhub": "https://www.tokhub.me/channels",
+    "tokhub": "https://www.tokhub.me/",
 }
 SOURCE_ORDER = tuple(SOURCE_LABELS)
 

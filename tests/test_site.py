@@ -7,6 +7,9 @@ from relayrank.site import SOURCE_URLS, write_site
 
 
 class SiteTests(unittest.TestCase):
+    def test_tokhub_source_uses_public_monitoring_home(self):
+        self.assertEqual(SOURCE_URLS["tokhub"], "https://www.tokhub.me/")
+
     def test_site_escapes_vendor_names_and_shows_source_evidence(self):
         result = RankedVendor(
             rank=1,
