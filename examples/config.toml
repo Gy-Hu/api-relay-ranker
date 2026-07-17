@@ -43,5 +43,6 @@ independence_group = "tokhub"
 "Micu" = ["Micu API", "micuapi"]
 "Yunwu" = ["云雾", "云雾AI", "Yunwu AI"]
 "Right Code" = ["RightCode", "Right Codes"]
-"Neko Code" = ["NekoCode", "NeKoAPI"]
+"Neko Code" = ["NekoCode"]
+"Neko API" = ["nekoapi", "NeKoAPI"]
 "78 Code" = ["78Code"]
