@@ -18,6 +18,8 @@ class SiteTests(unittest.TestCase):
             confidence=0.91,
             source_count=3,
             effective_weight=2.45,
+            score_stddev=8.4,
+            disagreement_penalty=2.1,
             rank_best=1,
             rank_worst=4,
             contributions=(
@@ -50,6 +52,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn("#2 / 19", rendered)
         self.assertIn("4/4 正常", rendered)
         self.assertIn("高置信", rendered)
+        self.assertIn("来源评分分歧 σ <strong>8.40</strong>，保守扣分 <strong>2.10</strong>", rendered)
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ half_life_days = 45
 prior_score = 50
 prior_strength = 0.8
 minimum_sources = 3
+variance_penalty = 0.25
 
 [metric_weights]
 rank = 0.40

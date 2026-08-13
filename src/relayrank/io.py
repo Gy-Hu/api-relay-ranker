@@ -27,6 +27,7 @@ def load_config(path: str | Path) -> tuple[Config, dict[str, Source], dict[str, 
         prior_score=float(aggregation.get("prior_score", 50)),
         prior_strength=float(aggregation.get("prior_strength", 0.8)),
         minimum_sources=int(aggregation.get("minimum_sources", 3)),
+        variance_penalty=float(aggregation.get("variance_penalty", 0.25)),
         metric_weights={
             key: float(value)
             for key, value in raw.get("metric_weights", Config(date.today()).metric_weights).items()
@@ -74,9 +75,37 @@ def write_csv(path: str | Path, results: list[RankedVendor]) -> None:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with Path(path).open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["rank", "vendor", "website_url", "score", "confidence", "sources", "effective_weight", "rank_best", "rank_worst"])
+        writer.writerow(
+            [
+                "rank",
+                "vendor",
+                "website_url",
+                "score",
+                "score_stddev",
+                "disagreement_penalty",
+                "confidence",
+                "sources",
+                "effective_weight",
+                "rank_best",
+                "rank_worst",
+            ]
+        )
         for item in results:
-            writer.writerow([item.rank, item.vendor, item.website_url, f"{item.score:.2f}", f"{item.confidence:.3f}", item.source_count, f"{item.effective_weight:.3f}", item.rank_best, item.rank_worst])
+            writer.writerow(
+                [
+                    item.rank,
+                    item.vendor,
+                    item.website_url,
+                    f"{item.score:.2f}",
+                    f"{item.score_stddev:.2f}",
+                    f"{item.disagreement_penalty:.2f}",
+                    f"{item.confidence:.3f}",
+                    item.source_count,
+                    f"{item.effective_weight:.3f}",
+                    item.rank_best,
+                    item.rank_worst,
+                ]
+            )
 
 
 def write_json(path: str | Path, results: list[RankedVendor]) -> None:
@@ -87,6 +116,8 @@ def write_json(path: str | Path, results: list[RankedVendor]) -> None:
             "vendor": item.vendor,
             "website_url": item.website_url,
             "score": round(item.score, 3),
+            "score_stddev": round(item.score_stddev, 3),
+            "disagreement_penalty": round(item.disagreement_penalty, 3),
             "confidence": round(item.confidence, 4),
             "source_count": item.source_count,
             "effective_weight": round(item.effective_weight, 4),

@@ -109,6 +109,7 @@ def _ranking_rows(results: list[RankedVendor]) -> str:
             '<div class="detail-body">'
             '<div class="detail-stats">'
             f'<span>置信度 <strong>{item.confidence * 100:.1f}%</strong></span>'
+            f'<span>来源评分分歧 σ <strong>{item.score_stddev:.2f}</strong>，保守扣分 <strong>{item.disagreement_penalty:.2f}</strong></span>'
             f'<span>移除单榜后的名次区间 <strong>{item.rank_best}–{item.rank_worst}</strong></span>'
             '</div>'
             f'<div class="source-grid">{_source_details(item.contributions)}</div>'

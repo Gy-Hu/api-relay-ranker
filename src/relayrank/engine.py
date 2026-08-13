@@ -53,9 +53,15 @@ def _scores(
     sources: dict[str, Source],
     config: Config,
     excluded_source: str | None = None,
-) -> tuple[dict[str, float], dict[str, list[dict[str, object]]], dict[str, float]]:
+) -> tuple[
+    dict[str, float],
+    dict[str, list[dict[str, object]]],
+    dict[str, float],
+    dict[str, float],
+]:
     source_weights = _source_weights(sources, config)
     weighted_sum: defaultdict[str, float] = defaultdict(float)
+    weighted_square_sum: defaultdict[str, float] = defaultdict(float)
     weight_sum: defaultdict[str, float] = defaultdict(float)
     details: defaultdict[str, list[dict[str, object]]] = defaultdict(list)
 
@@ -72,6 +78,7 @@ def _scores(
         raw_score, metrics = _observation_score(observation, config)
         weight = source_weights[observation.source]
         weighted_sum[observation.vendor] += raw_score * weight
+        weighted_square_sum[observation.vendor] += raw_score * raw_score * weight
         weight_sum[observation.vendor] += weight
         details[observation.vendor].append(
             {
@@ -85,25 +92,40 @@ def _scores(
             }
         )
 
-    scores = {
-        vendor: (weighted_sum[vendor] + config.prior_score * config.prior_strength)
-        / (weight_sum[vendor] + config.prior_strength)
+    score_stddevs = {
+        vendor: math.sqrt(
+            max(
+                0.0,
+                weighted_square_sum[vendor] / weight_sum[vendor]
+                - (weighted_sum[vendor] / weight_sum[vendor]) ** 2,
+            )
+        )
+        if weight_sum[vendor] > 0
+        else 0.0
         for vendor in weighted_sum
     }
-    return scores, details, dict(weight_sum)
+    scores = {
+        vendor: _clamp(
+            (weighted_sum[vendor] + config.prior_score * config.prior_strength)
+            / (weight_sum[vendor] + config.prior_strength)
+            - config.variance_penalty * score_stddevs[vendor]
+        )
+        for vendor in weighted_sum
+    }
+    return scores, details, dict(weight_sum), score_stddevs
 
 
 def aggregate(observations: list[Observation], sources: dict[str, Source], config: Config) -> list[RankedVendor]:
     if not observations:
         return []
-    scores, details, evidence = _scores(observations, sources, config)
+    scores, details, evidence, score_stddevs = _scores(observations, sources, config)
     ordered = sorted(scores, key=lambda vendor: (-scores[vendor], vendor.casefold()))
 
     leave_one_out_ranks: defaultdict[str, list[int]] = defaultdict(list)
     used_sources = sorted({observation.source for observation in observations})
     if len(used_sources) > 1:
         for excluded in used_sources:
-            subset_scores, _, _ = _scores(observations, sources, config, excluded)
+            subset_scores, _, _, _ = _scores(observations, sources, config, excluded)
             subset_order = sorted(subset_scores, key=lambda vendor: (-subset_scores[vendor], vendor.casefold()))
             for rank, vendor in enumerate(subset_order, 1):
                 leave_one_out_ranks[vendor].append(rank)
@@ -127,6 +149,8 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
                 confidence=confidence,
                 source_count=source_count,
                 effective_weight=evidence[vendor],
+                score_stddev=score_stddevs[vendor],
+                disagreement_penalty=config.variance_penalty * score_stddevs[vendor],
                 rank_best=min(ranges),
                 rank_worst=max(ranges),
                 contributions=tuple(details[vendor]),

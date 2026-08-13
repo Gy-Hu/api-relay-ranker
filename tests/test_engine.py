@@ -6,7 +6,12 @@ from relayrank.models import Config, Observation, Source
 
 
 def make_config(**changes):
-    values = {"as_of": date(2026, 7, 12), "prior_strength": 0.0, "minimum_sources": 1}
+    values = {
+        "as_of": date(2026, 7, 12),
+        "prior_strength": 0.0,
+        "minimum_sources": 1,
+        "variance_penalty": 0.0,
+    }
     values.update(changes)
     return Config(**values)
 
@@ -50,6 +55,30 @@ class AggregationTests(unittest.TestCase):
         observations = [Observation("new", "vendor", score=100), Observation("old", "vendor", score=0)]
         result = aggregate(observations, sources, make_config(half_life_days=30))[0]
         self.assertAlmostEqual(result.score, 66.6667, places=4)
+
+    def test_source_disagreement_lowers_score_and_rank(self):
+        sources = {
+            "a": Source("a", date(2026, 7, 12)),
+            "b": Source("b", date(2026, 7, 12)),
+        }
+        observations = [
+            Observation("a", "stable", score=80),
+            Observation("b", "stable", score=80),
+            Observation("a", "disputed", score=100),
+            Observation("b", "disputed", score=60),
+        ]
+
+        stable, disputed = aggregate(
+            observations,
+            sources,
+            make_config(variance_penalty=0.25),
+        )
+
+        self.assertEqual((stable.vendor, stable.score), ("stable", 80))
+        self.assertEqual(disputed.vendor, "disputed")
+        self.assertAlmostEqual(disputed.score_stddev, 20)
+        self.assertAlmostEqual(disputed.disagreement_penalty, 5)
+        self.assertAlmostEqual(disputed.score, 75)
 
     def test_prior_shrinks_thin_evidence(self):
         sources = {"a": Source("a", date(2026, 7, 12))}

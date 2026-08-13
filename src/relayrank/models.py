@@ -36,6 +36,7 @@ class Config:
     prior_score: float = 50.0
     prior_strength: float = 0.8
     minimum_sources: int = 3
+    variance_penalty: float = 0.25
     metric_weights: dict[str, float] = field(
         default_factory=lambda: {
             "rank": 0.40,
@@ -46,6 +47,10 @@ class Config:
         }
     )
 
+    def __post_init__(self) -> None:
+        if self.variance_penalty < 0:
+            raise ValueError("variance_penalty must be non-negative")
+
 
 @dataclass(frozen=True)
 class RankedVendor:
@@ -55,6 +60,8 @@ class RankedVendor:
     confidence: float
     source_count: int
     effective_weight: float
+    score_stddev: float
+    disagreement_penalty: float
     rank_best: int
     rank_worst: int
     contributions: tuple[dict[str, object], ...] = ()
