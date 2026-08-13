@@ -7,6 +7,12 @@ on:
   schedule:
     - cron: "17 1 * * *"
   workflow_dispatch:
+    inputs:
+      allow_partial:
+        description: "Deploy when one source is unavailable"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -48,6 +54,7 @@ jobs:
           --json build/site/data/audit.json
           --source-report build/site/data/sources.json
           --site-dir build/site
+          ${{ inputs.allow_partial && '--allow-partial' || '' }}
           --site-url https://gy-hu.github.io/api-relay-ranker/
           --og-image assets/relayrank-og.png
 
