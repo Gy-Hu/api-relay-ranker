@@ -11,6 +11,9 @@ def make_config(**changes):
         "prior_strength": 0.0,
         "minimum_sources": 1,
         "variance_penalty": 0.0,
+        "low_outlier_gap": 0.0,
+        "three_source_bonus": 0.0,
+        "four_source_bonus": 0.0,
     }
     values.update(changes)
     return Config(**values)
@@ -84,6 +87,85 @@ class AggregationTests(unittest.TestCase):
         sources = {"a": Source("a", date(2026, 7, 12))}
         result = aggregate([Observation("a", "vendor", score=100)], sources, make_config(prior_strength=1))[0]
         self.assertAlmostEqual(result.score, 75)
+
+    def test_isolated_low_score_is_guarded_with_three_independent_sources(self):
+        sources = {
+            name: Source(name, date(2026, 7, 12))
+            for name in ("a", "b", "buggy")
+        }
+        observations = [
+            Observation("a", "vendor", score=90),
+            Observation("b", "vendor", score=88),
+            Observation("buggy", "vendor", score=10),
+        ]
+
+        result = aggregate(observations, sources, make_config(low_outlier_gap=25))[0]
+
+        self.assertAlmostEqual(result.score, (90 + 88 + 88) / 3)
+        self.assertGreater(result.raw_score_stddev, result.score_stddev)
+        self.assertEqual(result.low_outlier_sources, ("buggy",))
+        guarded = next(item for item in result.contributions if item["source"] == "buggy")
+        self.assertEqual(guarded["adjusted_score"], 88)
+        self.assertTrue(guarded["low_outlier_guarded"])
+
+    def test_two_source_disagreement_is_not_guarded(self):
+        sources = {
+            name: Source(name, date(2026, 7, 12))
+            for name in ("a", "b")
+        }
+        observations = [
+            Observation("a", "vendor", score=90),
+            Observation("b", "vendor", score=10),
+        ]
+
+        result = aggregate(observations, sources, make_config(low_outlier_gap=25))[0]
+
+        self.assertEqual(result.score, 50)
+        self.assertEqual(result.low_outlier_sources, ())
+
+    def test_broad_disagreement_is_not_mistaken_for_one_low_outlier(self):
+        sources = {
+            name: Source(name, date(2026, 7, 12))
+            for name in ("a", "b", "c")
+        }
+        observations = [
+            Observation("a", "vendor", score=10),
+            Observation("b", "vendor", score=40),
+            Observation("c", "vendor", score=100),
+        ]
+
+        result = aggregate(observations, sources, make_config(low_outlier_gap=25))[0]
+
+        self.assertEqual(result.score, 50)
+        self.assertEqual(result.low_outlier_sources, ())
+
+    def test_three_and_four_source_coverage_receive_bonuses(self):
+        sources = {
+            name: Source(name, date(2026, 7, 12))
+            for name in ("a", "b", "c", "d")
+        }
+        observations = [
+            Observation(source, vendor, score=60)
+            for vendor, used_sources in (
+                ("two", ("a", "b")),
+                ("three", ("a", "b", "c")),
+                ("four", ("a", "b", "c", "d")),
+            )
+            for source in used_sources
+        ]
+
+        results = {
+            item.vendor: item
+            for item in aggregate(
+                observations,
+                sources,
+                make_config(three_source_bonus=2, four_source_bonus=4),
+            )
+        }
+
+        self.assertEqual((results["two"].score, results["two"].coverage_bonus), (60, 0))
+        self.assertEqual((results["three"].score, results["three"].coverage_bonus), (62, 2))
+        self.assertEqual((results["four"].score, results["four"].coverage_bonus), (64, 4))
 
     def test_duplicate_source_vendor_is_rejected(self):
         sources = {"a": Source("a", date(2026, 7, 12))}

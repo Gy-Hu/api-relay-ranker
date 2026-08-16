@@ -74,6 +74,10 @@ def _source_details(contributions: Iterable[dict[str, object]]) -> str:
             value = metrics.get(key) if isinstance(metrics, dict) else None
             if value is not None:
                 metric_bits.append(f"{label} {float(value):.2f}")
+        if item.get("low_outlier_guarded"):
+            metric_bits.append(
+                f"异常低分保护 {float(item['raw_score']):.2f}→{float(item['adjusted_score']):.2f}"
+            )
         metric_text = " · ".join(metric_bits) or f"贡献分 {float(item['raw_score']):.2f}"
         cards.append(
             '<div class="source-card">'
@@ -96,6 +100,21 @@ def _ranking_rows(results: list[RankedVendor]) -> str:
             if item.website_url
             else f"<strong>{vendor_name}</strong>"
         )
+        if item.low_outlier_sources:
+            disagreement_markup = (
+                f'<span>原始分歧 σ <strong>{item.raw_score_stddev:.2f}</strong>，异常保护后 '
+                f'<strong>{item.score_stddev:.2f}</strong>，保守扣分 <strong>{item.disagreement_penalty:.2f}</strong></span>'
+            )
+        else:
+            disagreement_markup = (
+                f'<span>来源评分分歧 σ <strong>{item.score_stddev:.2f}</strong>，'
+                f'保守扣分 <strong>{item.disagreement_penalty:.2f}</strong></span>'
+            )
+        bonus_markup = (
+            f'<span>多榜覆盖加分 <strong>+{item.coverage_bonus:.2f}</strong></span>'
+            if item.coverage_bonus > 0
+            else ""
+        )
         rows.append(
             '<article class="rank-card">'
             '<details>'
@@ -109,7 +128,8 @@ def _ranking_rows(results: list[RankedVendor]) -> str:
             '<div class="detail-body">'
             '<div class="detail-stats">'
             f'<span>置信度 <strong>{item.confidence * 100:.1f}%</strong></span>'
-            f'<span>来源评分分歧 σ <strong>{item.score_stddev:.2f}</strong>，保守扣分 <strong>{item.disagreement_penalty:.2f}</strong></span>'
+            f'{disagreement_markup}'
+            f'{bonus_markup}'
             f'<span>移除单榜后的名次区间 <strong>{item.rank_best}–{item.rank_worst}</strong></span>'
             '</div>'
             f'<div class="source-grid">{_source_details(item.contributions)}</div>'
@@ -234,7 +254,7 @@ def write_site(
     <section class="rank-list" aria-label="中转站综合排名">{_ranking_rows(results)}</section>
     <div class="lower-grid">
       <section class="panel"><h2>来源健康状态</h2><table><thead><tr><th>来源</th><th>状态</th><th>样本</th><th>抓取时间</th></tr></thead><tbody>{_source_rows(report_dicts)}</tbody></table></section>
-      <section class="panel"><h2>计算原则</h2><ol class="method"><li>不同榜单按可靠性与新鲜度加权。</li><li>缺失指标重新归一，不按零分处理。</li><li>单榜证据向 50 分中性先验收缩。</li><li>移除任一来源重算，检查名次稳定性。</li></ol></section>
+      <section class="panel"><h2>计算原则</h2><ol class="method"><li>不同榜单按可靠性与新鲜度加权。</li><li>至少三榜时限制孤立异常低分的影响，并保留原值审计。</li><li>三榜与四榜覆盖获得递增加分。</li><li>移除任一来源重算，检查名次稳定性。</li></ol></section>
     </div>
     <aside class="warning"><strong>风险提示：</strong>榜单只能降低盲选风险，不能保证商家不会停服、泄露数据或改变线路。请小额充值，不要提交敏感数据。</aside>
   </main>

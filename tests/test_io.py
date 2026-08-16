@@ -17,7 +17,7 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(aliases["nekoapi"], "Neko API")
         self.assertNotEqual(aliases["nekocode"], aliases["nekoapi"])
 
-    def test_variance_fields_are_written_to_csv_and_json(self):
+    def test_robustness_and_bonus_fields_are_written_to_csv_and_json(self):
         result = RankedVendor(
             rank=1,
             vendor="vendor",
@@ -29,6 +29,9 @@ class ConfigTests(unittest.TestCase):
             disagreement_penalty=5,
             rank_best=1,
             rank_worst=2,
+            raw_score_stddev=30,
+            coverage_bonus=2,
+            low_outlier_sources=("buggy",),
         )
         with tempfile.TemporaryDirectory() as directory:
             csv_path = Path(directory) / "ranking.csv"
@@ -41,8 +44,14 @@ class ConfigTests(unittest.TestCase):
 
         self.assertEqual(csv_row["score_stddev"], "20.00")
         self.assertEqual(csv_row["disagreement_penalty"], "5.00")
+        self.assertEqual(csv_row["raw_score_stddev"], "30.00")
+        self.assertEqual(csv_row["coverage_bonus"], "2.00")
+        self.assertEqual(csv_row["low_outlier_sources"], "buggy")
         self.assertEqual(json_row["score_stddev"], 20)
         self.assertEqual(json_row["disagreement_penalty"], 5)
+        self.assertEqual(json_row["raw_score_stddev"], 30)
+        self.assertEqual(json_row["coverage_bonus"], 2)
+        self.assertEqual(json_row["low_outlier_sources"], ["buggy"])
 
 
 if __name__ == "__main__":

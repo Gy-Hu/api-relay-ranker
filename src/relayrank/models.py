@@ -37,6 +37,9 @@ class Config:
     prior_strength: float = 0.8
     minimum_sources: int = 3
     variance_penalty: float = 0.25
+    low_outlier_gap: float = 25.0
+    three_source_bonus: float = 2.0
+    four_source_bonus: float = 4.0
     metric_weights: dict[str, float] = field(
         default_factory=lambda: {
             "rank": 0.40,
@@ -50,6 +53,12 @@ class Config:
     def __post_init__(self) -> None:
         if self.variance_penalty < 0:
             raise ValueError("variance_penalty must be non-negative")
+        if self.low_outlier_gap < 0:
+            raise ValueError("low_outlier_gap must be non-negative")
+        if self.three_source_bonus < 0 or self.four_source_bonus < 0:
+            raise ValueError("coverage bonuses must be non-negative")
+        if self.four_source_bonus < self.three_source_bonus:
+            raise ValueError("four_source_bonus must be at least three_source_bonus")
 
 
 @dataclass(frozen=True)
@@ -66,3 +75,6 @@ class RankedVendor:
     rank_worst: int
     contributions: tuple[dict[str, object], ...] = ()
     website_url: str = ""
+    raw_score_stddev: float = 0.0
+    coverage_bonus: float = 0.0
+    low_outlier_sources: tuple[str, ...] = ()

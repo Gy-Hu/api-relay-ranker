@@ -33,6 +33,9 @@ class SiteTests(unittest.TestCase):
                 },
             ),
             website_url="https://relay.example/",
+            raw_score_stddev=18.4,
+            coverage_bonus=2,
+            low_outlier_sources=("helpaio",),
         )
         reports = [
             {"name": name, "ok": True, "vendor_count": 10, "fetched_at": "2026-07-17T06:42:23+00:00"}
@@ -52,7 +55,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn("#2 / 19", rendered)
         self.assertIn("4/4 正常", rendered)
         self.assertIn("高置信", rendered)
-        self.assertIn("来源评分分歧 σ <strong>8.40</strong>，保守扣分 <strong>2.10</strong>", rendered)
+        self.assertIn("原始分歧 σ <strong>18.40</strong>，异常保护后 <strong>8.40</strong>", rendered)
+        self.assertIn("多榜覆盖加分 <strong>+2.00</strong>", rendered)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,9 @@ prior_score = 50
 prior_strength = 0.8
 minimum_sources = 3
 variance_penalty = 0.25
+low_outlier_gap = 25
+three_source_bonus = 2
+four_source_bonus = 4
 
 [metric_weights]
 rank = 0.40
