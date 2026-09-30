@@ -58,6 +58,11 @@ def _source_link(source: str, css_class: str = "source-link") -> str:
 
 ISSUE_LABELS = {
     "source_zero_availability_requires_verification": "原站可用率为零，需核验探测与样本",
+    "channel_detail_unavailable": "本通道详情抓取失败，未补造记录",
+    "l3_not_run": "真实生成摘要标记未执行",
+    "no_l3_records_in_returned_sample": "返回样本没有真实生成记录",
+    "recent_records_are_bounded_sample": "最近记录是有限样本，不代表完整24小时",
+    "summary_rates_not_used_as_measurements": "摘要百分比不当作实测比率",
     "unknown_date": "计分日期未知（权重折减）",
     "metric_measurement_date_unknown": "指标测量时间未确认",
     "source_composite_only": "仅采用原站综合分",
@@ -96,6 +101,15 @@ def _source_details(contributions: Iterable[dict[str, object]]) -> str:
         bits.append(f"证据日期：{item.get('observed_at') or '未知'}")
         if scored:
             bits.append(f"有效权重 {float(item['weight']):.3f}")
+        evidence = item.get("raw_evidence") or {}
+        for batch in evidence.get("benchmark_batches", []):
+            cache = f"{batch['cache_hits']}/{batch['cache_trials']}" if batch["cache_hits"] is not None else "未提供"
+            wait = f"{batch['average_wait_seconds']} 秒" if batch["average_wait_seconds"] is not None else "未提供"
+            bits.append(f"实测 {batch['model']} / {batch['channel']}：{batch['test_time']['display']}（年份/时区未知），{batch['round_count']}轮，缓存 {cache}，平均等待 {wait}")
+        for channel in evidence.get("channels", []):
+            detail = channel.get("detail")
+            if detail:
+                bits.append(f"{channel.get('model')}: 返回 {detail['record_count']} 条探测，其中 L3 {detail['l3_record_count']} 条")
         bits.extend(_issue_text(str(x)) for x in item.get("issues", []))
         cards.append(f'<div class="source-card">{_source_link(source)}<strong>{_escape(title)}</strong><small>{"<br>".join(_escape(x) for x in bits)}</small></div>')
     return "".join(cards)
@@ -133,6 +147,8 @@ def _source_rows(reports: list[dict[str, Any]]) -> str:
         status = labels.get(str(report.get("quality")), "已解析") if report.get("ok") else "抓取/解析失败"
         counts = f"{int(report.get('vendor_count', 0))} 家 / {int(report.get('scoring_count', 0))} 家计分"
         error = f"<br>{_escape(report['error'])}" if report.get("error") else ""
+        if report.get("detail_count") or report.get("detail_error_count"):
+            counts += f"<br>详情 {int(report.get('detail_count', 0))} 份；失败 {int(report.get('detail_error_count', 0))} 份"
         rows.append(f'<tr><th>{_source_link(name, "source-table-link")}</th><td>{status}{error}</td><td>{counts}</td><td>{_escape(_timestamp(str(report.get("fetched_at") or "")))}</td></tr>')
     return "".join(rows)
 
@@ -211,7 +227,7 @@ def write_site(
     .detail-stats {{ display:flex; flex-wrap:wrap; gap:12px 28px; padding:15px 0; color:var(--muted); font-size:13px; }} .detail-stats strong {{ color:var(--ink); }}
     .source-grid {{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }}
     .source-card {{ min-height:102px; padding:12px; border:1px solid var(--line); border-radius:10px; display:flex; flex-direction:column; }}
-    .source-link,.source-table-link {{ width:max-content; color:var(--muted); font-size:12px; text-decoration:none; }} .source-link:hover,.source-table-link:hover {{ color:var(--acid); text-decoration:underline; text-underline-offset:3px; }} .source-link span,.source-table-link span {{ margin-left:4px; }} .source-card strong {{ margin-top:5px; font:700 17px/1.2 ui-monospace,SFMono-Regular,monospace; }} .source-card small {{ margin-top:auto; font-size:11px; }}
+    .source-link,.source-table-link {{ width:max-content; color:var(--muted); font-size:12px; text-decoration:none; }} .source-link:hover,.source-table-link:hover {{ color:var(--acid); text-decoration:underline; text-underline-offset:3px; }} .source-link span,.source-table-link span {{ margin-left:4px; }} .source-card strong {{ margin-top:5px; font:700 17px/1.2 ui-monospace,SFMono-Regular,monospace; }} .source-card small {{ margin-top:auto; font-size:11px; overflow-wrap:anywhere; }}
     .source-card--missing {{ opacity:.48; }}
     .lower-grid {{ display:grid; grid-template-columns:1.25fr .75fr; gap:18px; margin-top:54px; }}
     .panel {{ padding:22px; background:var(--panel); border:1px solid var(--line); border-radius:16px; }} .panel h2 {{ margin-bottom:16px; }}
@@ -242,7 +258,7 @@ def write_site(
     </div>
     <aside class="warning"><strong>风险提示：</strong>参考综合分不是可用性承诺或可靠概率。日期不明、来源冲突及探测异常仍需核验，未提供模型维度证据时不生成模型专属排名。</aside>
   </main>
-  <footer><div class="shell"><span>RelayRank v2 · <a href="data/audit.json">计分审计</a> · <a href="data/observations.json">全部原始观测与排除原因</a> · <a href="data/sources.json">来源报告</a></span><a href="https://github.com/Gy-Hu/api-relay-ranker">查看方法与源码</a></div></footer>
+  <footer><div class="shell"><span>RelayRank v2 · <a href="data/audit.json">计分审计</a> · <a href="data/observations.json">全部原始观测与排除原因</a> · <a href="data/sources.json">来源报告</a> · <a href="data/details.json">实测与探测详情</a></span><a href="https://github.com/Gy-Hu/api-relay-ranker">查看方法与源码</a></div></footer>
 </body>
 </html>
 '''

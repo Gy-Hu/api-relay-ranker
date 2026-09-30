@@ -3,15 +3,16 @@ from __future__ import annotations
 import hashlib
 import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, replace, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 
 from .adapters import parse_apiranking, parse_helpaio, parse_tokhub, parse_zhaotutu
 from .engine import observation_weight, _observation_score
 from .fetch import fetch, save_snapshot
+from .details import BENCHMARK_URL, parse_benchmarks, parse_channel_detail
 from .models import Config, Observation, Source
 
 Parser = Callable[[bytes, dict[str, str]], list[Observation]]
@@ -40,6 +41,9 @@ class SourceReport:
     quality: str = "unavailable"
     warnings: tuple[str, ...] = ()
     pages: tuple[dict, ...] = ()
+    detail_count: int = 0
+    detail_error_count: int = 0
+    details: dict = field(default_factory=dict)
 
 
 class LiveCollectionError(RuntimeError):
@@ -60,6 +64,14 @@ def _fetch_source(spec: LiveSource, timeout: float, snapshot_dir, run_id):
     result = fetch(spec.name, spec.url, timeout)
     save_snapshot(result, snapshot_dir, run_id)
     pages = [{"url": result.url, "sha256": result.sha256, "fetched_at": result.fetched_at.isoformat()}]
+    if spec.name == "apiranking":
+        benchmark = fetch("apiranking-benchmark", BENCHMARK_URL, timeout)
+        save_snapshot(benchmark, snapshot_dir, run_id)
+        pages.append({"url": benchmark.url, "sha256": benchmark.sha256, "fetched_at": benchmark.fetched_at.isoformat()})
+        body = json.dumps({"listing_html": result.body.decode("utf-8"), "benchmark_html": benchmark.body.decode("utf-8")}, ensure_ascii=False).encode()
+        assembled = replace(result, source="apiranking-assembled", body=body, content_type="application/json", sha256=hashlib.sha256(body).hexdigest())
+        save_snapshot(assembled, snapshot_dir, run_id)
+        return assembled, tuple(pages)
     if spec.name != "tokhub":
         return result, tuple(pages)
     payload = json.loads(result.body)
@@ -89,6 +101,30 @@ def _fetch_source(spec: LiveSource, timeout: float, snapshot_dir, run_id):
         items.extend(batch)
     if len(items) != total:
         raise ValueError("TokHub pagination count mismatch")
+    def detail(channel):
+        slug = channel.get("publicSlug")
+        if not isinstance(slug, str) or not slug or len(slug) > 200:
+            raise ValueError("TokHub public channel slug missing/invalid")
+        response = fetch("tokhub-detail-" + str(items.index(channel) + 1),
+                         spec.url + "/" + quote(slug, safe="") + "?range=24", min(timeout, 20), retries=1)
+        save_snapshot(response, snapshot_dir, run_id)
+        return response, parse_channel_detail(json.loads(response.body), channel)
+
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {executor.submit(detail, channel): channel for channel in items if channel.get("publicSlug")}
+        for channel in items:
+            if not channel.get("publicSlug"):
+                channel["detail_error"] = "public channel slug missing"
+        for future in as_completed(futures):
+            channel = futures[future]
+            try:
+                response, evidence = future.result()
+                channel["detail"] = evidence
+                pages.append({"url": response.url, "sha256": response.sha256, "fetched_at": response.fetched_at.isoformat()})
+            except Exception as error:
+                channel["detail_error"] = str(error)
+    # Deterministic archive metadata despite concurrent detail requests.
+    pages.sort(key=lambda p: p["url"])
     merged = json.dumps({**payload, "items": items}, ensure_ascii=False, allow_nan=False).encode()
     # sha256 describes the exact assembled parser input; each original page hash is retained.
     assembled = replace(result, source="tokhub-assembled", body=merged, sha256=hashlib.sha256(merged).hexdigest())
@@ -117,7 +153,34 @@ def collect_live(aliases: dict[str, str], snapshot_dir: str | Path,
             continue
         result, pages = fetched[spec.name]
         try:
-            parsed = spec.parser(result.body, aliases)
+            details = {}
+            detail_errors = 0
+            if spec.name == "apiranking":
+                bundle = json.loads(result.body)
+                parsed = spec.parser(bundle["listing_html"].encode(), aliases)
+                details = parse_benchmarks(bundle["benchmark_html"].encode(), aliases)
+                by_slug = {}
+                for batch in details["batches"]:
+                    if batch["listing_slug"]:
+                        by_slug.setdefault(batch["listing_slug"], []).append(batch)
+                enriched = []
+                matched = set()
+                for obs in parsed:
+                    slug = obs.raw_evidence["listing_url"].rsplit("/", 1)[-1]
+                    batches = by_slug.get(slug, [])
+                    matched.update(b["batch_id"] for b in batches)
+                    enriched.append(replace(obs, raw_evidence={**obs.raw_evidence, "benchmark_batches": batches}))
+                details["unmatched_named_batch_ids"] = [b["batch_id"] for b in details["batches"] if not b["anonymous"] and b["batch_id"] not in matched]
+                parsed = enriched
+            else:
+                parsed = spec.parser(result.body, aliases)
+            if spec.name == "tokhub":
+                channels = json.loads(result.body)["items"]
+                details = {"requested_range": "24h", "channels": [
+                    {"channel_id": c["id"], "provider": c["provider"], "model": c.get("model"),
+                     "detail": c.get("detail"), "error": c.get("detail_error")} for c in channels]}
+                detail_errors = sum(bool(c.get("detail_error")) for c in channels)
+            detail_count = len(details.get("batches", [])) + sum(c.get("detail") is not None for c in details.get("channels", []))
             if not parsed or len({o.vendor for o in parsed}) != len(parsed):
                 raise ValueError("empty source or duplicate canonical vendors")
             if any(o.source != spec.name for o in parsed):
@@ -141,7 +204,8 @@ def collect_live(aliases: dict[str, str], snapshot_dir: str | Path,
             reports[spec.name] = SourceReport(spec.name, True, len(parsed), result.sha256,
                 result.fetched_at.isoformat(), scoring_count=scored, reference_count=refs,
                 excluded_count=len(parsed)-scored-refs, unknown_date_count=unknown,
-                quality=quality, warnings=warnings, pages=pages)
+                quality="limited" if detail_errors else quality, warnings=warnings, pages=pages,
+                detail_count=detail_count, detail_error_count=detail_errors, details=details)
             observations.extend(parsed)
             sources[spec.name] = source
         except Exception as error:

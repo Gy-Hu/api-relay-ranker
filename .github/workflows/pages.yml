@@ -42,7 +42,7 @@ jobs:
       - name: Run tests
         run: python -m unittest discover -s tests -v
 
-      - name: Fetch four sources and build Top 10
+      - name: Fetch rankings, benchmark details and channel probes
         run: >-
           relayrank live
           --config examples/config.toml
@@ -57,6 +57,34 @@ jobs:
           ${{ inputs.allow_partial && '--allow-partial' || '' }}
           --site-url https://gy-hu.github.io/api-relay-ranker/
           --og-image assets/relayrank-og.png
+
+      - name: Verify detail extraction and summarize coverage
+        run: |
+          python - <<'PYTHON'
+          import json, os
+          from pathlib import Path
+          details = json.loads(Path("build/site/data/details.json").read_text())
+          sources = details["sources"]
+          reports = {r["name"]: r for r in json.loads(Path("build/site/data/sources.json").read_text())}
+          lines = ["## Public evidence extraction", "", "| Source | Details | Errors |", "|---|---:|---:|"]
+          for name in ("apiranking", "tokhub"):
+              if name not in sources:
+                  if reports[name]["ok"]:
+                      raise SystemExit(f"Missing details for successfully parsed source: {name}")
+                  lines.append(f"| {name} | unavailable (explicit partial run) | — |")
+                  continue
+              source = sources[name]
+              if source["detail_count"] == 0:
+                  raise SystemExit(f"No usable detail responses from {name}")
+              lines.append(f"| {name} | {source['detail_count']} | {source['detail_error_count']} |")
+              if source["detail_error_count"]:
+                  print(f"::warning::{name}: some channel details could not be extracted; see sources.json")
+          bench = sources.get("apiranking", {}).get("data", {})
+          lines += ["", f"Anonymized benchmark batches retained: {bench.get('anonymous_count', 'unavailable')}.",
+                    "Probe records are bounded samples. Missing generation probes are not treated as failures or uptime measurements."]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as handle:
+              handle.write("\n".join(lines) + "\n")
+          PYTHON
 
       - name: Preserve audit data and raw snapshots
         if: always()

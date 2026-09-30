@@ -1,0 +1,18 @@
+[
+  {
+    "source": "apiranking-benchmark",
+    "url": "https://apiranking.com/benchmark",
+    "fetched_at": "2026-09-30T05:52:57.852864+00:00",
+    "content_type": "text/html",
+    "bytes": 575225,
+    "sha256": "04dbce30f5f6354f0f8f7a94bf4917b57b2362d6c6483aef599bf65caf13f9ea"
+  },
+  {
+    "source": "tokhub-detail-15",
+    "url": "https://www.tokhub.me/api/public/channels/aa503aa1?range=24",
+    "fetched_at": "2026-09-30T05:52:57.453762+00:00",
+    "content_type": "application/json",
+    "bytes": 5262,
+    "sha256": "e066b5c1cf131726ce76ce946caa45e5ada1b14a29d2231a2dbcedeb8ab01c0c"
+  }
+]

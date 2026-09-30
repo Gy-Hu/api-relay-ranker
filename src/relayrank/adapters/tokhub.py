@@ -29,6 +29,10 @@ def parse_tokhub(body: bytes, aliases: dict[str, str]) -> list[Observation]:
     for vendor, channels in grouped.items():
         issues = {"status_mapping_not_measured_rate"}
         for c in channels:
+            if c.get("detail_error"):
+                issues.add("channel_detail_unavailable")
+            if isinstance(c.get("detail"), dict):
+                issues.update(c["detail"].get("issues", []))
             if c.get("status") != "healthy":
                 issues.add(f"channel_status: {c.get('model', 'unknown')} / {c.get('status', 'unknown')} / {c.get('errorType') or 'unspecified'}")
         stamps = []
@@ -41,8 +45,8 @@ def parse_tokhub(body: bytes, aliases: dict[str, str]) -> list[Observation]:
             observed_at=min(stamps) if len(stamps) == len(channels) else None,
             date_basis="oldest_channel_probe", issues=tuple(sorted(issues)),
             raw_evidence={"channels": [{key: c.get(key) for key in (
-                "id", "model", "endpoint", "status", "diagnosis", "score", "uptime24h",
-                "successRate", "lastProbeAt", "l1Status", "l2Status", "l3Status", "errorType",
+                "id", "publicSlug", "model", "endpoint", "status", "diagnosis", "score", "uptime24h",
+                "successRate", "lastProbeAt", "l1Status", "l2Status", "l3Status", "errorType", "detail", "detail_error",
             )} for c in channels]},
         ))
     if len(observations) < 5:

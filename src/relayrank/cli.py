@@ -69,11 +69,21 @@ def main(argv: list[str] | None = None) -> int:
         report_path = Path(args.source_report)
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(
-            json.dumps([report.__dict__ for report in reports], ensure_ascii=False, indent=2) + "\n",
+            json.dumps([{k: v for k, v in report.__dict__.items() if k != "details"} for report in reports], ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
         if collection_error is not None:
             raise collection_error
+        details_payload = {"schema_version": "1.0", "sources": {
+            r.name: {"fetched_at": r.fetched_at, "detail_count": r.detail_count,
+                     "detail_error_count": r.detail_error_count, "data": r.details}
+            for r in reports if r.details}}
+        details_path = Path(args.json).with_name("details.json")
+        details_path.parent.mkdir(parents=True, exist_ok=True)
+        details_path.write_text(json.dumps(details_payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        for r in reports:
+            if r.details:
+                print(f"{r.name}: {r.detail_count} detail batches/channels; {r.detail_error_count} detail errors")
         all_results = aggregate(observations, sources, config, min_sources=args.min_sources)
         results = all_results[:args.top]
         write_observations(Path(args.json).with_name("observations.json"), observations, sources, config, args.min_sources)
@@ -85,6 +95,7 @@ def main(argv: list[str] | None = None) -> int:
             write_csv(data_dir / "ranking.csv", results)
             write_json(data_dir / "audit.json", results)
             write_observations(data_dir / "observations.json", observations, sources, config, args.min_sources)
+            (data_dir / "details.json").write_text(details_path.read_text(encoding="utf-8"), encoding="utf-8")
             (data_dir / "sources.json").write_text(report_path.read_text(encoding="utf-8"), encoding="utf-8")
             generated_at = max((report.fetched_at for report in reports if report.fetched_at), default="")
             write_site(
