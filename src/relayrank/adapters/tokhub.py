@@ -2,52 +2,49 @@ from __future__ import annotations
 
 import json
 from collections import defaultdict
-from statistics import mean, median
-
-from ..models import Observation
+from datetime import datetime
+from ..models import Observation, finite_number
 from .common import safe_http_url
-
 
 SOURCE = "tokhub"
 
 
 def parse_tokhub(body: bytes, aliases: dict[str, str]) -> list[Observation]:
     payload = json.loads(body)
-    grouped: defaultdict[str, list[dict]] = defaultdict(list)
-    for channel in payload.get("items", []):
+    items = payload.get("items", [])
+    if len(items) != payload.get("total"):
+        raise ValueError("TokHub pagination incomplete")
+    if len({c.get("id") for c in items}) != len(items):
+        raise ValueError("TokHub duplicate channel IDs")
+    grouped = defaultdict(list)
+    for channel in items:
         provider = str(channel.get("provider") or "").strip()
-        if provider and channel.get("score") is not None:
-            canonical = aliases.get(provider.casefold(), provider)
-            grouped[canonical].append(channel)
-
-    providers: list[tuple[str, float, float | None, str | None]] = []
+        if not provider or not channel.get("id"):
+            raise ValueError("TokHub missing channel identity")
+        for key in ("score", "uptime24h", "successRate"):
+            if channel.get(key) is not None:
+                finite_number(channel[key], f"TokHub/{provider}/{key}")
+        grouped[aliases.get(provider.casefold(), provider)].append(channel)
+    observations = []
     for vendor, channels in grouped.items():
-        score = float(median(float(channel["score"]) for channel in channels))
-        uptimes = [float(channel["uptime24h"]) for channel in channels if channel.get("uptime24h") is not None]
-        raw_url = next(
-            (
-                channel.get("officialSiteUrl") or channel.get("endpoint")
-                for channel in channels
-                if channel.get("officialSiteUrl") or channel.get("endpoint")
-            ),
-            None,
-        )
-        providers.append((vendor, score, mean(uptimes) if uptimes else None, safe_http_url(raw_url, origin_only=True)))
-
-    providers.sort(key=lambda item: (-item[1], item[0].casefold()))
-    total = len(providers)
-    observations = [
-        Observation(
-            source=SOURCE,
-            vendor=vendor,
-            rank=1 + sum(1 for _, other_score, _, _ in providers if other_score > score),
-            total_vendors=total,
-            score=score,
-            uptime=uptime,
-            website_url=website_url,
-        )
-        for vendor, score, uptime, website_url in providers
-    ]
+        issues = {"status_mapping_not_measured_rate"}
+        for c in channels:
+            if c.get("status") != "healthy":
+                issues.add(f"channel_status: {c.get('model', 'unknown')} / {c.get('status', 'unknown')} / {c.get('errorType') or 'unspecified'}")
+        stamps = []
+        for c in channels:
+            if c.get("lastProbeAt"):
+                stamps.append(datetime.fromisoformat(c["lastProbeAt"].replace("Z", "+00:00")).date())
+        url = next((safe_http_url(c.get("officialSiteUrl"), origin_only=True) for c in channels if safe_http_url(c.get("officialSiteUrl"))), None)
+        observations.append(Observation(
+            SOURCE, vendor, website_url=url, evidence_kind="status", state="reference",
+            observed_at=min(stamps) if len(stamps) == len(channels) else None,
+            date_basis="oldest_channel_probe", issues=tuple(sorted(issues)),
+            raw_evidence={"channels": [{key: c.get(key) for key in (
+                "id", "model", "endpoint", "status", "diagnosis", "score", "uptime24h",
+                "successRate", "lastProbeAt", "l1Status", "l2Status", "l3Status", "errorType",
+            )} for c in channels]},
+        ))
     if len(observations) < 5:
         raise ValueError(f"TokHub parser returned only {len(observations)} providers")
     return observations

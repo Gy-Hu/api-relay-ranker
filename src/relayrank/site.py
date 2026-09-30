@@ -7,7 +7,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
-from .models import RankedVendor
+from .models import Config, RankedVendor
+from datetime import date
 
 
 SOURCE_LABELS = {
@@ -55,106 +56,84 @@ def _source_link(source: str, css_class: str = "source-link") -> str:
     )
 
 
+ISSUE_LABELS = {
+    "source_zero_availability_requires_verification": "原站可用率为零，需核验探测与样本",
+    "unknown_date": "计分日期未知（权重折减）",
+    "metric_measurement_date_unknown": "指标测量时间未确认",
+    "source_composite_only": "仅采用原站综合分",
+    "missing_ranking_score": "缺少有效排名分",
+    "ordering_only": "页面顺序仅作收录旁证",
+    "status_mapping_not_measured_rate": "状态映射值，不是实测百分比",
+    "source_reports_website_unavailable": "原站标记官网不可用",
+    "source_reports_inactive": "原站标记已停运",
+    "source_reports_degraded": "原站标记服务降级",
+    "unknown_provider_status": "未知服务状态",
+    "missing_composite": "综合分缺失",
+    "future_date": "时间异常，未计分",
+    "stale": "数据过期，未计分",
+    "missing_metrics": "缺少有效指标，未计分",
+}
+
+
+def _issue_text(issue: str) -> str:
+    return ISSUE_LABELS.get(issue, issue.replace("channel_status:", "通道状态：").replace("source_status:", "原站状态：").replace("source_annotation:", "原站提示："))
+
+
 def _source_details(contributions: Iterable[dict[str, object]]) -> str:
     indexed = {str(item["source"]): item for item in contributions}
-    cards: list[str] = []
+    cards = []
     for source in SOURCE_ORDER:
         item = indexed.get(source)
         if item is None:
-            cards.append(
-                f'<div class="source-card source-card--missing">{_source_link(source)}<strong>未收录</strong></div>'
-            )
+            cards.append(f'<div class="source-card source-card--missing">{_source_link(source)}<strong>无观测</strong><small>不按零分处理</small></div>')
             continue
-        rank = item.get("rank")
-        total = item.get("total_vendors")
-        rank_text = f"#{rank} / {total}" if rank is not None and total is not None else "有数据"
-        metrics = item.get("metrics") if isinstance(item.get("metrics"), dict) else {}
-        metric_bits = []
-        for key, label in (("score", "站点分"), ("uptime", "可用率"), ("cache_rate", "缓存")):
-            value = metrics.get(key) if isinstance(metrics, dict) else None
-            if value is not None:
-                metric_bits.append(f"{label} {float(value):.2f}")
-        if item.get("low_outlier_guarded"):
-            metric_bits.append(
-                f"异常低分保护 {float(item['raw_score']):.2f}→{float(item['adjusted_score']):.2f}"
-            )
-        metric_text = " · ".join(metric_bits) or f"贡献分 {float(item['raw_score']):.2f}"
-        cards.append(
-            '<div class="source-card">'
-            f'{_source_link(source)}<strong>{_escape(rank_text)}</strong>'
-            f'<small>{_escape(metric_text)}</small></div>'
-        )
+        scored = float(item.get("weight", 0)) > 0
+        value = item.get("raw_score")
+        title = f"{float(value):.2f} 分" if scored and value is not None else "未计入评分"
+        bits = []
+        if item.get("rank") is not None:
+            bits.append(f"原站位置 #{item['rank']} / {item['total_vendors']}（不参与计分）")
+        bits.append(f"证据日期：{item.get('observed_at') or '未知'}")
+        if scored:
+            bits.append(f"有效权重 {float(item['weight']):.3f}")
+        bits.extend(_issue_text(str(x)) for x in item.get("issues", []))
+        cards.append(f'<div class="source-card">{_source_link(source)}<strong>{_escape(title)}</strong><small>{"<br>".join(_escape(x) for x in bits)}</small></div>')
     return "".join(cards)
 
 
 def _ranking_rows(results: list[RankedVendor]) -> str:
-    rows: list[str] = []
+    rows = []
     for item in results:
-        high_confidence = item.source_count >= 3
-        label = "高置信" if high_confidence else "两榜候选"
-        badge_class = "badge--high" if high_confidence else "badge--candidate"
+        risk = any(x.startswith(("channel_status:", "source_status:", "source_annotation:")) for x in item.issues)
+        label = "有风险信号" if risk else ("日期待核验" if "unknown_date" in item.issues else "交叉参考")
         vendor_name = _escape(item.vendor)
-        vendor_markup = (
-            f'<a class="vendor-link" href="{_escape(item.website_url)}" target="_blank" rel="noopener noreferrer external" '
-            f'aria-label="访问 {vendor_name} 官网">{vendor_name}<span aria-hidden="true">↗</span></a>'
-            if item.website_url
-            else f"<strong>{vendor_name}</strong>"
-        )
-        if item.low_outlier_sources:
-            disagreement_markup = (
-                f'<span>原始分歧 σ <strong>{item.raw_score_stddev:.2f}</strong>，异常保护后 '
-                f'<strong>{item.score_stddev:.2f}</strong>，保守扣分 <strong>{item.disagreement_penalty:.2f}</strong></span>'
-            )
-        else:
-            disagreement_markup = (
-                f'<span>来源评分分歧 σ <strong>{item.score_stddev:.2f}</strong>，'
-                f'保守扣分 <strong>{item.disagreement_penalty:.2f}</strong></span>'
-            )
-        bonus_markup = (
-            f'<span>多榜覆盖加分 <strong>+{item.coverage_bonus:.2f}</strong></span>'
-            if item.coverage_bonus > 0
-            else ""
-        )
+        vendor_markup = (f'<a class="vendor-link" href="{_escape(item.website_url)}" target="_blank" rel="noopener noreferrer external">{vendor_name}<span aria-hidden="true">↗</span></a>' if item.website_url else f"<strong>{vendor_name}</strong>")
+        coverage = f'<span>移除 {len(item.coverage_loss_groups)} 个组中的任一组后，证据将不足入榜门槛</span>' if item.coverage_loss_groups else ""
         rows.append(
-            '<article class="rank-card">'
-            '<details>'
-            '<summary>'
+            '<article class="rank-card"><details><summary>'
             f'<span class="position">{item.rank:02d}</span>'
-            f'<span class="vendor">{vendor_markup}<small>{item.source_count}/4 榜覆盖</small></span>'
-            f'<span class="badge {badge_class}">{label}</span>'
-            f'<span class="score"><strong>{item.score:.2f}</strong><small>综合分</small></span>'
-            '<span class="chevron" aria-hidden="true">＋</span>'
-            '</summary>'
-            '<div class="detail-body">'
-            '<div class="detail-stats">'
-            f'<span>置信度 <strong>{item.confidence * 100:.1f}%</strong></span>'
-            f'{disagreement_markup}'
-            f'{bonus_markup}'
-            f'<span>移除单榜后的名次区间 <strong>{item.rank_best}–{item.rank_worst}</strong></span>'
-            '</div>'
-            f'<div class="source-grid">{_source_details(item.contributions)}</div>'
-            '</div>'
-            '</details>'
-            '</article>'
+            f'<span class="vendor">{vendor_markup}<small>{item.source_count} 个计分来源组 · {label}</small></span>'
+            f'<span class="badge badge--candidate">{label}</span>'
+            f'<span class="score"><strong>{item.score:.2f}</strong><small>参考综合分</small></span>'
+            '<span class="chevron" aria-hidden="true">＋</span></summary><div class="detail-body"><div class="detail-stats">'
+            f'<span>证据强度指数 <strong>{item.confidence:.2f}</strong>（非概率）</span>'
+            f'<span>来源分歧 σ <strong>{item.score_stddev:.2f}</strong>（仅展示）</span>'
+            f'<span>固定候选集移除独立组后的名次 <strong>{item.rank_best}–{item.rank_worst}</strong></span>'
+            f'{coverage}</div><div class="source-grid">{_source_details(item.contributions)}</div></div></details></article>'
         )
-    return "".join(rows)
+    return "".join(rows) or '<p class="warning">当前没有足够独立评分证据支持排序。请查看来源状态与原始观测；本次不沿用旧榜单。</p>'
 
 
 def _source_rows(reports: list[dict[str, Any]]) -> str:
     indexed = {str(report["name"]): report for report in reports}
-    rows: list[str] = []
+    rows = []
+    labels = {"limited": "数据受限", "reference_only": "仅作旁证", "usable": "可计分", "unavailable": "不可用"}
     for name in SOURCE_ORDER:
-        report = indexed.get(name, {"ok": False, "vendor_count": 0, "fetched_at": ""})
-        status = "正常" if report.get("ok") else "异常"
-        status_class = "status--ok" if report.get("ok") else "status--error"
-        rows.append(
-            "<tr>"
-            f"<th>{_source_link(name, 'source-table-link')}</th>"
-            f'<td><span class="status {status_class}">{status}</span></td>'
-            f"<td>{int(report.get('vendor_count') or 0)} 家</td>"
-            f"<td>{_escape(_timestamp(str(report.get('fetched_at') or '')))}</td>"
-            "</tr>"
-        )
+        report = indexed.get(name, {"ok": False})
+        status = labels.get(str(report.get("quality")), "已解析") if report.get("ok") else "抓取/解析失败"
+        counts = f"{int(report.get('vendor_count', 0))} 家 / {int(report.get('scoring_count', 0))} 家计分"
+        error = f"<br>{_escape(report['error'])}" if report.get("error") else ""
+        rows.append(f'<tr><th>{_source_link(name, "source-table-link")}</th><td>{status}{error}</td><td>{counts}</td><td>{_escape(_timestamp(str(report.get("fetched_at") or "")))}</td></tr>')
     return "".join(rows)
 
 
@@ -165,7 +144,12 @@ def write_site(
     generated_at: str,
     site_url: str = "",
     og_image: str | Path | None = None,
+    min_sources: int = 2,
+    cohort_size: int | None = None,
+    config: Config | None = None,
 ) -> Path:
+    config = config or Config(date.today())
+    cohort_size = len(results) if cohort_size is None else cohort_size
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
     report_dicts = [_report_dict(report) for report in reports]
@@ -188,12 +172,12 @@ def write_site(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="每日聚合 HelpAIO、zhaotutu、APIRanking 与 TokHub 的可审计 API 中转站排名。">
-  <meta property="og:title" content="RelayRank · API 中转站实时榜">
-  <meta property="og:description" content="四榜交叉验证，区分高置信商家与两榜候选。">
+  <meta property="og:title" content="RelayRank · API 中转站证据参考榜">
+  <meta property="og:description" content="区分有效评分、缺测与风险旁证，不将收录数量当作可靠概率。">
   <meta property="og:type" content="website">
   {f'<meta property="og:url" content="{_escape(canonical_url)}">' if canonical_url else ''}
   {og_markup}
-  <title>RelayRank · API 中转站实时榜</title>
+  <title>RelayRank · API 中转站证据参考榜</title>
   <style>
     :root {{ color-scheme: dark; --bg:#0b0d0c; --panel:#121513; --line:#29302b; --ink:#f3f6f2; --muted:#9ba79e; --acid:#b7f34a; --mint:#59dba0; --amber:#f1bb54; }}
     * {{ box-sizing:border-box; }}
@@ -243,22 +227,22 @@ def write_site(
 <body>
   <header>
     <div class="shell">
-      <div class="eyebrow">Four-source live index</div>
-      <h1>API 中转站<br>实时综合榜</h1>
-      <p class="lede">同时交叉验证 HelpAIO、zhaotutu、APIRanking 与 TokHub。综合分衡量当前表现，覆盖榜数与置信度衡量证据厚度。</p>
-      <div class="meta-strip"><span>数据时间 <strong>{_escape(_timestamp(generated_at))}</strong></span><span>来源状态 <strong>{healthy_sources}/4 正常</strong></span><span>发布规则 <strong>至少覆盖 2 榜</strong></span></div>
+      <div class="eyebrow">Four-source evidence review · v2</div>
+      <h1>API 中转站<br>证据参考榜</h1>
+      <p class="lede">核查 HelpAIO、zhaotutu、APIRanking 与 TokHub。仅有效综合分参与排序；页面位置与通道状态作为旁证。未知日期降权，缺测不记零，故障信号保留。</p>
+      <div class="meta-strip"><span>抓取时间 <strong>{_escape(_timestamp(generated_at))}</strong></span><span>来源读取 <strong>{healthy_sources}/4 已解析</strong></span><span>发布规则 <strong>至少 {min_sources} 个计分来源组</strong></span></div>
     </div>
   </header>
   <main class="shell">
-    <div class="section-head"><h2>当前 Top {len(results)}</h2><p>点击任一商家，查看四个来源的名次与指标。三榜以上标为高置信，两榜仅作为候选。</p></div>
+    <div class="section-head"><h2>当前 Top {len(results)}</h2><p>排序依据各站综合评估，未承诺特定模型或渠道可用。展开查看有效权重、未知日期与风险信号；收录旁证不增加计分覆盖。</p></div>
     <section class="rank-list" aria-label="中转站综合排名">{_ranking_rows(results)}</section>
     <div class="lower-grid">
-      <section class="panel"><h2>来源健康状态</h2><table><thead><tr><th>来源</th><th>状态</th><th>样本</th><th>抓取时间</th></tr></thead><tbody>{_source_rows(report_dicts)}</tbody></table></section>
-      <section class="panel"><h2>计算原则</h2><ol class="method"><li>不同榜单按可靠性与新鲜度加权。</li><li>至少三榜时限制孤立异常低分的影响，并保留原值审计。</li><li>三榜与四榜覆盖获得递增加分。</li><li>移除任一来源重算，检查名次稳定性。</li></ol></section>
+      <section class="panel"><h2>来源数据质量</h2><table><thead><tr><th>来源</th><th>状态</th><th>样本</th><th>抓取时间</th></tr></thead><tbody>{_source_rows(report_dicts)}</tbody></table></section>
+      <section class="panel"><h2>计算原则</h2><ol class="method"><li>每来源综合分只计一次，再向 {config.prior_score:g} 分先验收缩（先验权重 {config.prior_strength:g}）。</li><li>日期未知权重乘 {config.unknown_date_weight:g}；已知日期按 {config.half_life_days:g} 天半衰期衰减，超过 {config.max_age_days} 天退出计分。</li><li>不抬高低分，不因多榜收录额外加分；同组相关来源合计至多一票。</li><li>在固定的 {cohort_size} 家候选中移除整个来源组，报告名次变化及覆盖不足。分组是建模假设，不证明跨站独立。</li></ol></section>
     </div>
-    <aside class="warning"><strong>风险提示：</strong>榜单只能降低盲选风险，不能保证商家不会停服、泄露数据或改变线路。请小额充值，不要提交敏感数据。</aside>
+    <aside class="warning"><strong>风险提示：</strong>参考综合分不是可用性承诺或可靠概率。日期不明、来源冲突及探测异常仍需核验，未提供模型维度证据时不生成模型专属排名。</aside>
   </main>
-  <footer><div class="shell"><span>RelayRank · 自动生成，可审计</span><a href="https://github.com/Gy-Hu/api-relay-ranker">查看方法与源码</a></div></footer>
+  <footer><div class="shell"><span>RelayRank v2 · <a href="data/audit.json">计分审计</a> · <a href="data/observations.json">全部原始观测与排除原因</a> · <a href="data/sources.json">来源报告</a></span><a href="https://github.com/Gy-Hu/api-relay-ranker">查看方法与源码</a></div></footer>
 </body>
 </html>
 '''

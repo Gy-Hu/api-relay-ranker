@@ -57,7 +57,7 @@ def safe_http_url(value: object, origin_only: bool = False) -> str | None:
         parsed = urlsplit(str(value).strip())
     except ValueError:
         return None
-    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc or parsed.username or parsed.password:
         return None
     path = "/" if origin_only else parsed.path
     return urlunsplit((parsed.scheme, parsed.netloc, path, "", ""))
@@ -99,3 +99,76 @@ def item_list(html: str, name_contains: str | None = None) -> list[tuple[int, st
 def escaped_number(block: str, name: str) -> float | None:
     match = re.search(rf'\\"{re.escape(name)}\\":(-?[0-9]+(?:\.[0-9]+)?)', block)
     return float(match.group(1)) if match else None
+
+
+class Node:
+    def __init__(self, tag: str, attrs=(), parent=None):
+        self.tag = tag
+        self.attrs = dict(attrs)
+        self.parent = parent
+        self.children: list[Node | str] = []
+
+    def walk(self):
+        yield self
+        for child in self.children:
+            if isinstance(child, Node):
+                yield from child.walk()
+
+    def has_class(self, name: str) -> bool:
+        return name in (self.attrs.get("class") or "").split()
+
+    def text(self) -> str:
+        if self.tag in {"script", "style"}:
+            return ""
+        return " ".join(c if isinstance(c, str) else c.text() for c in self.children)
+
+
+class Document(HTMLParser):
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self, html: str):
+        super().__init__(convert_charrefs=True)
+        self.root = Node("document")
+        self.current = self.root
+        self.feed(html)
+
+    def handle_starttag(self, tag, attrs):
+        node = Node(tag, attrs, self.current)
+        self.current.children.append(node)
+        if tag not in self.VOID:
+            self.current = node
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in self.VOID:
+            self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        node = self.current
+        while node.parent is not None:
+            if node.tag == tag:
+                self.current = node.parent
+                return
+            node = node.parent
+
+    def handle_data(self, data):
+        self.current.children.append(data)
+
+
+def next_flight(html: str) -> str:
+    """Decode escaped script strings before reading bounded JSON objects."""
+    parts = []
+    for match in re.finditer(r'self\.__next_f\.push\((.*?)\)</script>', html, re.S):
+        try:
+            payload = json.loads(match[1])
+            if len(payload) > 1 and payload[0] == 1 and isinstance(payload[1], str):
+                parts.append(payload[1])
+        except (ValueError, TypeError):
+            continue
+    return "".join(parts)
+
+
+def source_date(text: str):
+    from datetime import date
+    match = re.search(r'(?:数据更新于|最近更新)\s*(\d{4}-\d{2}-\d{2})', text)
+    return date.fromisoformat(match[1]) if match else None

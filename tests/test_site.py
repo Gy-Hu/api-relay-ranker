@@ -53,10 +53,11 @@ class SiteTests(unittest.TestCase):
             self.assertIn(f'href="{source_url}"', rendered)
         self.assertEqual(rendered.count('class="source-table-link"'), 4)
         self.assertIn("#2 / 19", rendered)
-        self.assertIn("4/4 正常", rendered)
-        self.assertIn("高置信", rendered)
-        self.assertIn("原始分歧 σ <strong>18.40</strong>，异常保护后 <strong>8.40</strong>", rendered)
-        self.assertIn("多榜覆盖加分 <strong>+2.00</strong>", rendered)
+        self.assertIn("4/4 已解析", rendered)
+        self.assertNotIn("高置信", rendered)
+        self.assertIn("非概率", rendered)
+        self.assertIn("来源分歧 σ <strong>8.40</strong>", rendered)
+        self.assertNotIn("多榜覆盖加分", rendered)
 
 
 if __name__ == "__main__":

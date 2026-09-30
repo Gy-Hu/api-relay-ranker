@@ -3,15 +3,17 @@ as_of = "2026-07-12"
 half_life_days = 45
 prior_score = 50
 prior_strength = 0.8
-minimum_sources = 3
-variance_penalty = 0.25
-low_outlier_gap = 25
-three_source_bonus = 2
-four_source_bonus = 4
+minimum_sources = 2
+variance_penalty = 0
+low_outlier_gap = 0
+three_source_bonus = 0
+four_source_bonus = 0
+unknown_date_weight = 0.25
+max_age_days = 90
 
 [metric_weights]
-rank = 0.40
-score = 0.20
+rank = 0.0
+score = 1.0
 uptime = 0.20
 cache_rate = 0.10
 price_value = 0.10

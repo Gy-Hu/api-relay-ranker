@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-USER_AGENT = "Mozilla/5.0 (compatible; API-Relay-Ranker/0.2; +local-research)"
+USER_AGENT = "Mozilla/5.0 (compatible; API-Relay-Ranker/0.3; +local-research)"
 
 
 @dataclass(frozen=True)

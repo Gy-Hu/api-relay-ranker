@@ -1,60 +1,54 @@
 from __future__ import annotations
 
+import json
 import re
-from statistics import mean
-
 from ..models import Observation
-from .common import escaped_number, safe_http_url
-
+from .common import next_flight, safe_http_url
 
 SOURCE = "zhaotutu"
-START = re.compile(r'\\"id\\":\\"([^"\\]+)\\",\\"name\\":\\"([^"\\]+)\\",\\"nameCn\\":')
 
 
 def parse_zhaotutu(body: bytes, aliases: dict[str, str]) -> list[Observation]:
-    html = body.decode("utf-8", errors="replace")
-    starts = list(START.finditer(html))
-    providers: dict[str, tuple[str, float, float | None, float | None, str | None]] = {}
-    for index, match in enumerate(starts):
-        provider_id, name = match.group(1), match.group(2).strip()
-        if provider_id in providers:
+    flight = next_flight(body.decode("utf-8", errors="strict"))
+    decoder = json.JSONDecoder()
+    candidates = []
+    for match in re.finditer(r'"providers"\s*:\s*', flight):
+        try:
+            value, _ = decoder.raw_decode(flight, match.end())
+            if isinstance(value, list) and all(isinstance(o, dict) for o in value):
+                candidates.append(value)
+        except ValueError:
             continue
-        end = starts[index + 1].start() if index + 1 < len(starts) else min(len(html), match.start() + 200_000)
-        block = html[match.start():end]
-        score = escaped_number(block, "overallScore")
-        status_match = re.search(r'\\"status\\":\\"([^"\\]+)\\"', block)
-        status = status_match.group(1) if status_match else None
-        if score is None or status not in {"active", "normal", "ascending"}:
-            continue
-        uptime_match = re.search(
-            r'\\"uptimeSummary\\":\{[^}]*\\"uptime3d\\":([0-9]+(?:\.[0-9]+)?)', block
-        )
-        uptime = float(uptime_match.group(1)) if uptime_match else None
-        cache_values = [
-            float(value)
-            for value in re.findall(r'\\"cacheHitRate\\":([0-9]+(?:\.[0-9]+)?)', block)
-            if float(value) > 0
-        ]
-        cache_rate = mean(cache_values) if cache_values else None
-        url_match = re.search(r'\\"url\\":\\"([^"\\]+)\\"', block)
-        website_url = safe_http_url(url_match.group(1)) if url_match else None
-        providers[provider_id] = (name, score, uptime, cache_rate, website_url)
-
-    ordered = sorted(providers.values(), key=lambda item: (-item[1], item[0].casefold()))
-    total = len(ordered)
-    observations = [
-        Observation(
-            source=SOURCE,
-            vendor=aliases.get(name.casefold(), name),
-            rank=1 + sum(1 for _, other_score, _, _, _ in ordered if other_score > score),
-            total_vendors=total,
-            score=score,
-            uptime=uptime,
-            cache_rate=cache_rate,
-            website_url=website_url,
-        )
-        for name, score, uptime, cache_rate, website_url in ordered
-    ]
-    if len(observations) < 10:
-        raise ValueError(f"zhaotutu parser returned only {len(observations)} vendors")
-    return observations
+    if len(candidates) != 1:
+        raise ValueError("zhaotutu provider payload missing or ambiguous")
+    providers = candidates[0]
+    if len(providers) < 10 or len({o.get("id") for o in providers}) != len(providers):
+        raise ValueError("zhaotutu incomplete or duplicate providers")
+    rows = []
+    for p in providers:
+        name = str(p.get("name") or "").strip()
+        status = p.get("status")
+        score = p.get("overallScore")
+        issues = ["metric_measurement_date_unknown", "source_composite_only"]
+        state = "valid"
+        if status == "defunct":
+            state = "inactive"
+            issues.append("source_reports_inactive")
+        elif status not in {"active", "normal", "ascending", "degraded"}:
+            state = "invalid"
+            issues.append("unknown_provider_status")
+        elif score is None:
+            state = "missing"
+            issues.append("missing_composite")
+        if status == "degraded":
+            issues.append("source_reports_degraded")
+        annotation = p.get("annotation") if isinstance(p.get("annotation"), dict) else {}
+        if annotation.get("type"):
+            issues.append("source_annotation: " + str(annotation.get("reason") or annotation["type"]))
+        # Do not average nested model and vendor summaries, or guess the meaning of zero.
+        # Store every value, including zero, null, sample counts and timestamps for audit.
+        raw = {key: p.get(key) for key in ("id", "nameCn", "status", "overallScore", "uptimeSummary", "models", "modelMonitorByVendor", "lastUpdated", "dataSources", "annotation")}
+        rows.append(Observation(SOURCE, aliases.get(name.casefold(), name), score=score,
+                                website_url=safe_http_url(p.get("url")), state=state,
+                                issues=tuple(issues), raw_evidence=raw))
+    return rows

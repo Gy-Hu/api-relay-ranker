@@ -1,227 +1,132 @@
 from __future__ import annotations
 
 import math
-from collections import Counter, defaultdict
+from collections import defaultdict
 from .models import Config, Observation, RankedVendor, Source
 
 
 METRICS = ("rank", "score", "uptime", "cache_rate", "price_value")
 
 
-def _clamp(value: float) -> float:
-    return min(100.0, max(0.0, value))
-
-
 def _rank_score(observation: Observation) -> float | None:
-    if observation.rank is None or observation.total_vendors is None:
+    if observation.rank is None:
         return None
-    if observation.total_vendors <= 1:
-        return 100.0
-    return _clamp(100 * (observation.total_vendors - observation.rank) / (observation.total_vendors - 1))
+    return 100.0 if observation.total_vendors == 1 else 100 * (observation.total_vendors - observation.rank) / (observation.total_vendors - 1)
 
 
 def _observation_score(observation: Observation, config: Config) -> tuple[float, dict[str, float]]:
-    values = {
-        "rank": _rank_score(observation),
-        "score": observation.score,
-        "uptime": observation.uptime,
-        "cache_rate": observation.cache_rate,
-        "price_value": observation.price_value,
-    }
-    present = {key: _clamp(float(value)) for key, value in values.items() if value is not None}
-    denominator = sum(config.metric_weights.get(key, 0) for key in present)
+    if observation.score is not None and config.metric_weights.get("score", 0) > 0:
+        return observation.score, {"score": observation.score}
+    if observation.evidence_kind == "composite":
+        raise ValueError(f"{observation.source}/{observation.vendor}: composite score missing or disabled")
+    values = {key: getattr(observation, key) for key in METRICS if key != "rank"}
+    values["rank"] = _rank_score(observation)
+    present = {k: v for k, v in values.items() if v is not None and config.metric_weights.get(k, 0) > 0}
+    denominator = sum(config.metric_weights[k] for k in present)
     if denominator <= 0:
         raise ValueError(f"{observation.source}/{observation.vendor}: no weighted metric is present")
-    normalized_weights = {key: config.metric_weights[key] / denominator for key in present}
-    return sum(present[key] * normalized_weights[key] for key in present), present
+    return sum(v * config.metric_weights[k] for k, v in present.items()) / denominator, present
 
 
-def _source_weights(sources: dict[str, Source], config: Config) -> dict[str, float]:
-    groups = Counter(source.independence_group or source.name for source in sources.values())
-    weights: dict[str, float] = {}
-    for name, source in sources.items():
-        age = max(0, (config.as_of - source.published_at).days)
-        freshness = 0.5 ** (age / config.half_life_days) if config.half_life_days > 0 else 1.0
-        # Fully correlated sources share one vote instead of multiplying influence.
-        correlation_discount = groups[source.independence_group or source.name]
-        weights[name] = source.reliability * freshness / correlation_discount
-    return weights
+def observation_weight(observation: Observation, source: Source, config: Config) -> tuple[float, str]:
+    if observation.state != "valid" or observation.evidence_kind in {"ordering", "status"}:
+        return 0.0, observation.state if observation.state != "valid" else "reference"
+    stamp = observation.observed_at or source.published_at
+    if stamp is None:
+        return source.reliability * config.unknown_date_weight, "unknown_date"
+    age = (config.as_of - stamp).days
+    if age < 0:
+        return 0.0, "future_date"
+    if age > config.max_age_days:
+        return 0.0, "stale"
+    return source.reliability * 0.5 ** (age / config.half_life_days), "dated"
 
 
-def _coverage_bonus(source_count: int, config: Config) -> float:
-    if source_count >= 4:
-        return config.four_source_bonus
-    if source_count >= 3:
-        return config.three_source_bonus
-    return 0.0
-
-
-def _guard_low_outlier(
-    entries: list[tuple[Observation, float, float, dict[str, float]]],
-    sources: dict[str, Source],
-    config: Config,
-) -> tuple[list[float], set[str]]:
-    adjusted = [entry[1] for entry in entries]
-    independence_groups = {
-        sources[entry[0].source].independence_group or entry[0].source
-        for entry in entries
-    }
-    if config.low_outlier_gap <= 0 or len(independence_groups) < 3:
-        return adjusted, set()
-
-    ordered = sorted(range(len(entries)), key=lambda index: adjusted[index])
-    lowest, second, third = ordered[:3]
-    low_gap = adjusted[second] - adjusted[lowest]
-    next_gap = adjusted[third] - adjusted[second]
-    if low_gap < config.low_outlier_gap or low_gap <= next_gap:
-        return adjusted, set()
-
-    # A single isolated low result is winsorized to the next-lowest independent
-    # observation. The raw value stays in the audit trail.
-    adjusted[lowest] = adjusted[second]
-    return adjusted, {entries[lowest][0].source}
-
-
-def _weighted_stddev(values: list[float], weights: list[float]) -> float:
-    weight_sum = sum(weights)
-    if weight_sum <= 0:
-        return 0.0
-    mean = sum(value * weight for value, weight in zip(values, weights)) / weight_sum
-    square_mean = sum(value * value * weight for value, weight in zip(values, weights)) / weight_sum
-    return math.sqrt(max(0.0, square_mean - mean * mean))
-
-
-def _scores(
-    observations: list[Observation],
-    sources: dict[str, Source],
-    config: Config,
-    excluded_source: str | None = None,
-) -> tuple[
-    dict[str, float],
-    dict[str, list[dict[str, object]]],
-    dict[str, float],
-    dict[str, float],
-    dict[str, float],
-]:
-    source_weights = _source_weights(sources, config)
-    weighted_sum: defaultdict[str, float] = defaultdict(float)
-    weighted_square_sum: defaultdict[str, float] = defaultdict(float)
-    weight_sum: defaultdict[str, float] = defaultdict(float)
-    details: defaultdict[str, list[dict[str, object]]] = defaultdict(list)
-    entries: defaultdict[str, list[tuple[Observation, float, float, dict[str, float]]]] = defaultdict(list)
-
-    seen: set[tuple[str, str]] = set()
-    for observation in observations:
-        if observation.source == excluded_source:
-            continue
-        if observation.source not in sources:
-            raise ValueError(f"unknown source in CSV: {observation.source}")
-        key = (observation.source, observation.vendor)
+def aggregate(observations: list[Observation], sources: dict[str, Source], config: Config,
+              min_sources: int = 1) -> list[RankedVendor]:
+    if min_sources < 1:
+        raise ValueError("min_sources must be positive")
+    by_vendor: dict[str, list[dict]] = defaultdict(list)
+    seen = set()
+    for obs in observations:
+        if obs.source not in sources:
+            raise ValueError(f"unknown source in CSV: {obs.source}")
+        key = (obs.source, obs.vendor)
         if key in seen:
-            raise ValueError(f"duplicate observation: {observation.source}/{observation.vendor}")
+            raise ValueError(f"duplicate observation: {obs.source}/{obs.vendor}")
         seen.add(key)
-        raw_score, metrics = _observation_score(observation, config)
-        weight = source_weights[observation.source]
-        entries[observation.vendor].append((observation, raw_score, weight, metrics))
+        source = sources[obs.source]
+        weight, quality = observation_weight(obs, source, config)
+        value, metrics = None, {}
+        if weight > 0:
+            try:
+                value, metrics = _observation_score(obs, config)
+            except ValueError:
+                weight, quality = 0.0, "missing_metrics"
+        issues = list(obs.issues)
+        if quality in {"unknown_date", "future_date", "stale", "missing_metrics"}:
+            issues.append(quality)
+        by_vendor[obs.vendor].append({
+            "source": obs.source, "group": source.independence_group or source.name,
+            "rank": obs.rank, "total_vendors": obs.total_vendors,
+            "website_url": obs.website_url, "raw_score": value,
+            "weight": weight, "metrics": metrics, "quality": quality,
+            "state": obs.state, "evidence_kind": obs.evidence_kind,
+            "observed_at": (obs.observed_at or source.published_at).isoformat() if (obs.observed_at or source.published_at) else None,
+            "date_basis": obs.date_basis, "issues": issues, "raw_evidence": obs.raw_evidence,
+        })
 
-    raw_score_stddevs: dict[str, float] = {}
-    for vendor, vendor_entries in entries.items():
-        adjusted_scores, guarded_sources = _guard_low_outlier(vendor_entries, sources, config)
-        raw_scores = [entry[1] for entry in vendor_entries]
-        weights = [entry[2] for entry in vendor_entries]
-        raw_score_stddevs[vendor] = _weighted_stddev(raw_scores, weights)
-        for entry, adjusted_score in zip(vendor_entries, adjusted_scores):
-            observation, raw_score, weight, metrics = entry
-            weighted_sum[vendor] += adjusted_score * weight
-            weighted_square_sum[vendor] += adjusted_score * adjusted_score * weight
-            weight_sum[vendor] += weight
-            detail: dict[str, object] = {
-                "source": observation.source,
-                "rank": observation.rank,
-                "total_vendors": observation.total_vendors,
-                "website_url": observation.website_url,
-                "raw_score": round(raw_score, 3),
-                "weight": round(weight, 4),
-                "metrics": metrics,
-            }
-            if observation.source in guarded_sources:
-                detail["adjusted_score"] = round(adjusted_score, 3)
-                detail["low_outlier_guarded"] = True
-            details[vendor].append(detail)
+    # Correlated observations share a maximum of one source's weight per vendor.
+    groups_by_vendor = {}
+    for vendor, details in by_vendor.items():
+        groups = defaultdict(list)
+        for d in details:
+            if d["weight"] > 0:
+                groups[d["group"]].append(d)
+        for entries in groups.values():
+            total = sum(d["weight"] for d in entries)
+            scale = max(d["weight"] for d in entries) / total
+            for d in entries:
+                d["weight"] *= scale
+        groups_by_vendor[vendor] = groups
 
-    score_stddevs = {
-        vendor: math.sqrt(
-            max(
-                0.0,
-                weighted_square_sum[vendor] / weight_sum[vendor]
-                - (weighted_sum[vendor] / weight_sum[vendor]) ** 2,
-            )
-        )
-        if weight_sum[vendor] > 0
-        else 0.0
-        for vendor in weighted_sum
-    }
-    scores = {
-        vendor: _clamp(
-            (weighted_sum[vendor] + config.prior_score * config.prior_strength)
-            / (weight_sum[vendor] + config.prior_strength)
-            - config.variance_penalty * score_stddevs[vendor]
-            + _coverage_bonus(len(details[vendor]), config)
-        )
-        for vendor in weighted_sum
-    }
-    return scores, details, dict(weight_sum), score_stddevs, raw_score_stddevs
+    cohort = [v for v, groups in groups_by_vendor.items() if len(groups) >= min_sources
+              and not any(d["state"] == "inactive" for d in by_vendor[v])]
 
+    def calculate(vendor: str, excluded: str | None = None):
+        entries = [d for d in by_vendor[vendor] if d["weight"] > 0 and d["group"] != excluded]
+        weight = sum(d["weight"] for d in entries)
+        denominator = weight + config.prior_strength
+        score = ((sum(d["raw_score"] * d["weight"] for d in entries) + config.prior_score * config.prior_strength)
+                 / denominator) if denominator else config.prior_score
+        if weight:
+            mean = sum(d["raw_score"] * d["weight"] for d in entries) / weight
+            sigma = math.sqrt(sum(d["weight"] * (d["raw_score"] - mean) ** 2 for d in entries) / weight)
+        else:
+            sigma = 0.0
+        return score, weight, sigma
 
-def aggregate(observations: list[Observation], sources: dict[str, Source], config: Config) -> list[RankedVendor]:
-    if not observations:
-        return []
-    scores, details, evidence, score_stddevs, raw_score_stddevs = _scores(observations, sources, config)
-    ordered = sorted(scores, key=lambda vendor: (-scores[vendor], vendor.casefold()))
-
-    leave_one_out_ranks: defaultdict[str, list[int]] = defaultdict(list)
-    used_sources = sorted({observation.source for observation in observations})
-    if len(used_sources) > 1:
-        for excluded in used_sources:
-            subset_scores, _, _, _, _ = _scores(observations, sources, config, excluded)
-            subset_order = sorted(subset_scores, key=lambda vendor: (-subset_scores[vendor], vendor.casefold()))
-            for rank, vendor in enumerate(subset_order, 1):
-                leave_one_out_ranks[vendor].append(rank)
-
-    results: list[RankedVendor] = []
+    scores = {v: calculate(v) for v in cohort}
+    ordered = sorted(cohort, key=lambda v: (-scores[v][0], v.casefold()))
+    ranges = {v: [i] for i, v in enumerate(ordered, 1)}
+    # Keep the same eligible cohort, remove an independent group (including clones).
+    all_groups = sorted({g for v in cohort for g in groups_by_vendor[v]})
+    if len(all_groups) > 1:
+        for excluded in all_groups:
+            subset = sorted(cohort, key=lambda v: (-calculate(v, excluded)[0], v.casefold()))
+            for rank, vendor in enumerate(subset, 1):
+                ranges[vendor].append(rank)
+    results = []
     for rank, vendor in enumerate(ordered, 1):
-        source_count = len(details[vendor])
-        coverage_bonus = _coverage_bonus(source_count, config)
-        low_outlier_sources = tuple(
-            str(item["source"])
-            for item in details[vendor]
-            if item.get("low_outlier_guarded")
-        )
-        evidence_confidence = 1 - math.exp(-evidence[vendor])
-        coverage_confidence = min(1.0, source_count / max(1, config.minimum_sources))
-        confidence = evidence_confidence * coverage_confidence
-        ranges = leave_one_out_ranks[vendor] or [rank]
-        website_url = next(
-            (str(item["website_url"]) for item in details[vendor] if item.get("website_url")),
-            "",
-        )
-        results.append(
-            RankedVendor(
-                rank=rank,
-                vendor=vendor,
-                score=scores[vendor],
-                confidence=confidence,
-                source_count=source_count,
-                effective_weight=evidence[vendor],
-                score_stddev=score_stddevs[vendor],
-                disagreement_penalty=config.variance_penalty * score_stddevs[vendor],
-                rank_best=min(ranges),
-                rank_worst=max(ranges),
-                contributions=tuple(details[vendor]),
-                website_url=website_url,
-                raw_score_stddev=raw_score_stddevs[vendor],
-                coverage_bonus=coverage_bonus,
-                low_outlier_sources=low_outlier_sources,
-            )
-        )
+        score, weight, sigma = scores[vendor]
+        details = by_vendor[vendor]
+        count = len(groups_by_vendor[vendor])
+        issues = tuple(sorted({str(issue) for d in details for issue in d["issues"]}))
+        loss = tuple(sorted(g for g in groups_by_vendor[vendor] if count - 1 < min_sources))
+        results.append(RankedVendor(
+            rank, vendor, score, 1 - math.exp(-weight), count, weight, sigma, 0.0,
+            min(ranges[vendor]), max(ranges[vendor]), tuple(details),
+            next((str(d["website_url"]) for d in details if d["website_url"]), ""),
+            raw_score_stddev=sigma, issues=issues, coverage_loss_groups=loss,
+        ))
     return results

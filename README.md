@@ -2,131 +2,92 @@
 
 [![Update ranking and deploy Pages](https://github.com/Gy-Hu/api-relay-ranker/actions/workflows/pages.yml/badge.svg)](https://github.com/Gy-Hu/api-relay-ranker/actions/workflows/pages.yml)
 
-**[查看每日自动更新的 Top 10 榜单](https://gy-hu.github.io/api-relay-ranker/)**
+**[查看每日更新的证据参考榜](https://gy-hu.github.io/api-relay-ranker/)**
 
-一个可审计、抗偏差的 API 中转商实时榜单聚合器。它同时抓取 HelpAIO、zhaotutu、APIRanking 和 TokHub，不把不同网站的名次直接平均，而是把“榜单质量”和“商家表现”分开建模。
+抓取 HelpAIO、zhaotutu、APIRanking 和 TokHub，保留原始响应、字段缺失、来源状态及计分依据。仅依赖 Python 3.11+ 标准库。
 
-> `rank` 子命令用于离线 CSV；`live` 子命令会实时抓取四站。每次响应原文、时间和 SHA-256 都会保存到 `snapshots/`，便于复核。榜单只能降低盲选风险，不能保证服务商不会停服、泄露数据或改变线路。
+## v2 的计分与限制
 
-## 为什么更中立
+2026-09-30 的审计发现：APIRanking 的 JSON-LD 只包含前 30 家，HelpAIO 已更换评分结构，TokHub 的部分百分比是状态映射值，旧版低分保护还会产生“来源分提高、总分下降”的现象。v2 更换了数据契约和计分规则，分数不应与 v1 直接比较。
 
-- **来源权重透明**：每个榜单都有可信度，不允许隐藏的硬编码偏爱。
-- **时间衰减**：旧数据按半衰期自动减权，避免历史口碑永久主导结果。
-- **相关来源折扣**：转载、同一社区或同一数据集衍生的多个榜单共享一票。
-- **缺失值公平**：榜单未提供缓存率时，已有指标重新归一，而不是给缓存率记零分。
-- **小样本收缩**：只上过一个榜单的商家会向 50 分中性先验收缩，减少偶然第一。
-- **分歧惩罚**：按来源权重计算单源综合分的标准差，并从均值中扣除 `variance_penalty × 标准差`；同均值时优先稳定商家。
-- **异常低分保护**：至少三榜覆盖时，如果最低单源分相对其余来源形成孤立断层，就把它温莎化到次低分；原始值仍保留在审计记录中。
-- **多榜覆盖加分**：默认三榜加 2 分、四榜加 4 分，让证据更厚的商家获得明确但有限的优势。
-- **稳定性审计**：逐一移除来源后重算，输出每家名次可能落入的区间。
-- **全链路解释**：JSON 结果保留每个来源的原始指标、单源得分和实际权重。
+### 来源如何使用
 
-这套方法减少偏差，但不能证明任何中转商安全。中转服务有停服、跑路、日志留存和密钥泄露风险；应小额充值、避免提交敏感数据。
+| 来源 | 获取内容 | 用途与限制 |
+|---|---|---|
+| [HelpAIO](https://www.helpaio.com/transit) | 逐卡读取页面排名分，核对名称、位置及基础分 × 可用率 × 降权系数公式 | 只使用排名综合分一次；基础分和可用率仅供审计。缺排名分保留缺失，不用列表位置替代。时间是原站页面声明的更新日，并非逐次测量时间。 |
+| [zhaotutu](https://api.zhaotutu.ai/) | 解码完整 Next.js 数据对象，保留正常、降级、停运及缺分记录 | 使用原站 `overallScore`；不再平均模型级/厂商级缓存，不重新叠加可用率。无法确认综合分测量日期，按未知日期降权。原站综合分本身可能包含基线或缺测数据，不能视作经过本项目复测。 |
+| [APIRanking](https://apiranking.com/) | 完整可见列表与状态，核对 `numberOfItems` 和连续位置 | 页面顺序仅作收录旁证，**不折算质量分，不增加计分覆盖**。SEO 预览截断时不拿预览长度当总数；缺行、重复行或结构改变时拒绝该次发布。 |
+| [TokHub](https://www.tokhub.me/) | 公开 API 全部分页、通道模型、探测日期和错误状态 | `score`、`uptime24h`、`successRate` 在已核验公开代码中含固定状态映射，**只作通道状态旁证**，不当作实测百分比或综合质量分。状态不代表其他模型/通道也异常。 |
 
-## 快速开始
+四站读取成功不代表四站都可计分。页面分别显示已解析数量、可计分商家数、数据受限及仅作旁证。缺失、旁证、非法数值、过期、未来日期及停运信号都保留原因。
 
-项目仅依赖 Python 3.11+ 标准库。
+### 公式
+
+对于有有效分数的观测：
+
+- 有原站综合分时，只使用该分数，名次和组成指标不再重复贡献。
+- 离线 CSV 明确提供独立指标而没有综合分时，才按配置的正权重归一；未提供的指标保持缺失，实测 0 保留为 0。
+- 来源权重 = 配置可靠性 × 新鲜度。已知时间按 `0.5 ** (age_days / half_life_days)` 衰减；日期未知乘 `unknown_date_weight`（默认 0.25）；超过 `max_age_days`（默认 90 天）或未来日期退出计分。
+- 每个商家的相关来源组内，各观测按原权重占比分摊，组总权重不超过该组最大单源权重。缺席或不可计分的来源不占票。
+- 参考综合分 = `(Σ有效权重 × 原站分数 + prior_strength × prior_score) / (Σ有效权重 + prior_strength)`。
+- 默认先验分 50、先验权重 0.8。**不抬高低分、不增加覆盖奖励、不扣除分歧罚分**。分歧标准差单独显示。固定证据权重和资格时，任一输入分提高不会降低总分。
+
+可靠性、新鲜度折扣和先验都是透明的建模选择，并非经过校准的概率。原站评分口径不同，参考综合分不承诺服务安全、模型真实性或某条线路的可用率。日期未知的数据仍可能过时，因此页面明确警示。
+
+计分覆盖只数有正有效权重的来源组；旁证、零权重、缺分和过期观测不增加覆盖。配置的分组不证明来源独立，发现共同数据血缘时应合组。本项目不按域名或模糊名称自动合并商家：只有配置中明确的别名才合并，冲突别名和同源重复商家会报错。
+
+### 排序稳定性
+
+先按 `--min-sources` 形成候选集合，再排序。移除一个完整来源组（含其所有关联来源）时保持同一候选集合，用剩余证据和先验重算；没有剩余证据时使用先验。区间包含基线排名。移除后低于入榜门槛会单独标记，不能把该情景解释为仍有足够证据的排名。
+
+Top N 是候选集合的截取，因此区间可以超过 N；页面同时显示完整候选数。分数相同按商家名称稳定排序，不伪装成有意义的质量差异。
+
+当前上游没有统一的模型/渠道/时间窗口契约，本项目不生成 Claude、Codex、Gemini 专属质量排名。TokHub 每条状态保留模型名称，避免把某个通道的异常推广到整个商家。
+
+## 运行
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-relayrank rank \
-  --config examples/config.toml \
-  --input examples/rankings.csv \
-  --output outputs/ranking.csv \
-  --json outputs/audit.json
+relayrank live --config examples/config.toml --top 10 --min-sources 2 --site-dir build/site
 ```
 
-### 实时四榜 Top N
+不安装也可运行：
 
 ```bash
-PYTHONPATH=src python3 -m relayrank live \
-  --config examples/config.toml \
-  --top 10
+PYTHONPATH=src python3 -m relayrank live --config examples/config.toml --site-dir build/site
+PYTHONPATH=src python3 -m relayrank rank --config examples/config.toml --input examples/rankings.csv
 ```
 
-默认规则：
+CSV 示例是历史观测，不是当前推荐。
 
-- 四站必须全部抓取和解析成功，否则拒绝发布结果；
-- Top N 商家默认至少要被 2 个独立榜单覆盖；
-- 原始响应写入 `snapshots/<UTC运行时间>/`；
-- 精简排名写入 `outputs/live-ranking.csv`；
-- 每个来源的贡献写入 `outputs/live-audit.json`；
-- 抓取数量、时间与哈希写入 `outputs/live-sources.json`。
+默认要求四站抓取和解析成功；失败时保存报告与快照，返回非零退出码，GitHub Pages 保留上一版。显式 `--allow-partial` 可接受缺站，但仍要求至少两个配置上不同的来源组成功读取。**即使全部读取成功，若没有商家满足有效计分覆盖，也发布明确的“证据不足”页面，不伪造排名或默默沿用旧数据。**
 
-生成与 GitHub Pages 相同的静态页面：
+GitHub Actions 每天按 cron `17 1 * * *`（香港时间计划 09:17，实际可能延迟）更新；推送 main 和手动触发也会运行。测试、抓取与构建通过后才部署。原始响应与审计 artifacts 保存 30 天。
 
-```bash
-PYTHONPATH=src python3 -m relayrank live \
-  --config examples/config.toml \
-  --top 10 \
-  --min-sources 2 \
-  --site-dir build/site
-```
+## 审计输出
 
-线上榜单每天香港时间 09:17 由 GitHub Actions 自动更新，也可以从 Actions 页面手动触发。四站必须全部成功，测试和聚合也必须通过，才会部署新页面；失败时保留上一版有效页面。原始快照和审计数据作为工作流 artifact 保存 30 天。
+- `ranking.csv`：参考分、有效覆盖、证据强度指数、分歧及名次区间。
+- `audit.json`：本次入榜商家的全部来源贡献，包含未计分旁证、日期、权重、异常和移除组后覆盖不足信息，`algorithm_version=2.0`。
+- `observations.json`：全部商家和通道原始证据，包括未入榜记录、计分资格及排除原因。
+- `sources.json`：来源读取结果、可计分/旁证/排除数量、未知日期数量及每页响应哈希。
+- `snapshots/<UTC运行时间>/`：原始响应与元数据。TokHub 每页和合并后的解析输入都保存，不覆盖第一页。
 
-调查范围较宽时可以加入 `--min-sources 2`。只有明确接受缺站风险时才使用 `--allow-partial`，生成的结果不应称为完整四榜排名。
+CLI 默认写入 `outputs/`；有 `--site-dir` 时，还复制一套到网页的 `data/` 目录，并提供下载链接。
 
-四个适配器的口径：
+证据强度指数 `1-exp(-有效权重)` 仅是权重规模摘要，**不是可靠概率**。v2 JSON/CSV 使用 `evidence_strength`，不再输出 `confidence` 百分比；Python 结果对象暂保留同名内部兼容属性。旧审计中的保护、覆盖奖励和分歧罚分字段保留为零，方便读取迁移。
 
-- HelpAIO：读取 JSON-LD 名次及页面内结构化站点评分；
-- zhaotutu：读取结构化综合分、3日可用率和缓存率；
-- APIRanking：读取 JSON-LD 页面顺序；“未检测”保持缺失，不记零分；
-- TokHub：读取公开通道 API，同一商家的多个模型通道先取中位分并聚合可用率，只计一票。
+## 配置迁移
 
-不安装也可以直接运行：
+v1 中 `variance_penalty`、`low_outlier_gap`、`three_source_bonus`、`four_source_bonus` 必须改为 0，否则明确报错，避免旧配置悄悄恢复有问题的策略。默认关闭名次分权重。
 
-```bash
-PYTHONPATH=src python3 -m relayrank rank \
-  --config examples/config.toml \
-  --input examples/rankings.csv
-```
+可调参数包括 `prior_strength`、`prior_score`、`half_life_days`、`max_age_days`、`unknown_date_weight` 和来源分组。它们都需记录理由，不能以让特定商家排名更高为目的调参。
 
-## 输入格式
-
-`examples/rankings.csv` 每行代表一个来源对一个商家的观测。默认文件禁止使用虚构榜单：
-
-| 字段 | 含义 |
-|---|---|
-| `source` | 必须与 TOML 中的来源名一致 |
-| `vendor` | 商家名称；别名会自动映射到标准名称 |
-| `rank` / `total_vendors` | 该来源的名次和榜单总数，成对填写 |
-| `score` | 来源给出的综合分，0–100 |
-| `uptime` | 可用率，0–100 |
-| `cache_rate` | 缓存命中率，0–100 |
-| `price_value` | 性价比评分，0–100，越高越好 |
-
-指标可以留空。至少要有一个在 `[metric_weights]` 中权重大于零的指标。
-
-## 配置原则
-
-`reliability` 建议依据可复核方法打分，而不是依据榜单结论：
-
-- 0.9–1.0：持续自动探测、公开方法、可复核原始数据；
-- 0.7–0.9：自费实测且披露样本和更新时间；
-- 0.4–0.7：社区问卷或公开口碑汇总；
-- 0.0–0.4：匿名推荐、返佣导向或无法复核的榜单。
-
-来自相同数据、作者、商业组织或大量互相转载的来源应填写同一个 `independence_group`。它们的总影响力会被限制为一组一票。
-
-`prior_strength` 越大，孤立证据越难制造高排名；`half_life_days` 越小，系统越看重近期数据。`variance_penalty` 控制来源分歧的保守扣分，默认 `0.25`。`low_outlier_gap` 默认 `25`，只在至少三个独立来源且最低分与次低分的断层也大于后续断层时启用异常保护；设为 `0` 可关闭。`three_source_bonus` 和 `four_source_bonus` 默认分别为 `2`、`4`。CSV、JSON 和网页详情同时输出原始/保护后标准差、实际扣分、覆盖加分及被保护的来源。所有调整都应提交配置变更并记录理由。
-
-## 测试
-
-测试只用 Python 标准库：
+## 验证
 
 ```bash
 PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-标准库自检和示例运行无需额外依赖：
-
-```bash
-PYTHONPATH=src python3 -m relayrank rank --config examples/config.toml --input examples/rankings.csv
-```
-
-## 下一步
-
-当前版本已经具备四站实时抓取与可解释聚合。后续适合增加：定时任务、供应商身份人工审核、异常变动告警，以及按 Claude/Codex/Gemini 使用场景分别排名。不要在抓取器中绕过网站服务条款或访问控制。
+测试包括 2026-09-30 的四站公共快照（gzip 压缩，哈希与来源见 `tests/fixtures/provenance.json`），以及合成的字段缺失、零值、非法值、结构变化、分页漂移、相关来源、单调性、时间衰减、固定候选区间和空榜发布场景。公共快照不代表之后的页面永远兼容；解析契约失效时停止发布并保留诊断。
