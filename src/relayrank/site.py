@@ -18,7 +18,7 @@ SOURCE_LABELS = {
 }
 SOURCE_URLS = {
     "helpaio": "https://www.helpaio.com/transit",
-    "zhaotutu": "https://zhaotutu.ai/",
+    "zhaotutu": "https://api.zhaotutu.ai/",
     "apiranking": "https://apiranking.com/",
     "tokhub": "https://www.tokhub.me/",
 }

@@ -32,9 +32,17 @@ class SourceReport:
     error: str = ""
 
 
+class LiveCollectionError(RuntimeError):
+    """Collection failed, with source diagnostics available for archiving."""
+
+    def __init__(self, message: str, reports: list[SourceReport]) -> None:
+        super().__init__(message)
+        self.reports = reports
+
+
 LIVE_SOURCES = (
     LiveSource("helpaio", "https://www.helpaio.com/transit", 0.90, parse_helpaio),
-    LiveSource("zhaotutu", "https://zhaotutu.ai/", 0.85, parse_zhaotutu),
+    LiveSource("zhaotutu", "https://api.zhaotutu.ai/", 0.85, parse_zhaotutu),
     LiveSource("apiranking", "https://apiranking.com/", 0.70, parse_apiranking),
     LiveSource("tokhub", "https://www.tokhub.me/api/public/channels", 0.90, parse_tokhub),
 )
@@ -91,7 +99,7 @@ def collect_live(
     failures = [report for report in ordered_reports if not report.ok]
     if failures and not allow_partial:
         summary = "; ".join(f"{report.name}: {report.error}" for report in failures)
-        raise RuntimeError(f"live ranking aborted because all four sources are required: {summary}")
+        raise LiveCollectionError(f"live ranking aborted because all four sources are required: {summary}", ordered_reports)
     if len(sources) < 2:
-        raise RuntimeError("live ranking needs at least two successfully parsed independent sources")
+        raise LiveCollectionError("live ranking needs at least two successfully parsed independent sources", ordered_reports)
     return observations, sources, ordered_reports

@@ -35,7 +35,7 @@ TokHub 是真实充值和调用探测项目，用于检查连通性、模型列�
 
 ### zhaotutu
 
-官网为 `https://zhaotutu.ai/`。用户保存的原始摘要包含 Duck Code 第 6（94.3）、SSSAiCode 93.4 等当时数据。榜单会动态扩容和变化，正式导入必须保存同一时刻的完整快照。
+测评榜单现为 `https://api.zhaotutu.ai/`（2026-09-30 核验，可解析 59 家商家）。原地址 `https://zhaotutu.ai/` 已改为产品首页，并链接至新测评地址。用户保存的原始摘要包含 Duck Code 第 6（94.3）、SSSAiCode 93.4 等当时数据。榜单会动态扩容和变化，正式导入必须保存同一时刻的完整快照。
 
 ### APIRanking
 

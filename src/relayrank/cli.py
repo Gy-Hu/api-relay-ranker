@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .engine import aggregate
 from .io import load_config, load_observations, write_csv, write_json
-from .live import collect_live
+from .live import LiveCollectionError, collect_live
 from .site import write_site
 
 
@@ -48,19 +48,26 @@ def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     config, sources, aliases = load_config(args.config)
     if args.command == "live":
-        observations, sources, reports = collect_live(
-            aliases=aliases,
-            snapshot_dir=args.snapshot_dir,
-            source_config=sources,
-            allow_partial=args.allow_partial,
-            timeout=args.timeout,
-        )
+        collection_error = None
+        try:
+            observations, sources, reports = collect_live(
+                aliases=aliases,
+                snapshot_dir=args.snapshot_dir,
+                source_config=sources,
+                allow_partial=args.allow_partial,
+                timeout=args.timeout,
+            )
+        except LiveCollectionError as error:
+            reports = error.reports
+            collection_error = error
         report_path = Path(args.source_report)
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(
             json.dumps([report.__dict__ for report in reports], ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
+        if collection_error is not None:
+            raise collection_error
         config = replace(config, as_of=date.today())
         results = [item for item in aggregate(observations, sources, config) if item.source_count >= args.min_sources]
         results = [replace(item, rank=index) for index, item in enumerate(results, 1)][: args.top]
