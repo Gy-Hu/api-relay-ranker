@@ -53,7 +53,7 @@ def parse_relaypick(body: bytes) -> list[Observation]:
             website_url=f"https://{domain}/", source_url=f"https://relaypick.com/station/{slug}",
             issues=tuple(issues),
             raw_evidence={key: row.get(key) for key in (
-                "rank", "slug", "status", "verdict", "supply_type", "uptime", "p50_ms", "computed_at")}
+                "rank", "slug", "status", "verdict", "supply_type", "uptime", "p50_ms", "computed_at", "online_since")}
             | {"rule_version": rule, "window": window},
         ))
     return observations

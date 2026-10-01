@@ -15,7 +15,8 @@ on:
         default: false
 
 permissions:
-  contents: read
+  # The build job commits data/domain_evidence.json (domain age/expiry cache) back to main.
+  contents: write
   pages: write
   id-token: write
 
@@ -26,7 +27,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -54,6 +55,20 @@ jobs:
           ${{ inputs.allow_partial && '--allow-partial' || '' }}
           --site-url https://gy-hu.github.io/api-relay-ranker/
           --og-image assets/relayrank-og.png
+
+      - name: Persist domain evidence cache
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          if git diff --quiet -- data/domain_evidence.json; then
+            echo "Domain evidence unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/domain_evidence.json
+          git commit -m "Update domain evidence cache"
+          # A concurrent push only delays the cache by a day; never fail the deployment over it.
+          git pull --rebase origin main && git push origin HEAD:main || echo "::warning::Could not push domain evidence cache"
 
       - name: Summarize source coverage
         if: always()

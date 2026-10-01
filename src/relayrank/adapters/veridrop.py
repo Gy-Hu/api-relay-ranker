@@ -120,6 +120,7 @@ def build_observation(domain: str, reports: dict[str, list[Report]], unavailable
     for _, r in recent:
         verdicts[r.verdict] = verdicts.get(r.verdict, 0) + 1
     hosts = sorted(reports)
+    earliest = min((r.day for rows in reports.values() for r in rows), default=None)
     if not valid:
         issues.append("no_valid_reports_in_window")
     return Observation(
@@ -132,6 +133,8 @@ def build_observation(domain: str, reports: dict[str, list[Report]], unavailable
         raw_evidence={
             "window": {"from": start.isoformat(), "to": as_of.isoformat()},
             "hosts": hosts, "verdict_counts": verdicts,
+            # Earliest report on any fetched page (paging stops at the window, so this only ever moves earlier).
+            "earliest_report_seen": earliest.isoformat() if earliest else None,
             "protocol_medians": medians,
             "protocol_counts": {p: len(v) for p, v in sorted(by_protocol.items())},
             "reports": [{"host": host, "date": r.day.isoformat(), "protocol": r.protocol, "model": r.model,

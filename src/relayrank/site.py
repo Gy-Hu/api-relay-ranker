@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .live import SOURCES
+from .longevity import EVIDENCE_LABELS, VendorAge
 from .models import Config, Ranking, Source
 
 INFO = {info.name: info for info in SOURCES}
@@ -74,7 +75,7 @@ def _source_cards(contributions: Iterable[dict[str, Any]]) -> str:
         title = f'P{item["percentile"]:.0f}' if scored else "未计分"
         bits = []
         if item.get("raw_score") is not None:
-            bits.append(f'原站分 {item["raw_score"]:g}')
+            bits.append(f'原站分 {round(item["raw_score"], 1):g}')
         bits.append(f'日期 {item.get("observed_at") or "未知"}')
         if item.get("sample_count") is not None:
             bits.append(f'有效样本 {item["sample_count"]}')
@@ -88,26 +89,63 @@ def _source_cards(contributions: Iterable[dict[str, Any]]) -> str:
     return "".join(cards)
 
 
-def _ranking_rows(ranking: Ranking, top: int) -> str:
-    rows = []
-    for item in ranking.results[:top]:
+def _age_text(age: VendorAge | None) -> str:
+    if age is None or age.operating_days is None:
+        return "运营时间未知"
+    return f"运营 ≥ {age.operating_days} 天"
+
+
+def _age_stats(age: VendorAge | None) -> str:
+    if age is None or age.service_start is None:
+        return "<span>最早运营证据 <strong>暂无</strong></span>"
+    parts = [f'<span>最早运营证据 <strong>{_escape(age.service_start.isoformat())}</strong>'
+             f'（{_escape(EVIDENCE_LABELS[age.basis])} · {_escape(age.basis_domain)}）</span>']
+    for domain, expires in age.expiring:
+        parts.append(f'<span class="age-warning">{_escape(domain)} 将于 {_escape(expires)} 到期</span>')
+    if age.reused_domains:
+        parts.append(f'<span class="age-warning">{_escape("、".join(age.reused_domains))} 曾属他人：该域名自身的证书/存档不计</span>')
+    return "".join(parts)
+
+
+def _ranking_rows(ranking: Ranking, top: int, ages: dict[str, VendorAge], min_days: int) -> tuple[str, int]:
+    """Cards until ``top`` vendors meet the operating-age bar; younger ones in between are hidden by default."""
+    rows, shown, hidden = [], 0, 0
+    for item in ranking.results:
+        if shown >= top:
+            break
+        age = ages.get(item.vendor)
+        mature = age is not None and age.mature(min_days)
+        shown += mature
+        hidden += not mature
         risk = any(i.startswith("source_status:") or i == "source_zero_availability_requires_verification" for i in item.issues)
-        label = "有风险信号" if risk else f"{item.source_count} 源交叉"
+        label = "有风险信号" if risk else (f"{item.source_count} 源交叉" if mature else f"运营不足 {min_days} 天")
         vendor = _link(item.website_url, item.vendor, "vendor-link") if item.website_url else f"<strong>{_escape(item.vendor)}</strong>"
         coverage = ('<span>移除任一来源组后将不足入榜门槛</span>' if item.coverage_loss_groups else "")
         rows.append(
-            '<article class="rank-card"><details><summary>'
+            f'<article class="rank-card{"" if mature else " rank-card--young"}"><details><summary>'
             f'<span class="position">{item.rank:02d}</span>'
-            f'<span class="vendor">{vendor}<small>{_escape(" · ".join(item.domains))}</small></span>'
-            f'<span class="badge badge--{"candidate" if risk else "high"}">{label}</span>'
+            f'<span class="vendor">{vendor}<small>{_escape(_age_text(age))} · {_escape(" · ".join(item.domains))}</small></span>'
+            f'<span class="badge badge--{"high" if mature and not risk else "candidate"}">{label}</span>'
             f'<span class="score"><strong>{item.score:.1f}</strong><small>综合分</small></span>'
             '<span class="chevron" aria-hidden="true">＋</span></summary><div class="detail-body"><div class="detail-stats">'
             f'<span>有效权重 <strong>{item.effective_weight:.2f}</strong></span>'
             f'<span>来源分歧 σ <strong>{item.score_stddev:.1f}</strong> 百分位</span>'
             f'<span>移除一个来源组后的名次 <strong>{item.rank_best}–{item.rank_worst}</strong></span>'
-            f'{coverage}</div><div class="source-grid">{_source_cards(item.contributions)}</div></div></details></article>'
+            f'{_age_stats(age)}{coverage}</div><div class="source-grid">{_source_cards(item.contributions)}</div></div></details></article>'
         )
-    return "".join(rows) or '<p class="warning">当前没有商家满足入榜所需的独立来源数量。请查看来源状态与原始观测；本次不沿用旧榜单。</p>'
+    html_rows = "".join(rows) or '<p class="warning">当前没有商家满足入榜所需的独立来源数量。请查看来源状态与原始观测；本次不沿用旧榜单。</p>'
+    return html_rows, hidden
+
+
+def _excluded_rows(ranking: Ranking, ages: dict[str, VendorAge]) -> str:
+    if not ranking.excluded:
+        return ""
+    items = []
+    for vendor, reason in sorted(ranking.excluded.items()):
+        age = ages.get(vendor)
+        detail = "域名已过期（过期日后复查仍未续费）：" + "、".join(age.expired_domains) if age and age.expired_domains else reason
+        items.append(f"<li><strong>{_escape(vendor)}</strong> · {_escape(detail)}</li>")
+    return f'<section class="panel excluded"><h2>未入榜（硬规则）</h2><ul class="method">{"".join(items)}</ul></section>'
 
 
 def _source_rows(reports: list[dict[str, Any]], sources: dict[str, Source], ranking: Ranking) -> str:
@@ -130,7 +168,8 @@ def _source_rows(reports: list[dict[str, Any]], sources: dict[str, Source], rank
 
 
 def write_site(output_dir: str | Path, ranking: Ranking, reports: Iterable[Any], sources: dict[str, Source],
-               config: Config, generated_at: str, top: int = 20, min_sources: int = 2,
+               config: Config, generated_at: str, ages: dict[str, VendorAge] | None = None,
+               min_operating_days: int = 90, top: int = 20, min_sources: int = 2,
                site_url: str = "", og_image: str | Path | None = None) -> Path:
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
@@ -144,7 +183,8 @@ def write_site(output_dir: str | Path, ranking: Ranking, reports: Iterable[Any],
         image_url = canonical_url + "og.png" if canonical_url else "og.png"
         og_markup = (f'<meta property="og:image" content="{_escape(image_url)}">'
                      '<meta name="twitter:card" content="summary_large_image">')
-    shown = min(top, len(ranking.results))
+    ages = ages or {}
+    rank_rows, hidden = _ranking_rows(ranking, top, ages, min_operating_days)
     document = f'''<!doctype html>
 <html lang="zh-Hans">
 <head>
@@ -192,6 +232,10 @@ def write_site(output_dir: str | Path, ranking: Ranking, reports: Iterable[Any],
     .source-card {{ min-height:102px; padding:12px; border:1px solid var(--line); border-radius:10px; display:flex; flex-direction:column; }}
     .source-link,.source-table-link {{ width:max-content; color:var(--muted); font-size:12px; text-decoration:none; }} .source-link:hover,.source-table-link:hover {{ color:var(--acid); text-decoration:underline; text-underline-offset:3px; }} .source-link span,.source-table-link span {{ margin-left:4px; }} .source-card strong {{ margin-top:5px; font:700 17px/1.2 ui-monospace,SFMono-Regular,monospace; }} .source-card small {{ margin-top:auto; font-size:11px; overflow-wrap:anywhere; }}
     .source-card--missing {{ opacity:.48; }}
+    .young-toggle {{ margin:0 8px 14px 0; accent-color:var(--acid); }} .young-toggle-label {{ color:var(--muted); font-size:13px; cursor:pointer; }}
+    .young-toggle:not(:checked) ~ .rank-list .rank-card--young {{ display:none; }}
+    .rank-card--young {{ border-style:dashed; }} .age-warning {{ color:var(--amber); }}
+    .excluded {{ margin-top:18px; }}
     .lower-grid {{ display:grid; grid-template-columns:1.25fr .75fr; gap:18px; margin-top:54px; }}
     .panel {{ padding:22px; background:var(--panel); border:1px solid var(--line); border-radius:16px; }} .panel h2 {{ margin-bottom:16px; }}
     table {{ width:100%; border-collapse:collapse; }} th,td {{ padding:11px 8px; border-bottom:1px solid var(--line); text-align:left; font-size:13px; }} th {{ color:var(--ink); }} td {{ color:var(--muted); }}
@@ -209,15 +253,18 @@ def write_site(output_dir: str | Path, ranking: Ranking, reports: Iterable[Any],
       <div class="eyebrow">Measured-source composite · v3</div>
       <h1>API 中转站<br>综合参考榜</h1>
       <p class="lede">汇总 {labels} 四个自有实测的榜单。商家按域名对齐；每个来源的分数先换算成该来源内的百分位，再按可靠性、新鲜度和样本量加权合成。缺测不记零，风险信号保留。</p>
-      <div class="meta-strip"><span>生成时间 <strong>{_escape(_timestamp(generated_at))}</strong></span><span>来源 <strong>{healthy}/{len(SOURCES)} 已解析</strong></span><span>入榜 <strong>{ranking.cohort_size} 家（至少 {min_sources} 个来源组）</strong></span></div>
+      <div class="meta-strip"><span>生成时间 <strong>{_escape(_timestamp(generated_at))}</strong></span><span>来源 <strong>{healthy}/{len(SOURCES)} 已解析</strong></span><span>入榜 <strong>{ranking.cohort_size} 家（至少 {min_sources} 个来源组）</strong></span><span>默认显示 <strong>运营 ≥ {min_operating_days} 天</strong></span></div>
     </div>
   </header>
   <main class="shell">
-    <div class="section-head"><h2>Top {shown}</h2><p>综合分 0–100：50 为各来源中位水平。展开查看每个来源的原站分、百分位 P、日期和样本。</p></div>
-    <section class="rank-list" aria-label="中转站综合排名">{_ranking_rows(ranking, top)}</section>
+    <div class="section-head"><h2>Top {top}（运营 ≥ {min_operating_days} 天）</h2><p>综合分 0–100：50 为各来源中位水平。名次是全部候选中的名次。展开查看每个来源的原站分、百分位 P、日期、样本和运营证据。</p></div>
+    <input type="checkbox" id="show-young" class="young-toggle"{" disabled" if not hidden else ""}>
+    <label for="show-young" class="young-toggle-label">同时显示运营不足 {min_operating_days} 天或运营时间未知的 {hidden} 家</label>
+    <section class="rank-list" aria-label="中转站综合排名">{rank_rows}</section>
+    {_excluded_rows(ranking, ages)}
     <div class="lower-grid">
       <section class="panel"><h2>来源</h2><table><thead><tr><th>来源</th><th>状态</th><th>有分/条目</th><th>可靠性 · 组</th><th>抓取时间</th></tr></thead><tbody>{_source_rows(report_dicts, sources, ranking)}</tbody></table></section>
-      <section class="panel"><h2>计算方法</h2><ol class="method"><li>各来源只取其综合分一次，换算为该来源全部可计分商家内的百分位。</li><li>权重 = 来源可靠性 × 0.5^(天数/{config.half_life_days:g})；超过 {config.max_age_days} 天退出；日期未知乘 {config.unknown_date_weight:g}；有样本数的来源再乘 n/(n+{config.sample_prior:g})。</li><li>综合分 = (Σ权重×百分位 + {config.prior_strength:g}×{config.prior_score:g}) / (Σ权重 + {config.prior_strength:g})，证据少的商家向中位收缩。</li><li>同一数据血缘的来源合计至多一票；移除整个来源组重排得到名次区间。</li></ol></section>
+      <section class="panel"><h2>计算方法</h2><ol class="method"><li>各来源只取其综合分一次，换算为该来源全部可计分商家内的百分位。</li><li>权重 = 来源可靠性 × 0.5^(天数/{config.half_life_days:g})；超过 {config.max_age_days} 天退出；日期未知乘 {config.unknown_date_weight:g}；有样本数的来源再乘 n/(n+{config.sample_prior:g})。</li><li>综合分 = (Σ权重×百分位 + {config.prior_strength:g}×{config.prior_score:g}) / (Σ权重 + {config.prior_strength:g})，证据少的商家向中位收缩。</li><li>同一数据血缘的来源合计至多一票；移除整个来源组重排得到名次区间。</li><li>运营天数取最早的中转相关证据：HelpAIO 收录、Veridrop 首份报告、本站首次收录；证书、Wayback 存档和 RelayPick 上线日期早于域名注册日的视为前任域名主人，丢弃；域名曾属他人时，它自身的证书和存档全部不用。不计入综合分，只用于默认隐藏运营不足 {min_operating_days} 天的站。</li><li>商家的全部已知域名都已过期（过期日后复查仍未续费）时不进榜。</li></ol></section>
     </div>
     <aside class="warning"><strong>说明：</strong>各来源测量对象不同（可用率、价格、真伪报告），综合分是相对排序参考，不是可用性承诺。Veridrop 报告由社区触发，样本分布不均匀；RelayPick 多数站点未做真伪抽样。</aside>
   </main>

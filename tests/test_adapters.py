@@ -24,6 +24,7 @@ class AdapterTests(unittest.TestCase):
         micu = rows["Micu"]
         self.assertEqual((micu.score, micu.domain, micu.observed_at), (79.49, "www.micuapi.ai", date(2026, 10, 1)))
         self.assertEqual(micu.raw_evidence["uptime3d"], 93.59)
+        self.assertEqual(micu.raw_evidence["listed_days"], 257)
         self.assertEqual(rows["Duck Code"].state, "missing")
         self.assertIsNone(rows["Duck Code"].score)
         self.assertEqual(rows["Yunwu"].score, 0)

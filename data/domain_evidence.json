@@ -1,0 +1,2595 @@
+{
+ "schema_version": 1,
+ "domains": {
+  "050602.xyz": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-14",
+    "expires": "2028-11-14",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-14",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "1xm.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-16",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-06",
+    "expires": "2028-03-06",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "36niu.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-21",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-25",
+    "expires": "2027-07-25",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-25",
+    "first": null,
+    "first_any": "2012-05-21"
+   }
+  },
+  "4router.net": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-08-30",
+   "veridrop_report": "2026-05-26",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-02-08",
+    "expires": "2027-02-08",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-02-08",
+    "first": "2026-04-04",
+    "first_any": "2026-04-04"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "78code.cc": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-05-06",
+   "veridrop_report": "2026-05-15",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-28",
+    "expires": "2030-01-28",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-28",
+    "first": "2026-01-28",
+    "first_any": "2026-01-28"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-28",
+    "first": "2026-08-05",
+    "first_any": "2026-08-05"
+   }
+  },
+  "88code.org": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-22",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-09-18",
+    "expires": "2027-09-18",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-18",
+    "first": "2025-09-19",
+    "first_any": "2017-05-11"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-18",
+    "first": "2025-09-18",
+    "first_any": "2016-11-03"
+   }
+  },
+  "9527.codes": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2025-10-20",
+   "veridrop_report": "2026-07-28",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-27",
+    "expires": "2027-07-27",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-27",
+    "first": "2026-07-27",
+    "first_any": "2026-07-27"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "9527code.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-18",
+    "expires": "2028-03-18",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "a6api.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-22",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-26",
+    "expires": "2027-04-26",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-26",
+    "first": "2026-06-22",
+    "first_any": "2026-06-22"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-26",
+    "first": "2026-05-17",
+    "first_any": "2026-05-17"
+   }
+  },
+  "agentrouter.org": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-13",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-09-04",
+    "expires": "2027-09-04",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-04",
+    "first": "2025-09-17",
+    "first_any": "2025-09-17"
+   }
+  },
+  "ai-router.dev": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-04",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-30",
+    "expires": "2027-04-30",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-30",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "aiapi.world": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-04",
+    "expires": "2027-03-04",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "aiapify.com": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-07",
+    "expires": "2027-04-07",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-07",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "aigcbest.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-08-17",
+    "expires": "2027-08-17",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+   }
+  },
+  "aipaibox.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-11",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-19",
+    "expires": "2026-11-19",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2025-11-19",
+    "first_any": "2025-11-19"
+   }
+  },
+  "aixor.org": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-13",
+    "expires": "2027-03-13",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2021-02-20",
+    "first_any": "2021-02-20"
+   }
+  },
+  "aixoras.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-11",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-02-18",
+    "expires": "2027-02-18",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2025-06-19",
+    "first_any": "2025-06-19"
+   }
+  },
+  "aiyahmm.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-20",
+    "first": "2026-05-12",
+    "first_any": "2026-05-12"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-20",
+    "expires": "2027-01-20",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "anpin.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-18",
+    "expires": "2028-04-18",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-18",
+    "first": "2026-04-21",
+    "first_any": "2026-04-21"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-18",
+    "first_any": "2026-04-18"
+   }
+  },
+  "api2cn.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-29",
+    "expires": "2027-04-29",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2023-06-27",
+    "first_any": "2023-06-27"
+   }
+  },
+  "apiddt.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-04",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-23",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-23",
+    "expires": "2027-06-23",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "apilio.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-24",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-08-22",
+    "expires": "2027-08-22",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-08-22",
+    "first": null,
+    "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2025-09-04",
+    "first_any": "2025-09-04"
+   }
+  },
+  "apinebula.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-07-26",
+   "veridrop_report": "2026-07-26",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-23",
+    "expires": "2028-07-23",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-07-23",
+    "first_any": "2026-07-23"
+   }
+  },
+  "apinebula.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-15",
+    "expires": "2027-04-15",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-15",
+    "first_any": "2026-04-15"
+   }
+  },
+  "apiok.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-09-06",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-03",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-03",
+    "expires": "2027-05-03",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   }
+  },
+  "apiplus.cloud": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-03",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-03",
+    "expires": "2027-03-03",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "apiporter.com": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2026-04-01",
+   "veridrop_report": "2026-06-30",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-31",
+    "expires": "2027-03-31",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "apiyi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-06-09",
+    "expires": "2027-06-09",
+    "status": []
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "autorouter.io": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-08",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   }
+  },
+  "avemujica.moe": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-07-30",
+    "expires": "2027-07-30",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2024-07-30",
+    "first": "2024-07-30",
+    "first_any": "2024-07-30"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "beankeji.com": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2021-10-19",
+    "expires": "2031-10-19",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2021-10-19",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "bearlab.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-25",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-13",
+    "expires": "2028-06-13",
+    "status": []
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-06-13",
+    "first_any": "2026-06-13"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "bestswifter.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-26",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2015-12-15",
+    "expires": "2030-12-15",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2015-12-15",
+    "first": "2016-01-09",
+    "first_any": "2016-01-09"
+   }
+  },
+  "bobdong.cn": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-05",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2016-06-21",
+    "first_any": "2016-06-21"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   }
+  },
+  "buzzai.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-07",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-06",
+    "expires": "2028-03-06",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "bytecatcode.org": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-06-13",
+   "veridrop_report": "2026-05-16",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-26",
+    "expires": "2027-01-26",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-26",
+    "first": "2026-01-27",
+    "first_any": "2026-01-27"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-01-26",
+    "first_any": "2026-01-26"
+   }
+  },
+  "bytonsec.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2022-10-08",
+    "first": "2024-11-13",
+    "first_any": "2024-11-13"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2022-10-08",
+    "expires": "2027-10-08",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "callxyq.xyz": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-09-06",
+    "expires": "2027-09-06",
+    "status": [
+     "active",
+     "auto renew period"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-06",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "cctq.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-04-05",
+   "veridrop_report": "2026-05-17",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-29",
+    "expires": "2028-04-29",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-29",
+    "first": "2026-08-05",
+    "first_any": "2026-08-05"
+   }
+  },
+  "chaiai.cc": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-16",
+    "expires": "2027-08-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "chintao.ai": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-04",
+    "expires": "2028-08-04",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-04",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "chintao.cn": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2026-03-01",
+   "veridrop_report": "2026-06-07",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-03-27",
+    "first_any": "2026-03-27"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   }
+  },
+  "clauddy.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-14",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-08-15",
+    "expires": "2027-08-15",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "claudeapi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-16",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-07-16",
+    "expires": "2029-07-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "claudecn.ai": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-09",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-09",
+    "expires": "2028-05-09",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "claudecn.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-24",
+    "expires": "2026-11-24",
+    "status": []
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2025-11-24",
+    "first_any": "2025-11-24"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "coderelay.cn": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-02",
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-18",
+    "first_any": "2026-04-18"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": null,
+    "first_any": null
+   }
+  },
+  "comeu.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-04",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-17",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-17",
+    "expires": "2028-01-17",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "cpass.cc": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-12-23",
+   "veridrop_report": "2026-06-22",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-02",
+    "expires": "2026-11-02",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-02",
+    "first": "2025-12-31",
+    "first_any": "2021-11-30"
+   }
+  },
+  "cubence.com": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-22",
+   "veridrop_report": "2026-05-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-10-06",
+    "expires": "2027-10-06",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "cun.ai": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2026-06-09",
+   "veridrop_report": "2026-07-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-04-04",
+    "expires": "2029-04-04",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-04",
+    "first": "2023-06-28",
+    "first_any": "2021-11-30"
+   }
+  },
+  "daodunapi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-05",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-28",
+    "first_any": "2026-04-28"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+   }
+  },
+  "datasea.fun": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-29",
+    "expires": "2027-04-29",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-29",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "dawclaudecode.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-18",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-10-08",
+    "expires": "2027-10-08",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-08",
+    "first": "2026-02-19",
+    "first_any": "2026-02-19"
+   }
+  },
+  "deepkey.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-26",
+    "expires": "2036-01-26",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-26",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "digitalcats.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-09-13",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-09-11",
+    "expires": "2027-09-11",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "duckcoding.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-22",
+   "veridrop_report": "2026-06-05",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-02-25",
+    "expires": "2028-02-25",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-02-25",
+    "first": "2026-03-06",
+    "first_any": "2026-03-06"
+   }
+  },
+  "duckcoding.com": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-09-06",
+    "expires": "2027-09-06",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "duiapi.com": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2026-06-07",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-02",
+    "expires": "2027-06-02",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "eirouter.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-22",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-21",
+    "expires": "2027-06-21",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-21",
+    "first": "2026-06-27",
+    "first_any": "2026-06-27"
+   }
+  },
+  "ekti.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-12",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-09-10",
+    "expires": "2027-09-10",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "fengchao-api.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-09-03",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-30",
+    "expires": "2027-08-30",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-30",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "flashapi.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-15",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-13",
+    "expires": "2027-03-13",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-13",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06"
+   }
+  },
+  "ggwk1.online": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-23",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-06-28",
+    "expires": "2027-06-28",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2024-06-28",
+    "first": "2024-09-04",
+    "first_any": "2024-09-04"
+   }
+  },
+  "gpt.ge": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-07",
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-06-26",
+    "first_any": "2026-06-26"
+   }
+  },
+  "hao.ai": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2026-03-01",
+   "veridrop_report": "2026-06-09",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2017-12-16",
+    "expires": "2028-12-04",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2017-12-16",
+    "first": "2018-04-20",
+    "first_any": "2015-03-29"
+   }
+  },
+  "hongmacc.com": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-01-31",
+   "veridrop_report": "2026-06-09",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-12-29",
+    "expires": "2026-12-29",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "honoursoft.cn": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-04",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   }
+  },
+  "hyperapi.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-12",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-28",
+    "first": "2026-05-20",
+    "first_any": "2026-05-20"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-28",
+    "expires": "2027-03-28",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "ikuncode.cc": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-27",
+   "veridrop_report": "2026-05-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-08-24",
+    "expires": "2027-08-24",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-08-24",
+    "first": "2025-12-11",
+    "first_any": "2025-12-11"
+   }
+  },
+  "jiekou.ai": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-06-09",
+    "expires": "2027-06-09",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-06-09",
+    "first": "2025-10-18",
+    "first_any": "2025-10-18"
+   }
+  },
+  "juxingai.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-08",
+    "expires": "2027-05-08",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-08",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "juxingai.xyz": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-25",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-25",
+    "expires": "2027-07-25",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "kelaiapi.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-22",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-12",
+    "expires": "2027-03-12",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "kfcv50.link": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-07-16",
+    "expires": "2027-07-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "kksj.org": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-10",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-03-09",
+    "expires": "2028-03-09",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "kuaipao.pro": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-21",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-22",
+    "expires": "2027-04-22",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "leverai.net": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-16",
+    "expires": "2027-08-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-16",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "lingsuan.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-26",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-15",
+    "expires": "2031-05-15",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "linkapi.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-16",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-10-11",
+    "expires": "2027-10-11",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-11",
+    "first": "2026-03-27",
+    "first_any": "2026-03-27"
+   }
+  },
+  "linkuai.net": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-08",
+    "expires": "2027-05-08",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "lmuai.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-20",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-12",
+    "expires": "2028-06-12",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-12",
+    "first": null,
+    "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "lmyanyu.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-28",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-12",
+    "expires": "2027-07-12",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "logitstoken.com": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-08",
+    "expires": "2027-08-08",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-08",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "luminai.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-04",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-05",
+    "expires": "2027-04-05",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "magic666.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-27",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-07-29",
+    "expires": "2031-07-29",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "micuapi.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-01-17",
+   "veridrop_report": "2026-05-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-07",
+    "expires": "2028-05-07",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-07",
+    "first": "2026-05-21",
+    "first_any": "2026-05-21"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "modcon.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-26",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-17",
+    "expires": "2027-05-17",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-17",
+    "first": null,
+    "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "modelflare.dev": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-15",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-16",
+    "expires": "2027-06-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-16",
+    "first": "2026-07-17",
+    "first_any": "2026-07-17"
+   }
+  },
+  "modelsell.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-24",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-13",
+    "expires": "2027-05-13",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-13",
+    "first": "2026-05-14",
+    "first_any": "2010-06-27"
+   }
+  },
+  "moeapi.cloud": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-18",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-18",
+    "expires": "2027-07-18",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-18",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "mxdapi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-09-04",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-28",
+    "expires": "2027-08-28",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-28",
+    "first": null,
+    "first_any": "2013-08-19"
+   }
+  },
+  "mxyhi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-10",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-02-13",
+    "expires": "2027-02-13",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "mxzzz.xyz": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-06",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-13",
+    "expires": "2027-06-13",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-13",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "mzlone.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-04",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-27",
+    "expires": "2026-11-27",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-27",
+    "first": "2026-01-06",
+    "first_any": "2026-01-06"
+   }
+  },
+  "nbility.dev": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-18",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-18",
+    "expires": "2027-03-18",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-18",
+    "first": "2026-04-14",
+    "first_any": "2026-04-14"
+   }
+  },
+  "nekoapi.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2023-08-01",
+    "first": "2023-10-19",
+    "first_any": "2023-10-19"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-08-01",
+    "expires": "2027-08-01",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "nekocode.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-02-06",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-16",
+    "expires": "2028-01-16",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-16",
+    "first": "2026-04-20",
+    "first_any": "2026-04-20"
+   }
+  },
+  "niccom.com.cn": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": null,
+    "first_any": null
+   }
+  },
+  "niu-niu.de": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2013-05-11",
+    "first_any": "2013-05-11"
+   }
+  },
+  "ogog.ai": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-10-27",
+    "expires": "2030-10-27",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2024-10-27",
+    "first": "2024-11-16",
+    "first_any": "2024-11-16"
+   }
+  },
+  "onliqiu.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-25",
+    "expires": "2027-08-25",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "openai-ch.top": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2024-02-16",
+    "first": "2024-05-16",
+    "first_any": "2024-05-16"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-02-16",
+    "expires": "2027-02-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "openai-labs.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-06",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2024-10-14",
+    "first": "2024-12-18",
+    "first_any": "2024-12-18"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-10-14",
+    "expires": "2027-10-14",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "openclawroot.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-07",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-17",
+    "expires": "2027-03-17",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "openllm.shop": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-29",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-02",
+    "expires": "2027-04-02",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-02",
+    "first": "2026-04-21",
+    "first_any": "2026-04-21"
+   }
+  },
+  "packyapi.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-20",
+   "veridrop_report": "2026-07-25",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-22",
+    "expires": "2028-05-22",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-22",
+    "first": "2026-07-28",
+    "first_any": "2026-07-28"
+   }
+  },
+  "packyapi.com": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2025-01-01",
+   "veridrop_report": "2026-05-09",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-10-17",
+    "expires": "2027-10-17",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-17",
+    "first": "2025-10-30",
+    "first_any": "2025-10-30"
+   }
+  },
+  "portdan.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-06-24",
+    "expires": "2027-06-24",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-24",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "privnode.com": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-07-01",
+    "expires": "2027-07-01",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "qiuqiutoken.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-23",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-04",
+    "expires": "2027-04-04",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-04",
+    "first": "2026-05-21",
+    "first_any": "2026-05-21"
+   }
+  },
+  "rcouyi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-12",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-07",
+    "first": "2023-12-15",
+    "first_any": "2023-12-15"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-04-07",
+    "expires": "2027-04-07",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "right.codes": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-09",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-10-11",
+    "expires": "2026-10-11",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "rightapi.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-12-17",
+   "veridrop_report": "2026-07-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-23",
+    "expires": "2028-07-23",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-23",
+    "first": "2026-07-28",
+    "first_any": "2026-07-28"
+   }
+  },
+  "rly0.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-16",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-16",
+    "expires": "2027-08-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "ruoli.dev": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-23",
+    "expires": "2026-11-23",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "sbgpt.site": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2024-12-25",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-12-25",
+    "expires": "2026-12-25",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   }
+  },
+  "shimaiapi.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-02",
+    "expires": "2027-04-02",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "smai.ai": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-12-02",
+    "expires": "2027-12-02",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "sparkcode.top": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-04",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-11-17",
+    "expires": "2026-11-17",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "sssaicode.com": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-02-27",
+   "veridrop_report": "2026-06-03",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-07-03",
+    "expires": "2027-07-03",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "storeapi.one": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-09-16",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-21",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-21",
+    "expires": "2027-03-21",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "suanniao.shop": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-09",
+    "expires": "2027-05-09",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-09",
+    "first": null,
+    "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "sudocode.chat": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2026-05-01",
+   "veridrop_report": "2026-05-30",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-28",
+    "expires": "2028-04-28",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "timicc.com": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2026-03-15",
+   "veridrop_report": "2026-05-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-06",
+    "expires": "2027-01-06",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "tken.lol": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-05",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-08-05",
+    "expires": "2027-08-05",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "tocodex.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-26",
+    "first": "2026-09-28",
+    "first_any": "2021-12-27"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-26",
+    "expires": "2027-03-26",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "tokavia.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-07-17",
+    "expires": "2027-07-17",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "token8341.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-01",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-01",
+    "expires": "2029-05-01",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "tokentaken.org": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-02",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-04-30",
+    "expires": "2027-04-30",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "tongapi.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-12",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-06",
+    "expires": "2027-05-06",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-06",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "umiluxury.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-16",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-02-17",
+    "expires": "2027-02-17",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2025-02-17",
+    "first": "2025-07-10",
+    "first_any": "2025-07-10"
+   }
+  },
+  "undyingapi.com": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-12-10",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-08-15",
+    "expires": "2026-08-15",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "unity2.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-14",
+    "expires": "2028-03-14",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "v3.cm": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-06",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-04-01",
+    "expires": "2027-04-01",
+    "status": [
+     "DS automation disabled",
+     "NS automation disabled",
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-01",
+    "first": "2023-11-02",
+    "first_any": "2009-10-31"
+   }
+  },
+  "xag-api.com": {
+   "first_seen": "2026-10-01",
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-09-16",
+    "expires": "2027-09-16",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "xcode.best": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-27",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-29",
+    "expires": "2028-01-29",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-29",
+    "first": "2026-02-27",
+    "first_any": "2022-01-01"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
+   }
+  },
+  "xiamiapi.xyz": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-29",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-29",
+    "first": "2026-04-15",
+    "first_any": "2026-04-15"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-29",
+    "expires": "2027-03-29",
+    "status": [
+     "active"
+    ]
+   }
+  },
+  "xiaojingai.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-09-18",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-09-20",
+    "expires": "2028-09-20",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "xiaoma.best": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-10",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-03-11",
+    "expires": "2027-03-11",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "xjai.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-04-24",
+    "expires": "2027-04-24",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "xpluse.plus": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-05-29",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-10-29",
+    "expires": "2026-10-29",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "xyc.ai": {
+   "first_seen": "2026-10-01",
+   "relaypick_online": "2025-11-04",
+   "veridrop_report": "2026-06-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-01-25",
+    "expires": "2029-01-25",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "xyusec.com": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-07-16",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2025-06-22",
+    "expires": "2027-06-22",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "yes.vg": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-22",
+   "veridrop_report": "2026-05-14",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-05-07",
+    "expires": "2036-05-07",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  },
+  "yescode.cloud": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-05",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-01-12",
+    "expires": "2027-01-12",
+    "status": [
+     "active"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-12",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "ykh.ai": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-12",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-25",
+    "first": null,
+    "first_any": null
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2026-05-25",
+    "expires": "2028-05-25",
+    "status": [
+     "client transfer prohibited"
+    ]
+   }
+  },
+  "yourapi.cn": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-08-31",
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2025-06-14",
+    "first_any": "2025-06-14"
+   },
+   "rdap": {
+    "checked": "2026-10-01",
+    "error": "no_rdap"
+   }
+  },
+  "yunwu.ai": {
+   "first_seen": "2026-10-01",
+   "helpaio_listed": "2025-11-23",
+   "relaypick_online": "2023-01-01",
+   "veridrop_report": "2026-05-09",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2024-12-03",
+    "expires": "2026-12-03",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "HTTP 503"
+   }
+  },
+  "zen-ai.top": {
+   "first_seen": "2026-10-01",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-10-26",
+    "expires": "2035-10-26",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "basis": "2023-10-26",
+    "first": "2023-12-25",
+    "first_any": "2023-12-25"
+   }
+  },
+  "zicc.cc": {
+   "first_seen": "2026-10-01",
+   "veridrop_report": "2026-06-08",
+   "rdap": {
+    "checked": "2026-10-01",
+    "registered": "2023-05-01",
+    "expires": "2034-05-01",
+    "status": []
+   },
+   "wayback": {
+    "checked": "2026-10-01",
+    "error": "The read operation timed out"
+   }
+  }
+ }
+}

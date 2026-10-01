@@ -11,7 +11,7 @@ from __future__ import annotations
 import math
 from bisect import bisect_left, bisect_right
 from collections import defaultdict
-from typing import Any
+from typing import Any, Mapping
 
 from .models import Config, Observation, RankedVendor, Ranking, Source
 
@@ -48,7 +48,13 @@ def percentiles(scores: dict[str, float]) -> dict[str, float]:
 
 
 def aggregate(observations: list[Observation], sources: dict[str, Source], config: Config,
-              min_sources: int | None = None) -> Ranking:
+              min_sources: int | None = None, excluded: Mapping[str, str] | None = None) -> Ranking:
+    """``excluded`` maps vendor -> reason for hard-rule removals (e.g. expired domain).
+
+    Excluded vendors leave the cohort but stay in every source's percentile basis, so removing
+    one never changes another vendor's score.
+    """
+    excluded = excluded or {}
     min_sources = config.minimum_sources if min_sources is None else min_sources
     if min_sources < 1:
         raise ValueError("min_sources must be positive")
@@ -99,7 +105,7 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
         return {g for g, w in totals.items() if w >= config.coverage_weight}
 
     coverage = {v: covering(entries) for v, entries in by_vendor.items()}
-    cohort = {v for v, groups in coverage.items() if len(groups) >= min_sources}
+    cohort = {v for v, groups in coverage.items() if len(groups) >= min_sources and v not in excluded}
 
     # Sources in one lineage group share at most one source's weight per vendor.
     for vendor in cohort:
@@ -112,8 +118,8 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
             for e in entries:
                 e["weight"] *= scale
 
-    def calculate(vendor: str, excluded: str | None = None) -> tuple[float, float, float]:
-        entries = [e for e in by_vendor[vendor] if e["weight"] > 0 and e["group"] != excluded]
+    def calculate(vendor: str, dropped_group: str | None = None) -> tuple[float, float, float]:
+        entries = [e for e in by_vendor[vendor] if e["weight"] > 0 and e["group"] != dropped_group]
         weight = sum(e["weight"] for e in entries)
         total = sum(e["percentile"] * e["weight"] for e in entries)
         denominator = weight + config.prior_strength
@@ -128,8 +134,8 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
     groups_present = sorted({e["group"] for v in cohort for e in by_vendor[v] if e["weight"] > 0})
     if len(groups_present) > 1:
         # Remove one whole lineage group, keep the same cohort, and re-rank.
-        for excluded in groups_present:
-            subset = sorted(cohort, key=lambda v: (-calculate(v, excluded)[0], v.casefold()))
+        for dropped_group in groups_present:
+            subset = sorted(cohort, key=lambda v: (-calculate(v, dropped_group)[0], v.casefold()))
             for rank, vendor in enumerate(subset, 1):
                 ranges[vendor].append(rank)
 
@@ -151,10 +157,11 @@ def aggregate(observations: list[Observation], sources: dict[str, Source], confi
 
     evaluations = {}
     for vendor, entries in by_vendor.items():
-        status = "ranked" if vendor in cohort else "insufficient_sources"
+        status = "ranked" if vendor in cohort else ("excluded" if vendor in excluded else "insufficient_sources")
         for e in entries:
             evaluations[(e["source"], vendor)] = {
                 "weight": e["weight"], "quality": e["quality"], "percentile": e["percentile"],
-                "group": e["group"], "vendor_status": status,
+                "group": e["group"], "vendor_status": status, "excluded_reason": excluded.get(vendor),
             }
-    return Ranking(results, evaluations, len(cohort), tuple(sorted(scoring)), thin_sources)
+    return Ranking(results, evaluations, len(cohort), tuple(sorted(scoring)), thin_sources,
+                   {v: r for v, r in excluded.items() if v in by_vendor})

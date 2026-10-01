@@ -42,6 +42,10 @@ def parse_helpaio(body: bytes) -> list[Observation]:
         issues = []
         score = None
         raw = {"rank": rank, "total": len(rankings)}
+        # "已收 N 天": how long HelpAIO has tracked this vendor; operating-age evidence.
+        listed = re.search(r"已收\s*(\d+)\s*天", card.text())
+        if listed:
+            raw["listed_days"] = int(listed[1])
         if parsed:
             score, base, uptime, penalty = parsed
             finite_number(base, f"HelpAIO/{name}/base_score")

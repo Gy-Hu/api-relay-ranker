@@ -18,7 +18,7 @@ class ConfigTests(unittest.TestCase):
         return path
 
     def test_shipped_config_covers_every_live_source(self):
-        _, sources, _ = load_config(Path(__file__).parents[1] / "examples" / "config.toml", DAY)
+        _, sources, _, _ = load_config(Path(__file__).parents[1] / "examples" / "config.toml", DAY)
         self.assertEqual(set(sources), {info.name for info in SOURCES})
 
     def test_retired_or_misspelled_aggregation_keys_fail_loudly(self):

@@ -12,6 +12,11 @@ minimum_peers = 5         # a source needs this many scorable vendors for percen
 coverage_weight = 0.25   # weaker evidence still scores, but cannot qualify a vendor by itself
 sample_prior = 3          # Veridrop weight factor n / (n + 3)
 
+# Operating age is shown and filtered on, never multiplied into the score: there is no
+# runaway history yet to calibrate such a factor. Expired domains are a hard exclusion.
+[longevity]
+min_operating_days = 90   # vendors without evidence of this many days are hidden by default
+
 # reliability reflects what the source actually measures, not how much we like its ranking.
 [[sources]]
 name = "helpaio"

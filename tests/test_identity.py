@@ -50,7 +50,7 @@ class IdentityTests(unittest.TestCase):
             Directory((VendorSpec("A", ("shared.com",)), VendorSpec("B", ("api.shared.com",))))
 
     def test_shipped_config_keeps_known_lookalikes_apart(self):
-        _, _, directory = load_config(Path(__file__).parents[1] / "examples" / "config.toml", date(2026, 10, 1))
+        _, _, directory, _ = load_config(Path(__file__).parents[1] / "examples" / "config.toml", date(2026, 10, 1))
         rows, _ = directory.resolve([obs("a", "x", "duckcode.cn"), obs("a", "y", "www.duckcoding.ai"),
                                      obs("a", "z", "88api.ai"), obs("a", "w", "www.88code.org")])
         self.assertEqual(sorted(o.vendor for o in rows), ["88 Code", "Duck Code", "x", "z"])

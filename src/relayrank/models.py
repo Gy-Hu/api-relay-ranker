@@ -121,3 +121,5 @@ class Ranking:
     cohort_size: int
     scoring_sources: tuple[str, ...]
     thin_sources: tuple[str, ...]
+    # vendor -> hard-rule reason, for vendors removed from the cohort despite having observations.
+    excluded: dict[str, str] = field(default_factory=dict)
