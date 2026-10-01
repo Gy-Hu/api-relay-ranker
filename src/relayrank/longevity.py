@@ -8,8 +8,9 @@ Evidence is a date by which the relay demonstrably existed. Two families:
   ``first_seen`` (first run in which any of our sources listed the domain).
 * Derived from the domain itself, or claimed by the vendor. Dropped when older than the
   registration date, because it may belong to a previous owner of a second-hand domain or be
-  unverifiable: ``first_cert`` (crt.sh), ``wayback`` (homepage capture), ``relaypick_online``
-  (RelayPick "上线", floored by the vendor's earliest registration).
+  unverifiable: ``first_cert`` (ctlogs.dev; older cache entries came from crt.sh), ``wayback``
+  (homepage capture), ``relaypick_online`` (RelayPick "上线", floored by the vendor's earliest
+  registration).
 
 Registration alone is never evidence of operation. Dates are cached in the repository so each
 daily run only queries new domains, failed lookups and domains near expiry.
@@ -17,6 +18,7 @@ daily run only queries new domains, failed lookups and domains near expiry.
 from __future__ import annotations
 
 import json
+import os
 import threading
 import time
 import urllib.error
@@ -38,6 +40,7 @@ NO_RDAP_RETRY_DAYS = 30      # TLDs without RDAP (.cn) rarely change
 RDAP_REFRESH_DAYS = 90       # registration can change on re-registration
 EXPIRY_WATCH_DAYS = 30       # re-check RDAP daily inside this window, and show a warning
 REUSE_TOLERANCE_DAYS = 30    # older evidence than this before registration => previous owner
+CERT_SOURCE = "ctlogs.dev"
 
 EVIDENCE_LABELS = {
     "helpaio_listed": "HelpAIO 收录",
@@ -71,16 +74,20 @@ class LongevityConfig:
 class Budget:
     """Lookups per run; leftovers are picked up by the next run."""
     rdap: int = 80
-    cert: int = 10
+    cert: int = 80           # ctlogs.dev allows 100 anonymous requests per hour
     wayback: int = 20
+
+
+class RateLimited(LookupError):
+    """The provider's quota is spent: stop this run's batch without caching a per-domain error."""
 
 
 class Lookups(Protocol):
     def rdap(self, domain: str) -> dict[str, Any]:
         """``{"registered", "expires", "status"}``; raises LookupError("no_rdap") when unsupported."""
 
-    def certificates(self, domain: str) -> list[date]:
-        """not_before dates of CT-logged certificates for the domain and its subdomains."""
+    def certificate_first_seen(self, domain: str) -> list[date]:
+        """First-certificate date of every hostname certified under the domain; may raise RateLimited."""
 
     def wayback(self, domain: str, since: date | None) -> date | None:
         """First homepage capture on or after ``since`` (any time when None)."""
@@ -99,27 +106,38 @@ def _iso(value: date | None) -> str | None:
     return value.isoformat() if value else None
 
 
+class HttpStatusError(LookupError):
+    def __init__(self, code: int, retry_after: str | None) -> None:
+        super().__init__(f"HTTP {code}")
+        self.code, self.retry_after = code, retry_after
+
+
 class HttpLookups:
-    """RDAP from each TLD's registry (IANA bootstrap), certificates via crt.sh, captures via Wayback CDX.
+    """RDAP from each TLD's registry (IANA bootstrap), certificates via ctlogs.dev, captures via Wayback CDX.
 
     The rdap.org redirector rate-limits bulk use, so registry servers are queried directly.
+    crt.sh is not used: its HTTP interface failed almost every request under load.
     """
 
     BOOTSTRAP_URL = "https://data.iana.org/rdap/dns.json"
+    CTLOGS_HOSTS_URL = "https://api.ctlogs.dev/v1/hosts/"
+    CTLOGS_MAX_PAGES = 10    # keyless callers may page 10 deep; each page is one request
 
-    def __init__(self, timeout: float = 25, cert_timeout: float = 45, cert_pause: float = 3) -> None:
-        self.timeout, self.cert_timeout, self.cert_pause = timeout, cert_timeout, cert_pause
-        self._cert_lock = threading.Lock()
+    def __init__(self, timeout: float = 25, ctlogs_key: str | None = None) -> None:
+        self.timeout = timeout
+        # Optional free key (account.ctlogs.dev) lifts the request out of the shared keyless pool.
+        self.ctlogs_key = ctlogs_key if ctlogs_key is not None else os.environ.get("CTLOGS_API_KEY") or None
         self._bootstrap_lock = threading.Lock()
         self._servers: dict[str, str] | None = None
 
-    def _get_json(self, url: str, timeout: float, accept: str = "application/json") -> Any:
-        request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
+    def _get_json(self, url: str, timeout: float, accept: str = "application/json",
+                  headers: dict[str, str] | None = None) -> Any:
+        request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept, **(headers or {})})
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 return json.loads(response.read(40_000_000))
         except urllib.error.HTTPError as error:
-            raise LookupError(f"HTTP {error.code}") from error
+            raise HttpStatusError(error.code, error.headers.get("Retry-After")) from error
 
     def _rdap_server(self, domain: str) -> str:
         with self._bootstrap_lock:
@@ -137,21 +155,40 @@ class HttpLookups:
     def rdap(self, domain: str) -> dict[str, Any]:
         try:
             data = self._get_json(self._rdap_server(domain) + "domain/" + quote(domain), self.timeout, "application/rdap+json")
-        except LookupError as error:
-            if str(error) == "HTTP 404":
+        except HttpStatusError as error:
+            if error.code == 404:
                 raise LookupError("no_rdap") from error
             raise
         events = {e.get("eventAction"): e.get("eventDate") for e in data.get("events", []) if isinstance(e, dict)}
         return {"registered": _iso(_day(events.get("registration"))), "expires": _iso(_day(events.get("expiration"))),
                 "status": sorted(str(s) for s in data.get("status", []))}
 
-    def certificates(self, domain: str) -> list[date]:
-        with self._cert_lock:  # crt.sh throttles bursts; keep requests sequential and spaced
+    def _ctlogs_page(self, url: str) -> dict[str, Any]:
+        headers = {"Authorization": f"Bearer {self.ctlogs_key}"} if self.ctlogs_key else {}
+        for attempt in range(2):
             try:
-                rows = self._get_json(f"https://crt.sh/?q=%25.{quote(domain)}&output=json&deduplicate=Y", self.cert_timeout)
-            finally:
-                time.sleep(self.cert_pause)
-        return [_day(r["not_before"]) for r in rows if isinstance(r, dict) and r.get("not_before")]
+                return self._get_json(url, self.timeout, headers=headers)
+            except HttpStatusError as error:
+                if error.code != 429:
+                    raise
+                # Retry-After: 1 means a request was still in flight; anything longer is the hourly cap.
+                if attempt or not (error.retry_after or "").isdigit() or int(error.retry_after) > 5:
+                    raise RateLimited(f"ctlogs.dev rate limited (Retry-After {error.retry_after})") from error
+                time.sleep(int(error.retry_after))
+        raise AssertionError("unreachable")
+
+    def certificate_first_seen(self, domain: str) -> list[date]:
+        # /v1/hosts lists hostnames with a certificate in the last 90 days; each row's first_seen
+        # is that hostname's first CT record (free tier: from ctlogs.dev's own 2025+ index).
+        dates, cursor = [], ""
+        for _ in range(self.CTLOGS_MAX_PAGES):
+            url = self.CTLOGS_HOSTS_URL + quote(domain) + (f"?after={quote(cursor)}" if cursor else "")
+            page = self._ctlogs_page(url)
+            dates += [d for row in page.get("hosts") or [] if (d := _day(row.get("first_seen")))]
+            cursor = page.get("next_cursor") or ""
+            if not page.get("has_next") or not cursor:
+                break
+        return dates
 
     def wayback(self, domain: str, since: date | None) -> date | None:
         url = f"https://web.archive.org/cdx/search/cdx?url={quote(domain)}&output=json&limit=1&fl=timestamp"
@@ -232,10 +269,18 @@ def _derived_due(entry: dict[str, Any], key: str, as_of: date) -> bool:
     return "error" not in record and record.get("basis") != _iso(_registered(entry))
 
 
-def _cert_record(lookups: Lookups, domain: str, basis: date | None) -> dict[str, Any]:
-    dates = sorted(d for d in lookups.certificates(domain) if d)
+def _cert_record(lookups: Lookups, domain: str, basis: date | None, previous: dict[str, Any] | None) -> dict[str, Any]:
+    """Certificate dates are facts about the domain, so a new lookup never discards older ones.
+
+    A previous record (e.g. from crt.sh, which keeps full history) may know earlier certificates
+    than ctlogs.dev's 2025+ index; its dates stay candidates, filtered against the current basis.
+    """
+    dates = sorted(d for d in lookups.certificate_first_seen(domain) if d)
+    if previous and "error" not in previous:
+        dates = sorted({*dates, *(d for d in (_day(previous.get("first")), _day(previous.get("first_any"))) if d)})
     after = [d for d in dates if basis is None or d >= basis]
-    return {"basis": _iso(basis), "first": _iso(after[0] if after else None), "first_any": _iso(dates[0] if dates else None)}
+    return {"basis": _iso(basis), "first": _iso(after[0] if after else None),
+            "first_any": _iso(dates[0] if dates else None), "source": CERT_SOURCE}
 
 
 def _wayback_record(lookups: Lookups, domain: str, basis: date | None) -> dict[str, Any]:
@@ -258,7 +303,7 @@ def refresh(cache: dict[str, Any], domains: list[str], as_of: date, lookups: Loo
         _entry(cache, domain, as_of)
     entries = cache["domains"]
     checked = as_of.isoformat()
-    stats = {"rdap": 0, "cert": 0, "wayback": 0, "errors": 0}
+    stats = {"rdap": 0, "cert": 0, "wayback": 0, "errors": 0, "cert_rate_limited": 0}
 
     def store(domain: str, key: str, result: dict[str, Any] | None, error: str | None) -> None:
         entries[domain][key] = {"checked": checked, **(result or {})} if error is None else {"checked": checked, "error": error}
@@ -273,10 +318,20 @@ def refresh(cache: dict[str, Any], domains: list[str], as_of: date, lookups: Loo
     cert_jobs = [d for d in domains if _derived_due(entries[d], "cert", as_of)][:budget.cert]
     wayback_jobs = [d for d in domains if _derived_due(entries[d], "wayback", as_of)][:budget.wayback]
     with ThreadPoolExecutor(max_workers=3) as executor:
-        certs = [executor.submit(_attempt, _cert_record, lookups, d, _registered(entries[d])) for d in cert_jobs]
         waybacks = [executor.submit(_attempt, _wayback_record, lookups, d, _registered(entries[d])) for d in wayback_jobs]
-        for domain, future in zip(cert_jobs, certs):
-            store(domain, "cert", *future.result())
+        # ctlogs.dev serves one request at a time per client, so certificates run sequentially
+        # alongside the Wayback pool. A spent quota ends the batch without caching an error,
+        # leaving the remaining domains due for the next run.
+        for domain in cert_jobs:
+            try:
+                result = _cert_record(lookups, domain, _registered(entries[domain]), entries[domain].get("cert"))
+            except RateLimited:
+                stats["cert_rate_limited"] = 1
+                break
+            except Exception as error:  # noqa: BLE001 - cached and retried next run
+                store(domain, "cert", None, str(error)[:200] or type(error).__name__)
+            else:
+                store(domain, "cert", result, None)
         for domain, future in zip(wayback_jobs, waybacks):
             store(domain, "wayback", *future.result())
     return stats

@@ -2,7 +2,8 @@ import unittest
 from datetime import date, timedelta
 
 from relayrank.engine import aggregate
-from relayrank.longevity import Budget, record_observations, refresh, vendor_age
+from relayrank.longevity import (Budget, HttpLookups, HttpStatusError, RateLimited, record_observations, refresh,
+                                 vendor_age)
 from relayrank.models import Config, Observation, Source
 
 DAY = date(2026, 10, 1)
@@ -26,7 +27,7 @@ class FakeLookups:
         registered, expires = self.registrations[domain]
         return {"registered": registered.isoformat(), "expires": expires.isoformat(), "status": []}
 
-    def certificates(self, domain):
+    def certificate_first_seen(self, domain):
         self.calls.append(("cert", domain))
         return self.certs.get(domain, [])
 
@@ -119,6 +120,32 @@ class RefreshTests(unittest.TestCase):
         self.assertEqual(c["domains"]["a.com"]["rdap"]["error"], "slow")
         self.assertNotIn("rdap", c["domains"]["c.com"])
 
+    def test_spent_certificate_quota_ends_the_batch_without_caching_errors(self):
+        class Limited(FakeLookups):
+            def certificate_first_seen(self, domain):
+                self.calls.append(("cert", domain))
+                if domain != "a.com":
+                    raise RateLimited("hourly cap")
+                return [date(2026, 2, 1)]
+        lookups = Limited()
+        c = cache()
+        stats = refresh(c, ["a.com", "b.com", "c.com"], DAY, lookups, Budget(rdap=0, cert=10, wayback=0))
+        self.assertEqual([call for call in lookups.calls if call[0] == "cert"], [("cert", "a.com"), ("cert", "b.com")])
+        self.assertEqual(c["domains"]["a.com"]["cert"]["first"], "2026-02-01")
+        self.assertNotIn("cert", c["domains"]["b.com"])  # still due on the next run
+        self.assertEqual(stats["cert_rate_limited"], 1)
+
+    def test_requery_after_registration_change_keeps_older_certificate_history(self):
+        # crt.sh once saw a 2021 certificate; ctlogs.dev's index starts in 2025. Re-querying must
+        # not erase the evidence that the domain had a previous owner.
+        lookups = FakeLookups({"old.org": (date(2026, 3, 13), date(2027, 3, 13))}, {"old.org": [date(2026, 4, 7)]})
+        c = cache(**{"old.org": {"first_seen": DAY.isoformat(),
+                                 "cert": {"checked": DAY.isoformat(), "basis": None, "first": "2021-02-20", "first_any": "2021-02-20"}}})
+        refresh(c, ["old.org"], DAY, lookups, Budget(rdap=1, cert=1, wayback=0))
+        record = c["domains"]["old.org"]["cert"]
+        self.assertEqual((record["basis"], record["first"], record["first_any"]), ("2026-03-13", "2026-04-07", "2021-02-20"))
+        self.assertEqual(vendor_age(["old.org"], c, DAY).reused_domains, ("old.org",))
+
     def test_source_evidence_is_recorded_per_registrable_domain_and_only_moves_earlier(self):
         c = cache()
         record_observations(c, [Observation("helpaio", "V", domain="www.v.com", score=50, observed_at=DAY,
@@ -129,6 +156,26 @@ class RefreshTests(unittest.TestCase):
                                             raw_evidence={"earliest_report_seen": "2026-09-20"})], DAY)
         entry = c["domains"]["v.com"]
         self.assertEqual((entry["helpaio_listed"], entry["veridrop_report"]), ("2026-06-23", "2026-09-01"))
+
+
+class CtlogsTests(unittest.TestCase):
+    def test_follows_pagination_and_maps_the_hourly_cap_to_rate_limited(self):
+        pages = {"": {"hosts": [{"host": "a.v.com", "first_seen": "2026-03-01T10:00:00Z"}], "has_next": True, "next_cursor": "c1"},
+                 "c1": {"hosts": None, "has_next": False, "next_cursor": ""}}
+        urls = []
+
+        def fake_get(url, timeout, accept="application/json", headers=None):
+            urls.append(url)
+            if "capped" in url:
+                raise HttpStatusError(429, "1800")
+            return pages[url.partition("?after=")[2]]
+
+        lookups = HttpLookups(ctlogs_key="")
+        lookups._get_json = fake_get
+        self.assertEqual(lookups.certificate_first_seen("v.com"), [date(2026, 3, 1)])
+        self.assertEqual(len(urls), 2)
+        with self.assertRaises(RateLimited):
+            lookups.certificate_first_seen("capped.com")
 
 
 class ExclusionTests(unittest.TestCase):

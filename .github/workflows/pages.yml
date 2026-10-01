@@ -44,6 +44,9 @@ jobs:
         run: python -m unittest discover -s tests -v
 
       - name: Fetch sources and build the ranking
+        env:
+          # Optional free key from account.ctlogs.dev; without it lookups use the keyless 100/hour pool.
+          CTLOGS_API_KEY: ${{ secrets.CTLOGS_API_KEY }}
         run: >-
           relayrank live
           --config examples/config.toml

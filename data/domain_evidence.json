@@ -16,6 +16,13 @@
     "basis": "2025-11-14",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-14",
+    "first": "2026-05-10",
+    "first_any": "2026-05-10",
+    "source": "ctlogs.dev"
    }
   },
   "1xm.ai": {
@@ -32,6 +39,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-06",
+    "first": "2026-05-03",
+    "first_any": "2026-05-03",
+    "source": "ctlogs.dev"
    }
   },
   "36niu.com": {
@@ -50,6 +64,13 @@
     "basis": "2026-07-25",
     "first": null,
     "first_any": "2012-05-21"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-25",
+    "first": "2026-07-25",
+    "first_any": "2026-07-25",
+    "source": "ctlogs.dev"
    }
   },
   "4router.net": {
@@ -161,6 +182,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-18",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "a6api.com": {
@@ -203,6 +231,13 @@
     "basis": "2025-09-04",
     "first": "2025-09-17",
     "first_any": "2025-09-17"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-04",
+    "first": "2025-12-08",
+    "first_any": "2025-12-08",
+    "source": "ctlogs.dev"
    }
   },
   "ai-router.dev": {
@@ -221,6 +256,13 @@
     "basis": "2026-04-30",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-30",
+    "first": "2026-04-30",
+    "first_any": "2026-04-30",
+    "source": "ctlogs.dev"
    }
   },
   "aiapi.world": {
@@ -236,6 +278,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-04",
+    "first": "2026-04-09",
+    "first_any": "2026-04-09",
+    "source": "ctlogs.dev"
    }
   },
   "aiapify.com": {
@@ -253,6 +302,13 @@
     "basis": "2026-04-07",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-07",
+    "first": "2026-04-07",
+    "first_any": "2026-04-07",
+    "source": "ctlogs.dev"
    }
   },
   "aigcbest.top": {
@@ -269,6 +325,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-08-17",
+    "first": "2026-04-27",
+    "first_any": "2026-04-27",
+    "source": "ctlogs.dev"
    }
   },
   "aipaibox.com": {
@@ -286,9 +349,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
+    "basis": "2025-11-19",
     "first": "2025-11-19",
-    "first_any": "2025-11-19"
+    "first_any": "2025-11-19",
+    "source": "ctlogs.dev"
    }
   },
   "aixor.org": {
@@ -306,9 +370,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
-    "first": "2021-02-20",
-    "first_any": "2021-02-20"
+    "basis": "2026-03-13",
+    "first": "2026-04-07",
+    "first_any": "2021-02-20",
+    "source": "ctlogs.dev"
    }
   },
   "aixoras.com": {
@@ -326,9 +391,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
-    "first": "2025-06-19",
-    "first_any": "2025-06-19"
+    "basis": "2026-02-18",
+    "first": "2026-04-29",
+    "first_any": "2025-06-19",
+    "source": "ctlogs.dev"
    }
   },
   "aiyahmm.com": {
@@ -346,6 +412,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-20",
+    "first": "2026-05-07",
+    "first_any": "2026-05-07",
+    "source": "ctlogs.dev"
    }
   },
   "anpin.ai": {
@@ -365,9 +438,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
+    "basis": "2026-04-18",
     "first": "2026-04-18",
-    "first_any": "2026-04-18"
+    "first_any": "2026-04-18",
+    "source": "ctlogs.dev"
    }
   },
   "api2cn.com": {
@@ -385,9 +459,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
-    "first": "2023-06-27",
-    "first_any": "2023-06-27"
+    "basis": "2026-04-29",
+    "first": "2026-04-29",
+    "first_any": "2023-06-27",
+    "source": "ctlogs.dev"
    }
   },
   "apiddt.com": {
@@ -407,6 +482,13 @@
      "client delete prohibited",
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-23",
+    "first": "2026-06-23",
+    "first_any": "2026-06-23",
+    "source": "ctlogs.dev"
    }
   },
   "apilio.ai": {
@@ -426,9 +508,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
+    "basis": "2025-08-22",
     "first": "2025-09-04",
-    "first_any": "2025-09-04"
+    "first_any": "2025-09-04",
+    "source": "ctlogs.dev"
    }
   },
   "apinebula.ai": {
@@ -447,9 +530,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
+    "basis": "2026-07-23",
     "first": "2026-07-23",
-    "first_any": "2026-07-23"
+    "first_any": "2026-07-23",
+    "source": "ctlogs.dev"
    }
   },
   "apinebula.com": {
@@ -467,9 +551,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
+    "basis": "2026-04-15",
     "first": "2026-04-15",
-    "first_any": "2026-04-15"
+    "first_any": "2026-04-15",
+    "source": "ctlogs.dev"
    }
   },
   "apiok.cc": {
@@ -491,6 +576,13 @@
      "client transfer prohibited",
      "client update prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-03",
+    "first": "2026-05-03",
+    "first_any": "2026-05-03",
+    "source": "ctlogs.dev"
    }
   },
   "apiplus.cloud": {
@@ -508,6 +600,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-03",
+    "first": "2026-05-23",
+    "first_any": "2026-05-23",
+    "source": "ctlogs.dev"
    }
   },
   "apiporter.com": {
@@ -525,6 +624,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-31",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "apiyi.com": {
@@ -536,13 +642,16 @@
     "expires": "2027-06-09",
     "status": []
    },
-   "cert": {
-    "checked": "2026-10-01",
-    "error": "HTTP 502"
-   },
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-06-09",
+    "first": "2026-04-19",
+    "first_any": "2026-04-19",
+    "source": "ctlogs.dev"
    }
   },
   "autorouter.io": {
@@ -557,6 +666,13 @@
    "rdap": {
     "checked": "2026-10-01",
     "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-05-11",
+    "first_any": "2026-05-11",
+    "source": "ctlogs.dev"
    }
   },
   "avemujica.moe": {
@@ -576,7 +692,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2024-07-30",
+    "first": "2026-04-08",
+    "first_any": "2026-04-08",
+    "source": "ctlogs.dev"
    }
   },
   "beankeji.com": {
@@ -594,6 +713,13 @@
     "basis": "2021-10-19",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2021-10-19",
+    "first": "2025-07-25",
+    "first_any": "2025-07-25",
+    "source": "ctlogs.dev"
    }
   },
   "bearlab.ai": {
@@ -605,13 +731,16 @@
     "expires": "2028-06-13",
     "status": []
    },
-   "cert": {
-    "checked": "2026-10-01",
-    "error": "HTTP 502"
-   },
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-13",
+    "first": "2026-06-13",
+    "first_any": "2026-06-13",
+    "source": "ctlogs.dev"
    }
   },
   "bestswifter.com": {
@@ -630,6 +759,13 @@
     "basis": "2015-12-15",
     "first": "2016-01-09",
     "first_any": "2016-01-09"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2015-12-15",
+    "first": "2026-04-09",
+    "first_any": "2026-04-09",
+    "source": "ctlogs.dev"
    }
   },
   "bobdong.cn": {
@@ -644,6 +780,13 @@
    "rdap": {
     "checked": "2026-10-01",
     "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-25",
+    "first_any": "2026-04-25",
+    "source": "ctlogs.dev"
    }
   },
   "buzzai.cc": {
@@ -660,6 +803,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-06",
+    "first": "2026-05-26",
+    "first_any": "2026-05-26",
+    "source": "ctlogs.dev"
    }
   },
   "bytecatcode.org": {
@@ -680,7 +830,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-01-26",
+    "first": "2026-04-07",
+    "first_any": "2026-04-07",
+    "source": "ctlogs.dev"
    }
   },
   "bytonsec.com": {
@@ -698,6 +851,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2022-10-08",
+    "first": "2025-12-20",
+    "first_any": "2025-12-20",
+    "source": "ctlogs.dev"
    }
   },
   "callxyq.xyz": {
@@ -717,6 +877,13 @@
     "basis": "2025-09-06",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-06",
+    "first": "2025-12-26",
+    "first_any": "2025-12-26",
+    "source": "ctlogs.dev"
    }
   },
   "cctq.ai": {
@@ -734,6 +901,13 @@
     "basis": "2026-04-29",
     "first": "2026-08-05",
     "first_any": "2026-08-05"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-29",
+    "first": "2026-04-29",
+    "first_any": "2026-04-29",
+    "source": "ctlogs.dev"
    }
   },
   "chaiai.cc": {
@@ -749,6 +923,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-16",
+    "first": "2026-08-16",
+    "first_any": "2026-08-16",
+    "source": "ctlogs.dev"
    }
   },
   "chintao.ai": {
@@ -766,6 +947,13 @@
     "basis": "2026-08-04",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-04",
+    "first": "2026-08-04",
+    "first_any": "2026-08-04",
+    "source": "ctlogs.dev"
    }
   },
   "chintao.cn": {
@@ -781,6 +969,13 @@
    "rdap": {
     "checked": "2026-10-01",
     "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-12",
+    "first_any": "2026-04-12",
+    "source": "ctlogs.dev"
    }
   },
   "clauddy.com": {
@@ -798,6 +993,13 @@
      "client delete prohibited",
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-08-15",
+    "first": "2026-04-09",
+    "first_any": "2026-04-09",
+    "source": "ctlogs.dev"
    }
   },
   "claudeapi.com": {
@@ -814,6 +1016,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-07-16",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "claudecn.ai": {
@@ -831,6 +1040,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-09",
+    "first": "2026-05-09",
+    "first_any": "2026-05-09",
+    "source": "ctlogs.dev"
    }
   },
   "claudecn.top": {
@@ -844,9 +1060,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
+    "basis": "2025-11-24",
     "first": "2025-11-24",
-    "first_any": "2025-11-24"
+    "first_any": "2025-11-24",
+    "source": "ctlogs.dev"
    },
    "wayback": {
     "checked": "2026-10-01",
@@ -889,6 +1106,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-17",
+    "first": "2026-05-09",
+    "first_any": "2026-05-09",
+    "source": "ctlogs.dev"
    }
   },
   "cpass.cc": {
@@ -906,6 +1130,13 @@
     "basis": "2025-11-02",
     "first": "2025-12-31",
     "first_any": "2021-11-30"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-02",
+    "first": "2026-04-25",
+    "first_any": "2026-04-25",
+    "source": "ctlogs.dev"
    }
   },
   "cubence.com": {
@@ -921,6 +1152,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-06",
+    "first": "2026-04-16",
+    "first_any": "2026-04-16",
+    "source": "ctlogs.dev"
    }
   },
   "cun.ai": {
@@ -938,6 +1176,13 @@
     "basis": "2023-04-04",
     "first": "2023-06-28",
     "first_any": "2021-11-30"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-04",
+    "first": "2026-04-26",
+    "first_any": "2026-04-26",
+    "source": "ctlogs.dev"
    }
   },
   "daodunapi.com": {
@@ -952,6 +1197,13 @@
    "rdap": {
     "checked": "2026-10-01",
     "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-18",
+    "first_any": "2026-04-18",
+    "source": "ctlogs.dev"
    }
   },
   "datasea.fun": {
@@ -970,6 +1222,13 @@
     "basis": "2026-04-29",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-29",
+    "first": "2026-05-01",
+    "first_any": "2026-05-01",
+    "source": "ctlogs.dev"
    }
   },
   "dawclaudecode.com": {
@@ -986,6 +1245,13 @@
     "basis": "2025-10-08",
     "first": "2026-02-19",
     "first_any": "2026-02-19"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-08",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "deepkey.top": {
@@ -1005,7 +1271,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-01-26",
+    "first": "2026-04-07",
+    "first_any": "2026-04-07",
+    "source": "ctlogs.dev"
    }
   },
   "digitalcats.cc": {
@@ -1020,6 +1289,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-09-11",
+    "first": "2026-09-11",
+    "first_any": "2026-09-11",
+    "source": "ctlogs.dev"
    }
   },
   "duckcoding.ai": {
@@ -1037,6 +1313,13 @@
     "basis": "2026-02-25",
     "first": "2026-03-06",
     "first_any": "2026-03-06"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-02-25",
+    "first": "2026-04-28",
+    "first_any": "2026-04-28",
+    "source": "ctlogs.dev"
    }
   },
   "duckcoding.com": {
@@ -1052,6 +1335,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-06",
+    "first": "2026-04-28",
+    "first_any": "2026-04-28",
+    "source": "ctlogs.dev"
    }
   },
   "duiapi.com": {
@@ -1068,6 +1358,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-02",
+    "first": "2026-06-17",
+    "first_any": "2026-06-17",
+    "source": "ctlogs.dev"
    }
   },
   "eirouter.com": {
@@ -1086,6 +1383,13 @@
     "basis": "2026-06-21",
     "first": "2026-06-27",
     "first_any": "2026-06-27"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-21",
+    "first": "2026-06-21",
+    "first_any": "2026-06-21",
+    "source": "ctlogs.dev"
    }
   },
   "ekti.cc": {
@@ -1102,6 +1406,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-09-10",
+    "first": "2026-04-08",
+    "first_any": "2026-04-08",
+    "source": "ctlogs.dev"
    }
   },
   "fengchao-api.com": {
@@ -1121,7 +1432,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-08-30",
+    "first": "2026-08-30",
+    "first_any": "2026-08-30",
+    "source": "ctlogs.dev"
    }
   },
   "flashapi.top": {
@@ -1140,6 +1454,13 @@
     "basis": "2026-03-13",
     "first": "2026-04-06",
     "first_any": "2026-04-06"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-13",
+    "first": "2026-04-11",
+    "first_any": "2026-04-11",
+    "source": "ctlogs.dev"
    }
   },
   "ggwk1.online": {
@@ -1159,7 +1480,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2024-06-28",
+    "first": "2026-04-28",
+    "first_any": "2026-04-28",
+    "source": "ctlogs.dev"
    }
   },
   "gpt.ge": {
@@ -1177,7 +1501,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": null,
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "hao.ai": {
@@ -1195,6 +1522,13 @@
     "basis": "2017-12-16",
     "first": "2018-04-20",
     "first_any": "2015-03-29"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2017-12-16",
+    "first": "2026-04-14",
+    "first_any": "2026-04-14",
+    "source": "ctlogs.dev"
    }
   },
   "hongmacc.com": {
@@ -1210,6 +1544,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-12-29",
+    "first": "2026-04-09",
+    "first_any": "2026-04-09",
+    "source": "ctlogs.dev"
    }
   },
   "honoursoft.cn": {
@@ -1224,6 +1565,13 @@
    "rdap": {
     "checked": "2026-10-01",
     "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-05-11",
+    "first_any": "2026-05-11",
+    "source": "ctlogs.dev"
    }
   },
   "hyperapi.cc": {
@@ -1242,6 +1590,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-28",
+    "first": "2026-05-26",
+    "first_any": "2026-05-26",
+    "source": "ctlogs.dev"
    }
   },
   "ikuncode.cc": {
@@ -1259,6 +1614,13 @@
     "basis": "2025-08-24",
     "first": "2025-12-11",
     "first_any": "2025-12-11"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-08-24",
+    "first": "2026-04-23",
+    "first_any": "2026-04-23",
+    "source": "ctlogs.dev"
    }
   },
   "jiekou.ai": {
@@ -1279,6 +1641,13 @@
     "basis": "2025-06-09",
     "first": "2025-10-18",
     "first_any": "2025-10-18"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-06-09",
+    "first": "2025-09-17",
+    "first_any": "2025-09-17",
+    "source": "ctlogs.dev"
    }
   },
   "juxingai.top": {
@@ -1297,6 +1666,13 @@
     "basis": "2026-05-08",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-08",
+    "first": "2026-05-09",
+    "first_any": "2026-05-09",
+    "source": "ctlogs.dev"
    }
   },
   "juxingai.xyz": {
@@ -1311,6 +1687,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-25",
+    "first": "2026-07-25",
+    "first_any": "2026-07-25",
+    "source": "ctlogs.dev"
    }
   },
   "kelaiapi.cc": {
@@ -1327,6 +1710,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-12",
+    "first": "2026-05-10",
+    "first_any": "2026-05-10",
+    "source": "ctlogs.dev"
    }
   },
   "kfcv50.link": {
@@ -1343,6 +1733,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-07-16",
+    "first": "2026-04-15",
+    "first_any": "2026-04-15",
+    "source": "ctlogs.dev"
    }
   },
   "kksj.org": {
@@ -1359,6 +1756,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-03-09",
+    "first": "2026-04-16",
+    "first_any": "2026-04-16",
+    "source": "ctlogs.dev"
    }
   },
   "kuaipao.pro": {
@@ -1373,6 +1777,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-22",
+    "first": "2026-04-30",
+    "first_any": "2026-04-30",
+    "source": "ctlogs.dev"
    }
   },
   "leverai.net": {
@@ -1390,6 +1801,13 @@
     "basis": "2026-08-16",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-16",
+    "first": "2026-08-16",
+    "first_any": "2026-08-16",
+    "source": "ctlogs.dev"
    }
   },
   "lingsuan.top": {
@@ -1407,7 +1825,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-05-15",
+    "first": "2026-05-15",
+    "first_any": "2026-05-15",
+    "source": "ctlogs.dev"
    }
   },
   "linkapi.ai": {
@@ -1427,7 +1848,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2025-10-11",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "linkuai.net": {
@@ -1443,6 +1867,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-08",
+    "first": "2026-05-08",
+    "first_any": "2026-05-08",
+    "source": "ctlogs.dev"
    }
   },
   "lmuai.ai": {
@@ -1462,7 +1893,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-06-12",
+    "first": "2026-06-18",
+    "first_any": "2026-06-18",
+    "source": "ctlogs.dev"
    }
   },
   "lmyanyu.com": {
@@ -1477,6 +1911,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-12",
+    "first": "2026-07-13",
+    "first_any": "2026-07-13",
+    "source": "ctlogs.dev"
    }
   },
   "logitstoken.com": {
@@ -1494,6 +1935,13 @@
     "basis": "2026-08-08",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-08",
+    "first": "2026-08-09",
+    "first_any": "2026-08-09",
+    "source": "ctlogs.dev"
    }
   },
   "luminai.cc": {
@@ -1511,7 +1959,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-04-05",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "magic666.top": {
@@ -1528,6 +1979,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-07-29",
+    "first": "2026-04-04",
+    "first_any": "2026-04-04",
+    "source": "ctlogs.dev"
    }
   },
   "micuapi.ai": {
@@ -1548,7 +2006,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-05-07",
+    "first": "2026-05-07",
+    "first_any": "2026-05-07",
+    "source": "ctlogs.dev"
    }
   },
   "modcon.top": {
@@ -1568,7 +2029,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-05-17",
+    "first": "2026-05-18",
+    "first_any": "2026-05-18",
+    "source": "ctlogs.dev"
    }
   },
   "modelflare.dev": {
@@ -1587,6 +2051,13 @@
     "basis": "2026-06-16",
     "first": "2026-07-17",
     "first_any": "2026-07-17"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-16",
+    "first": "2026-06-16",
+    "first_any": "2026-06-16",
+    "source": "ctlogs.dev"
    }
   },
   "modelsell.com": {
@@ -1603,6 +2074,13 @@
     "basis": "2026-05-13",
     "first": "2026-05-14",
     "first_any": "2010-06-27"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-13",
+    "first": "2026-05-13",
+    "first_any": "2026-05-13",
+    "source": "ctlogs.dev"
    }
   },
   "moeapi.cloud": {
@@ -1619,6 +2097,13 @@
     "basis": "2026-07-18",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-18",
+    "first": "2026-07-18",
+    "first_any": "2026-07-18",
+    "source": "ctlogs.dev"
    }
   },
   "mxdapi.com": {
@@ -1635,6 +2120,13 @@
     "basis": "2026-08-28",
     "first": null,
     "first_any": "2013-08-19"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-28",
+    "first": "2026-08-29",
+    "first_any": "2026-08-29",
+    "source": "ctlogs.dev"
    }
   },
   "mxyhi.com": {
@@ -1652,7 +2144,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2023-02-13",
+    "first": "2026-04-10",
+    "first_any": "2026-04-10",
+    "source": "ctlogs.dev"
    }
   },
   "mxzzz.xyz": {
@@ -1672,7 +2167,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-06-13",
+    "first": "2026-06-13",
+    "first_any": "2026-06-13",
+    "source": "ctlogs.dev"
    }
   },
   "mzlone.top": {
@@ -1691,6 +2189,13 @@
     "basis": "2025-11-27",
     "first": "2026-01-06",
     "first_any": "2026-01-06"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-27",
+    "first": "2026-05-23",
+    "first_any": "2026-05-23",
+    "source": "ctlogs.dev"
    }
   },
   "nbility.dev": {
@@ -1709,6 +2214,13 @@
     "basis": "2026-03-18",
     "first": "2026-04-14",
     "first_any": "2026-04-14"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-18",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "nekoapi.com": {
@@ -1726,6 +2238,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-08-01",
+    "first": "2026-04-08",
+    "first_any": "2026-04-08",
+    "source": "ctlogs.dev"
    }
   },
   "nekocode.ai": {
@@ -1743,6 +2262,13 @@
     "basis": "2026-01-16",
     "first": "2026-04-20",
     "first_any": "2026-04-20"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-16",
+    "first": "2026-05-14",
+    "first_any": "2026-05-14",
+    "source": "ctlogs.dev"
    }
   },
   "niccom.com.cn": {
@@ -1757,6 +2283,13 @@
     "basis": null,
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-06-24",
+    "first_any": "2026-06-24",
+    "source": "ctlogs.dev"
    }
   },
   "niu-niu.de": {
@@ -1770,6 +2303,13 @@
     "basis": null,
     "first": "2013-05-11",
     "first_any": "2013-05-11"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-04-24",
+    "first_any": "2026-04-24",
+    "source": "ctlogs.dev"
    }
   },
   "ogog.ai": {
@@ -1790,6 +2330,13 @@
     "basis": "2024-10-27",
     "first": "2024-11-16",
     "first_any": "2024-11-16"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-10-27",
+    "first": "2026-04-08",
+    "first_any": "2026-04-08",
+    "source": "ctlogs.dev"
    }
   },
   "onliqiu.com": {
@@ -1805,6 +2352,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-25",
+    "first": "2026-08-25",
+    "first_any": "2026-08-25",
+    "source": "ctlogs.dev"
    }
   },
   "openai-ch.top": {
@@ -1822,6 +2376,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-02-16",
+    "first": "2026-05-16",
+    "first_any": "2026-05-16",
+    "source": "ctlogs.dev"
    }
   },
   "openai-labs.com": {
@@ -1840,6 +2401,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-10-14",
+    "first": "2026-04-11",
+    "first_any": "2026-04-11",
+    "source": "ctlogs.dev"
    }
   },
   "openclawroot.com": {
@@ -1856,6 +2424,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-17",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "openllm.shop": {
@@ -1872,6 +2447,13 @@
     "basis": "2026-04-02",
     "first": "2026-04-21",
     "first_any": "2026-04-21"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-02",
+    "first": "2026-04-07",
+    "first_any": "2026-04-07",
+    "source": "ctlogs.dev"
    }
   },
   "packyapi.ai": {
@@ -1889,6 +2471,13 @@
     "basis": "2026-05-22",
     "first": "2026-07-28",
     "first_any": "2026-07-28"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-22",
+    "first": "2026-05-22",
+    "first_any": "2026-05-22",
+    "source": "ctlogs.dev"
    }
   },
   "packyapi.com": {
@@ -1906,6 +2495,13 @@
     "basis": "2025-10-17",
     "first": "2025-10-30",
     "first_any": "2025-10-30"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-17",
+    "first": "2025-10-25",
+    "first_any": "2025-10-25",
+    "source": "ctlogs.dev"
    }
   },
   "portdan.com": {
@@ -1922,6 +2518,13 @@
     "basis": "2026-06-24",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-06-24",
+    "first": "2026-06-24",
+    "first_any": "2026-06-24",
+    "source": "ctlogs.dev"
    }
   },
   "privnode.com": {
@@ -1937,6 +2540,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-07-01",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "qiuqiutoken.com": {
@@ -1955,6 +2565,10 @@
     "basis": "2026-04-04",
     "first": "2026-05-21",
     "first_any": "2026-05-21"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 403"
    }
   },
   "rcouyi.com": {
@@ -1973,6 +2587,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-07",
+    "first": "2026-03-12",
+    "first_any": "2026-03-12",
+    "source": "ctlogs.dev"
    }
   },
   "right.codes": {
@@ -1987,6 +2608,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-11",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "rightapi.ai": {
@@ -2004,6 +2632,13 @@
     "basis": "2026-07-23",
     "first": "2026-07-28",
     "first_any": "2026-07-28"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-23",
+    "first": "2026-07-23",
+    "first_any": "2026-07-23",
+    "source": "ctlogs.dev"
    }
   },
   "rly0.com": {
@@ -2021,6 +2656,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-08-16",
+    "first": "2026-08-16",
+    "first_any": "2026-08-16",
+    "source": "ctlogs.dev"
    }
   },
   "ruoli.dev": {
@@ -2035,6 +2677,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-23",
+    "first": "2026-04-06",
+    "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
    }
   },
   "sbgpt.site": {
@@ -2055,6 +2704,13 @@
      "client transfer prohibited",
      "client update prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-12-25",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "shimaiapi.com": {
@@ -2070,6 +2726,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-02",
+    "first": "2026-04-08",
+    "first_any": "2026-04-08",
+    "source": "ctlogs.dev"
    }
   },
   "smai.ai": {
@@ -2085,6 +2748,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-12-02",
+    "first": "2025-12-23",
+    "first_any": "2025-12-23",
+    "source": "ctlogs.dev"
    }
   },
   "sparkcode.top": {
@@ -2101,6 +2771,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-11-17",
+    "first": "2026-04-23",
+    "first_any": "2026-04-23",
+    "source": "ctlogs.dev"
    }
   },
   "sssaicode.com": {
@@ -2116,6 +2793,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-07-03",
+    "first": "2026-04-23",
+    "first_any": "2026-04-23",
+    "source": "ctlogs.dev"
    }
   },
   "storeapi.one": {
@@ -2134,6 +2818,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-21",
+    "first": "2026-03-21",
+    "first_any": "2026-03-21",
+    "source": "ctlogs.dev"
    }
   },
   "suanniao.shop": {
@@ -2153,7 +2844,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-05-09",
+    "first": "2026-05-09",
+    "first_any": "2026-05-09",
+    "source": "ctlogs.dev"
    }
   },
   "sudocode.chat": {
@@ -2169,6 +2863,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-28",
+    "first": "2026-04-28",
+    "first_any": "2026-04-28",
+    "source": "ctlogs.dev"
    }
   },
   "timicc.com": {
@@ -2187,7 +2888,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-01-06",
+    "first": "2026-04-26",
+    "first_any": "2026-04-26",
+    "source": "ctlogs.dev"
    }
   },
   "tken.lol": {
@@ -2205,7 +2909,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-08-05",
+    "first": "2026-08-05",
+    "first_any": "2026-08-05",
+    "source": "ctlogs.dev"
    }
   },
   "tocodex.com": {
@@ -2223,6 +2930,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-26",
+    "first": "2026-05-15",
+    "first_any": "2026-05-15",
+    "source": "ctlogs.dev"
    }
   },
   "tokavia.com": {
@@ -2238,6 +2952,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-07-17",
+    "first": "2026-07-17",
+    "first_any": "2026-07-17",
+    "source": "ctlogs.dev"
    }
   },
   "token8341.com": {
@@ -2255,6 +2976,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-01",
+    "first": "2026-05-11",
+    "first_any": "2026-05-11",
+    "source": "ctlogs.dev"
    }
   },
   "tokentaken.org": {
@@ -2271,6 +2999,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-04-30",
+    "first": "2026-04-30",
+    "first_any": "2026-04-30",
+    "source": "ctlogs.dev"
    }
   },
   "tongapi.com": {
@@ -2287,6 +3022,13 @@
     "basis": "2026-05-06",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-06",
+    "first": "2026-05-06",
+    "first_any": "2026-05-06",
+    "source": "ctlogs.dev"
    }
   },
   "umiluxury.com": {
@@ -2303,6 +3045,13 @@
     "basis": "2025-02-17",
     "first": "2025-07-10",
     "first_any": "2025-07-10"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-02-17",
+    "first": "2026-06-15",
+    "first_any": "2026-06-15",
+    "source": "ctlogs.dev"
    }
   },
   "undyingapi.com": {
@@ -2317,6 +3066,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-08-15",
+    "first": "2026-04-29",
+    "first_any": "2026-04-29",
+    "source": "ctlogs.dev"
    }
   },
   "unity2.ai": {
@@ -2333,6 +3089,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-14",
+    "first": "2026-04-12",
+    "first_any": "2026-04-12",
+    "source": "ctlogs.dev"
    }
   },
   "v3.cm": {
@@ -2354,6 +3117,13 @@
     "basis": "2023-04-01",
     "first": "2023-11-02",
     "first_any": "2009-10-31"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-01",
+    "first": "2026-04-13",
+    "first_any": "2026-04-13",
+    "source": "ctlogs.dev"
    }
   },
   "xag-api.com": {
@@ -2369,6 +3139,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-09-16",
+    "first": "2026-09-16",
+    "first_any": "2026-09-16",
+    "source": "ctlogs.dev"
    }
   },
   "xcode.best": {
@@ -2388,7 +3165,10 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "error": "HTTP 502"
+    "basis": "2026-01-29",
+    "first": "2026-04-10",
+    "first_any": "2026-04-10",
+    "source": "ctlogs.dev"
    }
   },
   "xiamiapi.xyz": {
@@ -2407,6 +3187,13 @@
     "status": [
      "active"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-29",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "xiaojingai.com": {
@@ -2421,6 +3208,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-09-20",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "xiaoma.best": {
@@ -2437,6 +3231,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-03-11",
+    "first": "2026-05-11",
+    "first_any": "2026-05-11",
+    "source": "ctlogs.dev"
    }
   },
   "xjai.cc": {
@@ -2456,6 +3257,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-04-24",
+    "first": "2025-09-18",
+    "first_any": "2025-09-18",
+    "source": "ctlogs.dev"
    }
   },
   "xpluse.plus": {
@@ -2472,6 +3280,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-10-29",
+    "first": "2026-04-05",
+    "first_any": "2026-04-05",
+    "source": "ctlogs.dev"
    }
   },
   "xyc.ai": {
@@ -2489,6 +3304,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-01-25",
+    "first": "2026-05-20",
+    "first_any": "2026-05-20",
+    "source": "ctlogs.dev"
    }
   },
   "xyusec.com": {
@@ -2505,6 +3327,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2025-06-22",
+    "first": "2026-04-10",
+    "first_any": "2026-04-10",
+    "source": "ctlogs.dev"
    }
   },
   "yes.vg": {
@@ -2520,6 +3349,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-05-07",
+    "first": "2026-04-07",
+    "first_any": "2026-04-07",
+    "source": "ctlogs.dev"
    }
   },
   "yescode.cloud": {
@@ -2538,6 +3374,13 @@
     "basis": "2026-01-12",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-01-12",
+    "first": "2026-04-19",
+    "first_any": "2026-04-19",
+    "source": "ctlogs.dev"
    }
   },
   "ykh.ai": {
@@ -2556,6 +3399,13 @@
     "status": [
      "client transfer prohibited"
     ]
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2026-05-25",
+    "first": "2026-05-25",
+    "first_any": "2026-05-25",
+    "source": "ctlogs.dev"
    }
   },
   "yourapi.cn": {
@@ -2570,6 +3420,13 @@
    "rdap": {
     "checked": "2026-10-01",
     "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": null,
+    "first": "2026-05-16",
+    "first_any": "2026-05-16",
+    "source": "ctlogs.dev"
    }
   },
   "yunwu.ai": {
@@ -2586,6 +3443,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2024-12-03",
+    "first": "2025-06-10",
+    "first_any": "2025-06-10",
+    "source": "ctlogs.dev"
    }
   },
   "zen-ai.top": {
@@ -2603,6 +3467,13 @@
     "basis": "2023-10-26",
     "first": "2023-12-25",
     "first_any": "2023-12-25"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-10-26",
+    "first": "2026-04-10",
+    "first_any": "2026-04-10",
+    "source": "ctlogs.dev"
    }
   },
   "zicc.cc": {
@@ -2617,6 +3488,13 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "basis": "2023-05-01",
+    "first": "2026-04-13",
+    "first_any": "2026-04-13",
+    "source": "ctlogs.dev"
    }
   }
  }
