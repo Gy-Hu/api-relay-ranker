@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-import math
 import json
+import math
 from dataclasses import dataclass, field
 from datetime import date
 from typing import Any
+
+STATES = ("valid", "missing", "invalid")
 
 
 def finite_number(value: object, label: str, lower: float = 0, upper: float = 100) -> float:
@@ -17,31 +19,36 @@ def finite_number(value: object, label: str, lower: float = 0, upper: float = 10
 
 @dataclass(frozen=True)
 class Source:
+    """A ranking site. Sources sharing a lineage `group` count as one vote."""
+
     name: str
-    published_at: date | None
     reliability: float = 1.0
-    independence_group: str = ""
+    group: str = ""
+    # Only Veridrop uses this: reports older than the window are ignored.
+    window_days: int | None = None
 
     def __post_init__(self) -> None:
         finite_number(self.reliability, f"source {self.name}: reliability", 0, 1)
+        if not self.group:
+            object.__setattr__(self, "group", self.name)
+        if self.window_days is not None and (type(self.window_days) is not int or self.window_days < 1):
+            raise ValueError(f"source {self.name}: window_days must be a positive integer")
 
 
 @dataclass(frozen=True)
 class Observation:
+    """One source's verdict on one vendor, on that source's own 0-100 scale."""
+
     source: str
+    # The source's display name until identity resolution, then the canonical vendor.
     vendor: str
-    rank: int | None = None
-    total_vendors: int | None = None
+    domain: str | None = None
     score: float | None = None
-    uptime: float | None = None
-    cache_rate: float | None = None
-    price_value: float | None = None
-    website_url: str | None = None
-    # A source composite is used once; its ingredients and ordering are audit only.
-    evidence_kind: str = "composite"
-    state: str = "valid"
     observed_at: date | None = None
-    date_basis: str = "unknown"
+    sample_count: int | None = None
+    state: str = "valid"
+    website_url: str | None = None
+    source_url: str | None = None
     issues: tuple[str, ...] = ()
     raw_evidence: dict[str, Any] = field(default_factory=dict)
 
@@ -49,58 +56,44 @@ class Observation:
         json.dumps(self.raw_evidence, allow_nan=False)
         if not self.source.strip() or not self.vendor.strip():
             raise ValueError("source and vendor must not be empty")
-        for key in ("score", "uptime", "cache_rate", "price_value"):
-            value = getattr(self, key)
-            if value is not None:
-                finite_number(value, f"{self.source}/{self.vendor}/{key}")
-        if (self.rank is None) != (self.total_vendors is None):
-            raise ValueError("rank and total_vendors must be provided together")
-        if self.rank is not None:
-            if type(self.rank) is not int or type(self.total_vendors) is not int or not 1 <= self.rank <= self.total_vendors:
-                raise ValueError("rank must be an integer in [1, total_vendors]")
-        if self.state not in {"valid", "missing", "reference", "inactive", "invalid"}:
+        if self.score is not None:
+            finite_number(self.score, f"{self.source}/{self.vendor}/score")
+        if self.sample_count is not None and (type(self.sample_count) is not int or self.sample_count < 0):
+            raise ValueError(f"{self.source}/{self.vendor}: sample_count must be a non-negative integer")
+        if self.state not in STATES:
             raise ValueError(f"unknown observation state: {self.state}")
-        if self.evidence_kind not in {"composite", "metrics", "ordering", "status"}:
-            raise ValueError(f"unknown evidence kind: {self.evidence_kind}")
+        if self.state == "valid" and self.score is None:
+            raise ValueError(f"{self.source}/{self.vendor}: a valid observation needs a score")
 
 
 @dataclass(frozen=True)
 class Config:
     as_of: date
-    half_life_days: float = 45.0
+    half_life_days: float = 30.0
+    max_age_days: int = 90
+    unknown_date_weight: float = 0.25
     prior_score: float = 50.0
     prior_strength: float = 0.8
     minimum_sources: int = 2
-    # Retained in output/config for compatibility; unsafe v1 adjustments are disabled.
-    variance_penalty: float = 0.0
-    low_outlier_gap: float = 0.0
-    three_source_bonus: float = 0.0
-    four_source_bonus: float = 0.0
-    unknown_date_weight: float = 0.25
-    max_age_days: int = 90
-    metric_weights: dict[str, float] = field(default_factory=lambda: {
-        "rank": 0.0, "score": 1.0, "uptime": 0.2, "cache_rate": 0.1, "price_value": 0.1,
-    })
+    # A source needs this many scorable vendors before its percentiles mean anything.
+    minimum_peers: int = 5
+    # Weight factor n / (n + sample_prior) for sources that report sample counts.
+    sample_prior: float = 3.0
+    # A source group counts toward minimum_sources only with at least this much weight;
+    # weaker evidence still contributes to the score but cannot qualify a vendor alone.
+    coverage_weight: float = 0.25
 
     def __post_init__(self) -> None:
-        finite_number(self.prior_score, "prior_score")
-        finite_number(self.prior_strength, "prior_strength", 0, 100)
+        finite_number(self.coverage_weight, "coverage_weight", 0, 1)
         finite_number(self.half_life_days, "half_life_days", 0.001, 10000)
         finite_number(self.unknown_date_weight, "unknown_date_weight", 0, 1)
-        if type(self.minimum_sources) is not int or self.minimum_sources < 1:
-            raise ValueError("minimum_sources must be a positive integer")
-        if type(self.max_age_days) is not int or self.max_age_days < 1:
-            raise ValueError("max_age_days must be a positive integer")
-        for key in ("variance_penalty", "low_outlier_gap", "three_source_bonus", "four_source_bonus"):
-            if getattr(self, key) != 0:
-                raise ValueError(f"{key} is retired; set to 0 (v2 preserves negative evidence and monotonicity)")
-        allowed = {"rank", "score", "uptime", "cache_rate", "price_value"}
-        if set(self.metric_weights) - allowed:
-            raise ValueError("unknown metric weight")
-        for key, value in self.metric_weights.items():
-            finite_number(value, f"metric weight {key}", 0, 100)
-        if not any(self.metric_weights.values()):
-            raise ValueError("at least one metric weight must be positive")
+        finite_number(self.prior_score, "prior_score")
+        finite_number(self.prior_strength, "prior_strength", 0, 100)
+        finite_number(self.sample_prior, "sample_prior", 0, 1000)
+        for key in ("max_age_days", "minimum_sources", "minimum_peers"):
+            value = getattr(self, key)
+            if type(value) is not int or value < 1:
+                raise ValueError(f"{key} must be a positive integer")
 
 
 @dataclass(frozen=True)
@@ -108,17 +101,23 @@ class RankedVendor:
     rank: int
     vendor: str
     score: float
-    confidence: float
     source_count: int
     effective_weight: float
     score_stddev: float
-    disagreement_penalty: float
     rank_best: int
     rank_worst: int
-    contributions: tuple[dict[str, object], ...] = ()
+    contributions: tuple[dict[str, Any], ...] = ()
     website_url: str = ""
-    raw_score_stddev: float = 0.0
-    coverage_bonus: float = 0.0
-    low_outlier_sources: tuple[str, ...] = ()
+    domains: tuple[str, ...] = ()
     issues: tuple[str, ...] = ()
     coverage_loss_groups: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class Ranking:
+    results: list[RankedVendor]
+    # (source, vendor) -> weight, quality, percentile and vendor eligibility.
+    evaluations: dict[tuple[str, str], dict[str, Any]]
+    cohort_size: int
+    scoring_sources: tuple[str, ...]
+    thin_sources: tuple[str, ...]

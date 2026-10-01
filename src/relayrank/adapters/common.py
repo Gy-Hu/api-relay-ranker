@@ -168,6 +168,22 @@ def next_flight(html: str) -> str:
     return "".join(parts)
 
 
+def flight_records(flight: str, key: str, required: str) -> list[dict[str, Any]]:
+    """The single JSON array of objects stored under `key` whose objects carry `required`."""
+    decoder = json.JSONDecoder()
+    found = []
+    for match in re.finditer(rf'"{re.escape(key)}"\s*:\s*', flight):
+        try:
+            value, _ = decoder.raw_decode(flight, match.end())
+        except ValueError:
+            continue
+        if isinstance(value, list) and value and all(isinstance(v, dict) for v in value) and required in value[0]:
+            found.append(value)
+    if len(found) != 1:
+        raise ValueError(f"expected one embedded {key!r} array, found {len(found)}")
+    return found[0]
+
+
 def source_date(text: str):
     from datetime import date
     match = re.search(r'(?:数据更新于|最近更新)\s*(\d{4}-\d{2}-\d{2})', text)

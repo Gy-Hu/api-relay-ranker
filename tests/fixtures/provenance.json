@@ -1,34 +1,50 @@
 [
   {
-    "source": "zhaotutu",
-    "url": "https://api.zhaotutu.ai/",
-    "fetched_at": "2026-09-30T05:09:48.710018+00:00",
-    "content_type": "text/html",
-    "bytes": 752735,
-    "sha256": "2bd6319aa866db1ef46af2e859e0d100cfc90dbf81d8740149add2766925ef90"
-  },
-  {
+    "file": "helpaio.html.gz",
     "source": "helpaio",
     "url": "https://www.helpaio.com/transit",
-    "fetched_at": "2026-09-30T05:09:46.364329+00:00",
-    "content_type": "text/html",
-    "bytes": 1623327,
-    "sha256": "c8a2f6b561c14d6ef68a78d12e59dce0ba729722aba95587d66183493f360c4c"
+    "fetched_at": "2026-10-01T13:08:51.196643+00:00",
+    "bytes": 1623634,
+    "sha256": "a4f490b76d8225b1004eedaa717dca70a526531fb41326b2c19a0eea6e6add9e"
   },
   {
-    "source": "apiranking",
-    "url": "https://apiranking.com/",
-    "fetched_at": "2026-09-30T05:09:48.332954+00:00",
-    "content_type": "text/html",
-    "bytes": 480693,
-    "sha256": "f9dd17b4aac01a0c217d3af5d0944f2653dad58b926ef69b2b739b5ebd150dd1"
+    "file": "relaypick.html.gz",
+    "source": "relaypick",
+    "url": "https://relaypick.com/ranking",
+    "fetched_at": "2026-10-01T13:08:51.196643+00:00",
+    "bytes": 629205,
+    "sha256": "11f15aec8ea28ba9ecfaab55c431b40c890c4cc8e1f93a0ad6a368eeb337acb7"
   },
   {
-    "source": "tokhub",
-    "url": "https://www.tokhub.me/api/public/channels",
-    "fetched_at": "2026-09-30T05:09:46.534471+00:00",
-    "content_type": "application/json",
-    "bytes": 17215,
-    "sha256": "581ea92b79737138d856a46376b7129f8fd33716c3641ca1cb5723bab793f933"
+    "file": "okkmax-list.html.gz",
+    "source": "okkmax",
+    "url": "https://www.okkmax.com/list",
+    "fetched_at": "2026-10-01T13:08:51.196643+00:00",
+    "bytes": 159863,
+    "sha256": "9c14635bf6c45144853737c2cd9d8c7d7d8713d8b0838745733ffcedd797902e"
+  },
+  {
+    "file": "okkmax-availability.html.gz",
+    "source": "okkmax",
+    "url": "https://www.okkmax.com/availability",
+    "fetched_at": "2026-10-01T13:08:51.196643+00:00",
+    "bytes": 356628,
+    "sha256": "f10b50b7cb9779245325a8b6c1e846bb92723eacc1d7ddfa9465865851cd4c5b"
+  },
+  {
+    "file": "veridrop-detail-micuapi.html.gz",
+    "source": "veridrop",
+    "url": "https://veridrop.org/leaderboard/www.micuapi.ai",
+    "fetched_at": "2026-10-01T13:08:51.196643+00:00",
+    "bytes": 65884,
+    "sha256": "7c5873f4a52aadb9bb9b4a44e3a8f1a3cf52d39096c7c103fed4bc197e1bc681"
+  },
+  {
+    "file": "veridrop-search-right.codes.html.gz",
+    "source": "veridrop",
+    "url": "https://veridrop.org/search?q=right.codes",
+    "fetched_at": "2026-10-01T13:08:51.196643+00:00",
+    "bytes": 16577,
+    "sha256": "58b5df70097402505ec452ccf224e675121b286d79ee94e503e44af4d00d56fa"
   }
 ]

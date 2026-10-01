@@ -1,7 +1,7 @@
-"""Bias-resistant API relay ranking aggregation."""
+"""Measured-source API relay ranking aggregation."""
 
 from .engine import aggregate
-from .models import Config, Observation, RankedVendor, Source
+from .models import Config, Observation, RankedVendor, Ranking, Source
 
-__all__ = ["Config", "Observation", "RankedVendor", "Source", "aggregate"]
+__all__ = ["Config", "Observation", "RankedVendor", "Ranking", "Source", "aggregate"]
 

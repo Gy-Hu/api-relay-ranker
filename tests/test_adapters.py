@@ -1,14 +1,11 @@
 import gzip
-import json
 import unittest
-from pathlib import Path
-from dataclasses import replace
-
-from relayrank.adapters import parse_apiranking, parse_helpaio, parse_tokhub, parse_zhaotutu
-from relayrank.adapters.common import safe_http_url
-from relayrank.models import Config, Source
-from relayrank.engine import aggregate
 from datetime import date
+from pathlib import Path
+
+from relayrank.adapters import parse_helpaio, parse_okkmax, parse_relaypick
+from relayrank.adapters.common import safe_http_url
+from relayrank.adapters.veridrop import Report, build_observation, parse_detail, parse_search
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -17,114 +14,72 @@ def fixture(name):
     return gzip.decompress((FIXTURES / (name + ".gz")).read_bytes())
 
 
-def synthetic_zhaotutu(providers):
-    data = '0:' + json.dumps({"providers": providers}, ensure_ascii=False, separators=(",", ":"))
-    # Split inside a JSON object to reproduce streamed Next.js chunks.
-    chunks = [data[:len(data)//2], data[len(data)//2:]]
-    return ''.join('<script>self.__next_f.push(' + json.dumps([1, chunk]) + ')</script>' for chunk in chunks).encode()
-
-
 class AdapterTests(unittest.TestCase):
     def test_vendor_links_only_allow_http_urls(self):
         for url in ["javascript:alert(1)", "//example.com", "https://user:secret@example.com"]:
             self.assertIsNone(safe_http_url(url))
 
-    def test_helpaio_real_cards_preserve_composite_and_missing(self):
-        rows = {o.vendor: o for o in parse_helpaio(fixture("helpaio.html"), {})}
-        self.assertEqual(len(rows), 21)
-        self.assertEqual(sum(o.state == "valid" for o in rows.values()), 18)
-        self.assertEqual(rows["SSSAiCode"].score, 79.25)
-        self.assertEqual(rows["SSSAiCode"].uptime, 95.42)
-        self.assertEqual(rows["SSSAiCode"].observed_at, date(2026, 9, 30))
+    def test_helpaio_keeps_composite_domain_and_missing_scores(self):
+        rows = {o.vendor: o for o in parse_helpaio(fixture("helpaio.html"))}
+        micu = rows["Micu"]
+        self.assertEqual((micu.score, micu.domain, micu.observed_at), (79.49, "www.micuapi.ai", date(2026, 10, 1)))
+        self.assertEqual(micu.raw_evidence["uptime3d"], 93.59)
+        self.assertEqual(rows["Duck Code"].state, "missing")
+        self.assertIsNone(rows["Duck Code"].score)
         self.assertEqual(rows["Yunwu"].score, 0)
-        for name in ["Duck Code", "88 Code", "Privnode"]:
-            self.assertIsNone(rows[name].score)
-            self.assertEqual(rows[name].state, "missing")
-
-    def test_helpaio_no_silent_fallback_when_markup_changes(self):
-        with self.assertRaises(ValueError):
-            parse_helpaio(fixture("helpaio.html").replace(b'data-station-index=', b'data-new-index='), {})
+        self.assertIn("source_zero_availability_requires_verification", rows["Yunwu"].issues)
 
     def test_helpaio_formula_drift_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "formula mismatch"):
-            parse_helpaio(fixture("helpaio.html").replace(b'>79.25<', b'>99.25<'), {})
+            parse_helpaio(fixture("helpaio.html").replace(b">79.49<", b">99.49<", 1))
 
-    def test_apiranking_full_list_and_status_are_reference_only(self):
-        rows = parse_apiranking(fixture("apiranking.html"), {})
-        self.assertEqual(len(rows), 296)
-        self.assertTrue(all(o.total_vendors == 296 for o in rows))
-        self.assertEqual(rows[25].rank, 26)
-        self.assertEqual(rows[49].vendor, "Micu")
-        self.assertTrue(all(o.score is None for o in rows))
-        self.assertTrue(any(o.state == "inactive" for o in rows))
-        self.assertEqual(rows[0].website_url, "https://uuapi.io")
+    def test_relaypick_reads_every_eligible_row_with_domain_and_date(self):
+        rows = parse_relaypick(fixture("relaypick.html"))
+        self.assertEqual(len(rows), 90)
+        packy = next(o for o in rows if o.domain == "packyapi.com")
+        self.assertEqual((packy.score, packy.observed_at), (63.1, date(2026, 10, 1)))
+        self.assertIn("authenticity_unsampled", packy.issues)
 
-    def test_apiranking_truncation_is_rejected(self):
-        body = fixture("apiranking.html").replace(b'rank=296" class="provider-link"', b'position=296" class="provider-link"')
-        with self.assertRaisesRegex(ValueError, "incomplete"):
-            parse_apiranking(body, {})
+    def test_relaypick_table_and_data_disagreement_is_rejected(self):
+        body = fixture("relaypick.html").replace(b"<tr", b"<tr-x", 3)
+        with self.assertRaisesRegex(ValueError, "mismatch"):
+            parse_relaypick(body)
 
-    def test_apiranking_does_not_turn_listing_position_into_score(self):
-        rows = parse_apiranking(fixture("apiranking.html"), {})
-        self.assertEqual(aggregate(rows, {"apiranking": Source("apiranking", None)}, Config(date(2026, 9, 30))), [])
+    def test_okkmax_uses_composite_and_probe_bucket_date(self):
+        rows = {o.domain: o for o in parse_okkmax(fixture("okkmax-list.html"), fixture("okkmax-availability.html"))}
+        timi = rows["timicc.com"]
+        self.assertAlmostEqual(timi.score, 79.37145396825399)
+        self.assertEqual(timi.observed_at, date(2026, 10, 1))
+        unscored = [o for o in rows.values() if o.score is None]
+        self.assertTrue(unscored and all(o.state == "missing" and o.observed_at is None for o in unscored))
 
-    def test_tokhub_preserves_all_channel_states_without_fake_rates(self):
-        rows = {o.vendor: o for o in parse_tokhub(fixture("tokhub.json"), {"packycode": "Packy Code"})}
-        self.assertEqual(len(rows), 9)
-        self.assertIn("Packy Code", rows)
-        self.assertEqual(len(rows["CrazyRouter"].raw_evidence["channels"]), 4)
-        run = rows["RunAPI"]
-        self.assertIsNone(run.score)
-        self.assertIsNone(run.uptime)
-        self.assertIsNone(run.rank)
-        self.assertEqual(run.raw_evidence["channels"][0]["uptime24h"], 88)
-        self.assertEqual(run.raw_evidence["channels"][0]["status"], "functional_down")
-        self.assertEqual(run.state, "reference")
+    def test_veridrop_search_lists_hosts_with_counts_and_skips_sponsors(self):
+        hits = parse_search(fixture("veridrop-search-right.codes.html"))
+        self.assertEqual(hits, [("right.codes", 54), ("www.right.codes", 62), ("api.right.codes", 0)])
 
-    def test_tokhub_null_score_does_not_drop_provider_or_failure(self):
-        data = json.loads(fixture("tokhub.json"))
-        for c in data["items"]:
-            c["score"] = None
-        self.assertEqual(len(parse_tokhub(json.dumps(data).encode(), {})), 9)
+    def test_veridrop_detail_parses_history_and_keeps_invalid_reports(self):
+        page = parse_detail(fixture("veridrop-detail-micuapi.html"))
+        self.assertEqual((page.page, page.pages, len(page.reports)), (1, 4, 50))
+        first = page.reports[0]
+        self.assertEqual((first.day, first.protocol, first.score, first.verdict), (date(2026, 10, 1), "Claude", 99, "通过"))
+        self.assertTrue(any(r.score is None and r.verdict == "检测无效" for r in page.reports))
 
-    def test_tokhub_rejects_incomplete_page_and_duplicate_channels(self):
-        data = json.loads(fixture("tokhub.json"))
-        data["total"] += 1
-        with self.assertRaisesRegex(ValueError, "pagination"):
-            parse_tokhub(json.dumps(data).encode(), {})
-        data["items"].append(data["items"][0])
-        with self.assertRaisesRegex(ValueError, "duplicate"):
-            parse_tokhub(json.dumps(data).encode(), {})
+    def test_veridrop_cold_placeholder_is_missing_not_zero(self):
+        self.assertIsNone(parse_detail("<html><body><p>数据正在整理</p></body></html>".encode()))
+        with self.assertRaisesRegex(ValueError, "history"):
+            parse_detail(b"<html><body>redesigned</body></html>")
 
-    def test_zhaotutu_real_data_preserves_all_states_and_raw_zeroes(self):
-        rows = {o.vendor: o for o in parse_zhaotutu(fixture("zhaotutu.html"), {})}
-        self.assertEqual(len(rows), 64)
-        self.assertEqual(rows["Gotoken"].state, "valid")
-        self.assertIn("source_reports_degraded", rows["Gotoken"].issues)
-        self.assertEqual(rows["灵芽API"].state, "inactive")
-        micu = rows["Micu"]
-        self.assertEqual(micu.score, 92.33)
-        self.assertIsNone(micu.uptime)
-        self.assertIsNone(micu.cache_rate)
-        self.assertIsNone(micu.observed_at)
-        self.assertIn(0, [m["cacheHitRate"] for m in micu.raw_evidence["models"]])
-        self.assertEqual(micu.raw_evidence["lastUpdated"], "2026-04-30")
-
-    def test_zhaotutu_null_zero_and_field_order_survive_streaming(self):
-        rows = [{"nameCn": "Synthetic", "overallScore": 0 if i == 0 else (None if i == 1 else 80),
-                 "status": "active", "id": str(i), "name": f'Synthetic "Vendor" {i}',
-                 "models": [{"cacheHitRate": 0, "cacheSamples": 10}],
-                 "modelMonitorByVendor": [{"cacheHitRate": 90}]} for i in range(10)]
-        parsed = parse_zhaotutu(synthetic_zhaotutu(rows), {})
-        self.assertEqual(parsed[0].score, 0)
-        self.assertEqual(parsed[1].state, "missing")
-        self.assertEqual(parsed[0].raw_evidence["models"][0]["cacheHitRate"], 0)
-        self.assertIsNone(parsed[0].cache_rate)
-
-    def test_zhaotutu_malformed_score_fails_instead_of_clamping(self):
-        rows = [{"id": str(i), "name": f"Synthetic {i}", "status": "active", "overallScore": 101} for i in range(10)]
-        with self.assertRaisesRegex(ValueError, "must be in"):
-            parse_zhaotutu(synthetic_zhaotutu(rows), {})
+    def test_veridrop_composite_is_not_driven_by_protocol_mix(self):
+        day = date(2026, 10, 1)
+        # Twenty failing OpenAI reports vs ten passing Claude reports: a pooled median would be 0.
+        reports = [Report(day, "OpenAI", "gpt", 0, "未达标", None)] * 20
+        reports += [Report(day, "Claude", "opus", 90, "通过", None)] * 10
+        reports += [Report(day, "Claude", "opus", None, "检测无效", None)] * 5
+        reports += [Report(date(2026, 6, 1), "Claude", "opus", 0, "未达标", None)] * 50
+        observation = build_observation("example.com", {"api.example.com": reports}, [], day, 60)
+        self.assertEqual(observation.sample_count, 30)
+        self.assertAlmostEqual(observation.score, (0 * 20 / 23 + 90 * 10 / 13) / (20 / 23 + 10 / 13))
+        self.assertIn("veridrop_protocols_disagree", observation.issues)
 
 
 if __name__ == "__main__":

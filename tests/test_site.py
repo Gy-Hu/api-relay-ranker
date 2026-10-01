@@ -1,63 +1,33 @@
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 
-from relayrank.models import RankedVendor
-from relayrank.site import SOURCE_URLS, write_site
+from relayrank.engine import aggregate
+from relayrank.live import SOURCES as SOURCE_INFO
+from relayrank.models import Config, Observation, Source
+from relayrank.site import write_site
+
+DAY = date(2026, 10, 1)
 
 
 class SiteTests(unittest.TestCase):
-    def test_tokhub_source_uses_public_monitoring_home(self):
-        self.assertEqual(SOURCE_URLS["tokhub"], "https://www.tokhub.me/")
-
-    def test_site_escapes_vendor_names_and_shows_source_evidence(self):
-        result = RankedVendor(
-            rank=1,
-            vendor="Example <Relay>",
-            score=88.2,
-            confidence=0.91,
-            source_count=3,
-            effective_weight=2.45,
-            score_stddev=8.4,
-            disagreement_penalty=2.1,
-            rank_best=1,
-            rank_worst=4,
-            contributions=(
-                {
-                    "source": "helpaio",
-                    "rank": 2,
-                    "total_vendors": 19,
-                    "raw_score": 90.0,
-                    "weight": 0.9,
-                    "metrics": {"score": 89.5},
-                },
-            ),
-            website_url="https://relay.example/",
-            raw_score_stddev=18.4,
-            coverage_bonus=2,
-            low_outlier_sources=("helpaio",),
-        )
-        reports = [
-            {"name": name, "ok": True, "vendor_count": 10, "fetched_at": "2026-07-17T06:42:23+00:00"}
-            for name in ("helpaio", "zhaotutu", "apiranking", "tokhub")
-        ]
+    def test_site_escapes_untrusted_names_and_links_every_source(self):
+        sources = {info.name: Source(info.name) for info in SOURCE_INFO}
+        rows = [Observation("helpaio", "Evil <Relay>", domain="evil.example", score=90, observed_at=DAY,
+                            website_url='https://evil.example/"><script>'),
+                Observation("okkmax", "Evil <Relay>", domain="evil.example", score=70, observed_at=DAY),
+                Observation("helpaio", "Other", domain="other.example", score=10, observed_at=DAY),
+                Observation("okkmax", "Other", domain="other.example", score=20, observed_at=DAY)]
+        config = Config(DAY, minimum_peers=1)
+        ranking = aggregate(rows, sources, config)
         with tempfile.TemporaryDirectory() as directory:
-            target = write_site(directory, [result], reports, "2026-07-17T06:42:23+00:00")
-            rendered = Path(target).read_text(encoding="utf-8")
-
-        self.assertIn("Example &lt;Relay&gt;", rendered)
-        self.assertNotIn("Example <Relay>", rendered)
-        self.assertIn('class="vendor-link" href="https://relay.example/"', rendered)
-        self.assertIn('rel="noopener noreferrer external"', rendered)
-        for source_url in SOURCE_URLS.values():
-            self.assertIn(f'href="{source_url}"', rendered)
-        self.assertEqual(rendered.count('class="source-table-link"'), 4)
-        self.assertIn("#2 / 19", rendered)
-        self.assertIn("4/4 已解析", rendered)
-        self.assertNotIn("高置信", rendered)
-        self.assertIn("非概率", rendered)
-        self.assertIn("来源分歧 σ <strong>8.40</strong>", rendered)
-        self.assertNotIn("多榜覆盖加分", rendered)
+            rendered = write_site(directory, ranking, [], sources, config, "2026-10-01T00:00:00Z").read_text(encoding="utf-8")
+        self.assertIn("Evil &lt;Relay&gt;", rendered)
+        self.assertNotIn("<Relay>", rendered)
+        self.assertNotIn('"><script>', rendered)
+        for info in SOURCE_INFO:
+            self.assertIn(f'href="{info.homepage}"', rendered)
 
 
 if __name__ == "__main__":

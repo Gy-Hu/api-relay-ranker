@@ -2,103 +2,87 @@
 
 [![Update ranking and deploy Pages](https://github.com/Gy-Hu/api-relay-ranker/actions/workflows/pages.yml/badge.svg)](https://github.com/Gy-Hu/api-relay-ranker/actions/workflows/pages.yml)
 
-**[查看每日更新的证据参考榜](https://gy-hu.github.io/api-relay-ranker/)**
+**[查看每日更新的综合参考榜](https://gy-hu.github.io/api-relay-ranker/)**
 
-抓取 HelpAIO、zhaotutu、APIRanking 和 TokHub，保留原始响应、字段缺失、来源状态及计分依据。仅依赖 Python 3.11+ 标准库。
+每天抓取四个**自己做测量**的中转站榜单，按域名对齐商家，把每个来源的分数换算成该来源内的百分位，再加权合成一个综合分。只依赖 Python 3.11+ 标准库，不需要浏览器、账号或 API Key。
 
-## v2 的计分与限制
+## 来源
 
-2026-09-30 的审计发现：APIRanking 的 JSON-LD 只包含前 30 家，HelpAIO 已更换评分结构，TokHub 的部分百分比是状态映射值，旧版低分保护还会产生“来源分提高、总分下降”的现象。v2 更换了数据契约和计分规则，分数不应与 v1 直接比较。
+| 来源 | 读取内容 | 测的是什么 | 已知局限 |
+|---|---|---|---|
+| [HelpAIO](https://www.helpaio.com/transit) | 卡片上的排名分公式（基础分 × 3 日可用率 × 降权系数），逐卡校验 | 站长自费实测 | 只收录约 20 家精选站；3 日可用率波动大 |
+| [RelayPick](https://relaypick.com/ranking) | SSR 页面内嵌的完整合格榜（`final_score`、`computed_at`） | 价格 35%、稳定性 25%、真伪 25%、透明度 15%；美国单点每 10 分钟探测 | 非 5xx 即算可达；多数站点真伪"未抽样"，该项按 0 计入原站分；CSV 导出在 robots 禁止的 `/api/` 下，因此读页面 |
+| [OkkMax](https://www.okkmax.com/list) | `/list` 内嵌的综合分 `score`；`/availability` 探测序列的最新时间作为观测日期 | 分组真实请求的可用率、速度与 Claude 纯度 | 生产环境权重未公开；`/api/search` 的 `score` 不是综合分，不使用 |
+| [Veridrop](https://veridrop.org/leaderboard) | 按域名搜索所有端点，读取各端点详情页的报告历史 | 社区用户触发的真实请求检测（协议、真伪签名、计费） | 谁提交、测哪个协议都不均匀；付费认证只影响置顶展示，因此不读榜单页 |
 
-### 来源如何使用
+OkkMax 的服务条款禁止"抓取数据用于商业目的"。本项目仅供自用。
 
-| 来源 | 获取内容 | 用途与限制 |
-|---|---|---|
-| [HelpAIO](https://www.helpaio.com/transit) | 逐卡读取页面排名分，核对名称、位置及基础分 × 可用率 × 降权系数公式 | 只使用排名综合分一次；基础分和可用率仅供审计。缺排名分保留缺失，不用列表位置替代。时间是原站页面声明的更新日，并非逐次测量时间。 |
-| [zhaotutu](https://api.zhaotutu.ai/) | 解码完整 Next.js 数据对象，保留正常、降级、停运及缺分记录 | 使用原站 `overallScore`；不再平均模型级/厂商级缓存，不重新叠加可用率。无法确认综合分测量日期，按未知日期降权。原站综合分本身可能包含基线或缺测数据，不能视作经过本项目复测。 |
-| [APIRanking](https://apiranking.com/) | 完整可见列表与状态，核对 `numberOfItems` 和连续位置 | 页面顺序仅作收录旁证，**不折算质量分，不增加计分覆盖**。SEO 预览截断时不拿预览长度当总数；缺行、重复行或结构改变时拒绝该次发布。 |
-| [TokHub](https://www.tokhub.me/) | 公开 API 全部分页、通道模型、探测日期和错误状态 | `score`、`uptime24h`、`successRate` 在已核验公开代码中含固定状态映射，**只作通道状态旁证**，不当作实测百分比或综合质量分。状态不代表其他模型/通道也异常。 |
+**已移除的来源：**
+- zhaotutu：综合分停在 2026-04/05，没有可靠的测量日期
+- APIRanking：页面顺序不是质量分
+- TokHub：百分比是状态映射值，覆盖 9 家
 
-四站读取成功不代表四站都可计分。页面分别显示已解析数量、可计分商家数、数据受限及仅作旁证。缺失、旁证、非法数值、过期、未来日期及停运信号都保留原因。
+**核验后排除的来源：**
+- ChunduAI：复制 Veridrop 的报告
+- fanbidog/ai-relay-rank：OkkMax 镜像，停在 07-08
+- aiapirank：Hvoy 镜像，多数商家没有测量数据
+- CheckFakeAPI：近 7 天没有报告，多数商家只有单样本
+- BaiPiao：站长打分 + 投票，收录收费
+- GrokCode：没有样本的商家用兜底评分
+- ai-transfer：硬编码的推广文案
+- Chenking api-rank：人工打分，自动检测已关闭
+- RouterHubs：没有综合分，重合 1 家
+- apirank.ttop5.cc：快照停在 08-19
 
-### 公式
+## 商家识别
 
-对于有有效分数的观测：
+各来源按**可注册域名**对齐商家（`www.packyapi.ai`、`api-slb.packyapi.com` 等都归到所属域名）。`examples/config.toml` 的 `[[vendors]]` 把同一商家的多个域名合并，例如 Packy 的 `.com` 和 `.ai`。
 
-- 有原站综合分时，只使用该分数，名次和组成指标不再重复贡献。
-- 离线 CSV 明确提供独立指标而没有综合分时，才按配置的正权重归一；未提供的指标保持缺失，实测 0 保留为 0。
-- 来源权重 = 配置可靠性 × 新鲜度。已知时间按 `0.5 ** (age_days / half_life_days)` 衰减；日期未知乘 `unknown_date_weight`（默认 0.25）；超过 `max_age_days`（默认 90 天）或未来日期退出计分。
-- 每个商家的相关来源组内，各观测按原权重占比分摊，组总权重不超过该组最大单源权重。缺席或不可计分的来源不占票。
-- 参考综合分 = `(Σ有效权重 × 原站分数 + prior_strength × prior_score) / (Σ有效权重 + prior_strength)`。
-- 默认先验分 50、先验权重 0.8。**不抬高低分、不增加覆盖奖励、不扣除分歧罚分**。分歧标准差单独显示。固定证据权重和资格时，任一输入分提高不会降低总分。
+- 未配置的域名在各来源之间按域名自然合并，但不会按名字相似合并。
+- 与已配置商家同名、但域名不同的条目单独入榜，并标记 `name_matches_configured_vendor`。
+- 同一来源列出同一商家的多个域名时，取平均，只计一次。
+- 同一域名在配置中分给两个商家会直接报错。
 
-可靠性、新鲜度折扣和先验都是透明的建模选择，并非经过校准的概率。原站评分口径不同，参考综合分不承诺服务安全、模型真实性或某条线路的可用率。日期未知的数据仍可能过时，因此页面明确警示。
+## 计分
 
-计分覆盖只数有正有效权重的来源组；旁证、零权重、缺分和过期观测不增加覆盖。配置的分组不证明来源独立，发现共同数据血缘时应合组。本项目不按域名或模糊名称自动合并商家：只有配置中明确的别名才合并，冲突别名和同源重复商家会报错。
+1. **原站分数只用一次。** 各来源取自己的综合分。Veridrop 没有可用的综合分，用 60 天窗口内有效报告计算：先按协议分别取中位数，再按 n/(n+3) 加权平均。这样不会被社区提交的协议比例左右。例如 Packy 的 Claude 中位 79、OpenAI 中位 0，混在一起取中位会是 0。
+2. **来源内百分位。** 每个来源把其全部可计分商家换算成 0–100 的中位秩百分位。各站尺度差别很大（RelayPick 头名 63，Veridrop 中位数多在 90 以上），只有排序信息可以比较。可计分商家少于 `minimum_peers`（5）的来源当次不计分。
+3. **权重** = 来源可靠性 × 0.5^(天数 / 30)：
+   - 超过 90 天或日期在未来，退出计分；日期未知乘 0.25。
+   - 提供样本数的来源（Veridrop）再乘 n/(n+3)。
+   - 同一血缘组的来源合计至多一票。
+4. **综合分** = (Σ权重 × 百分位 + 0.8 × 50) / (Σ权重 + 0.8)。50 代表各来源的中位水平，证据少的商家向 50 收缩。
+5. **入榜门槛：** 至少 2 个来源组，且每个组的权重 ≥ `coverage_weight`（0.25）。权重更低的旧数据或稀疏数据仍参与计分，但不能单独把商家带进榜。
+6. **名次区间：** 固定候选集，逐个移除整个来源组后重新排名，得到名次范围。
 
-### 排序稳定性
+这些规则保证：任一来源的原站分提高，不会让该商家的综合分下降。
 
-先按 `--min-sources` 形成候选集合，再排序。移除一个完整来源组（含其所有关联来源）时保持同一候选集合，用剩余证据和先验重算；没有剩余证据时使用先验。区间包含基线排名。移除后低于入榜门槛会单独标记，不能把该情景解释为仍有足够证据的排名。
-
-Top N 是候选集合的截取，因此区间可以超过 N；页面同时显示完整候选数。分数相同按商家名称稳定排序，不伪装成有意义的质量差异。
-
-当前上游没有统一的模型/渠道/时间窗口契约，本项目不生成 Claude、Codex、Gemini 专属质量排名。TokHub 每条状态保留模型名称，避免把某个通道的异常推广到整个商家。
+可靠性、半衰期和先验都是建模选择，不是经过校准的概率，调整时需在配置注释中写明理由。百分位只表达"在该来源里排第几"，而各来源的收录范围不同：HelpAIO 只收录精选站，RelayPick 包含停运站。所以同一个百分位在不同来源里含义并不完全相同。综合分是相对排序参考，不是可用性承诺。
 
 ## 运行
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
-relayrank live --config examples/config.toml --top 10 --min-sources 2 --site-dir build/site
+relayrank live --config examples/config.toml --top 30 --site-dir build/site
 ```
 
-不安装也可运行：
+不安装也可以运行：`PYTHONPATH=src python3 -m relayrank live --config examples/config.toml`。
 
-```bash
-PYTHONPATH=src python3 -m relayrank live --config examples/config.toml --site-dir build/site
-PYTHONPATH=src python3 -m relayrank rank --config examples/config.toml --input examples/rankings.csv
-```
+- HelpAIO、RelayPick、OkkMax 任一抓取或解析失败，就不发布，返回非零退出码，GitHub Pages 保留上一版。
+- Veridrop 单个域名查询失败只记录警告，全部失败才算该来源失败。
+- `--allow-partial` 可以接受缺站，但仍要求至少两个来源组成功。
+- 没有商家满足门槛时，发布明确的"证据不足"页面。
 
-CSV 示例是历史观测，不是当前推荐。
+GitHub Actions 每天按 cron `17 1 * * *` 运行，推送 main 和手动触发也会运行。测试与构建通过后才部署；原始响应和审计数据作为 artifact 保存 30 天。
 
-默认要求四站抓取和解析成功；失败时保存报告与快照，返回非零退出码，GitHub Pages 保留上一版。显式 `--allow-partial` 可接受缺站，但仍要求至少两个配置上不同的来源组成功读取。**即使全部读取成功，若没有商家满足有效计分覆盖，也发布明确的“证据不足”页面，不伪造排名或默默沿用旧数据。**
+## 输出
 
-GitHub Actions 每天按 cron `17 1 * * *`（香港时间计划 09:17，实际可能延迟）更新；推送 main 和手动触发也会运行。测试、抓取与构建通过后才部署。原始响应与审计 artifacts 保存 30 天。
-
-## 审计输出
-
-- `ranking.csv`：参考分、有效覆盖、证据强度指数、分歧及名次区间。
-- `audit.json`：本次入榜商家的全部来源贡献，包含未计分旁证、日期、权重、异常和移除组后覆盖不足信息，`algorithm_version=2.0`。
-- `observations.json`：全部商家和通道原始证据，包括未入榜记录、计分资格及排除原因。
-- `sources.json`：来源读取结果、可计分/旁证/排除数量、未知日期数量、详情成功/失败数及每页响应哈希。
-- `details.json`：APIRanking 两个模型页签的全部实测批次（含匿名负面样本）、逐轮记录、扣费流水和历史批次；TokHub 每个公开通道的分层记录、L3 摘要、错误与成本。
-- `snapshots/<UTC运行时间>/`：原始响应与元数据。TokHub 每页和合并后的解析输入都保存，不覆盖第一页。
-
-CLI 默认写入 `outputs/`；有 `--site-dir` 时，还复制一套到网页的 `data/` 目录，并提供下载链接。
-
-证据强度指数 `1-exp(-有效权重)` 仅是权重规模摘要，**不是可靠概率**。v2 JSON/CSV 使用 `evidence_strength`，不再输出 `confidence` 百分比；Python 结果对象暂保留同名内部兼容属性。旧审计中的保护、覆盖奖励和分歧罚分字段保留为零，方便读取迁移。
-
-## GitHub Actions 自动提取详情
-
-`live` 默认额外读取 `https://apiranking.com/benchmark`，HTML 中同时包含 OpenAI 与 Claude 页签及折叠详情。按批次 ID 将表格与详情关联，核对列名、样本计数及商家页面标识；不依赖浏览器渲染、本地 ego 会话、账号或 API Key。
-
-TokHub 完成分页后，使用每个通道公开的 `publicSlug` 请求 `/api/public/channels/<slug>?range=24`。最多 4 个并发详情请求，每次最多 20 秒、最多重试一次。逐份保存响应与哈希，校验通道 ID、商家和模型；个别详情失败保留 overview 并标明错误，不补造记录。
-
-工作流在提取后检查详情文件和数量，把覆盖情况写入 Actions Summary。主来源成功但详情全部缺失时构建失败；个别通道详情失败会给出 warning。显式缺站运行仍保留缺站说明。成功后 `data/details.json` 随 Pages 发布，并与原始快照一起作为 artifact 保存 30 天。网页商家详情显示关联批次和探测样本数量，所有样本（含未入榜商家）都可下载。
-
-实测详情与综合评分是不同的数据层，本次自动采集不把混合模型的指标直接塞入总分：
-
-- 原站测试时间若只提供月日、未提供年份或时区，就保存原文并标记未知，不用抓取年份补造时间。
-- 缓存命中统计与逐轮成败分别保存；例如 11 次原始调用、10 次可复用缓存机会，两个分母不能混用。
-- 原站 `data-cache=-1` 表示未提供；`0` 是展示的零命中。匿名负面批次保留，但不推测商家身份，也不把没有具名记录解释成良好表现。
-- TokHub 的 recentRecords 是有限的最近记录，`range=24` 不保证返回全天完整探测。只含 L1、L3 未执行、L3 有明确结果分别记录；不由缺测推断失败，不把状态映射百分比当成真实成功率。
-
-## 配置迁移
-
-v1 中 `variance_penalty`、`low_outlier_gap`、`three_source_bonus`、`four_source_bonus` 必须改为 0，否则明确报错，避免旧配置悄悄恢复有问题的策略。默认关闭名次分权重。
-
-可调参数包括 `prior_strength`、`prior_score`、`half_life_days`、`max_age_days`、`unknown_date_weight` 和来源分组。它们都需记录理由，不能以让特定商家排名更高为目的调参。
+- `ranking.csv`：名次、综合分、来源组数、有效权重、各来源百分位、名次区间、域名。
+- `audit.json`：配置、来源、入榜商家的逐来源贡献（原站分、百分位、权重、日期、样本数、原始证据），`algorithm_version=3.0`。
+- `observations.json`：全部来源的全部条目（包括未入榜的），附计分资格和排除原因。
+- `sources.json`：每个来源的读取结果、条目数，以及每个原始响应的 URL 和哈希。
+- `snapshots/<UTC 运行时间>/`：全部原始响应。
 
 ## 验证
 
@@ -106,4 +90,10 @@ v1 中 `variance_penalty`、`low_outlier_gap`、`three_source_bonus`、`four_sou
 PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-测试包括 2026-09-30 的四站公共快照（gzip 压缩，哈希与来源见 `tests/fixtures/provenance.json`），以及合成的字段缺失、零值、非法值、结构变化、分页漂移、相关来源、单调性、时间衰减、固定候选区间和空榜发布场景。公共快照不代表之后的页面永远兼容；解析契约失效时停止发布并保留诊断。
+测试使用 2026-10-01 的公共页面快照（gzip 压缩，来源与哈希见 `tests/fixtures/provenance.json`），外加合成数据，覆盖：
+- 尺度不变性和单调性
+- 血缘去重和弱证据入榜门槛
+- 缺测不记零
+- 域名对齐与同名不合并
+- Veridrop 协议混合和占位页处理
+- 结构变化时拒绝发布

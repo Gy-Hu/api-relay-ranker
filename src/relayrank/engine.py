@@ -1,132 +1,160 @@
+"""Aggregate per-source composites into one reference ranking.
+
+Each source scores vendors on its own scale (RelayPick's leader has 63, Veridrop medians cluster
+at 90+), so raw scores are not comparable. Every source's scorable vendors are converted to
+mid-rank percentiles over that source's whole list (0 = its worst, 100 = its best), then combined
+as a weighted mean shrunk toward a neutral prior. Percentiles use the source's full list, not the
+final cohort, so a vendor's per-source value does not depend on which other vendors qualify.
+"""
 from __future__ import annotations
 
 import math
+from bisect import bisect_left, bisect_right
 from collections import defaultdict
-from .models import Config, Observation, RankedVendor, Source
+from typing import Any
 
-
-METRICS = ("rank", "score", "uptime", "cache_rate", "price_value")
-
-
-def _rank_score(observation: Observation) -> float | None:
-    if observation.rank is None:
-        return None
-    return 100.0 if observation.total_vendors == 1 else 100 * (observation.total_vendors - observation.rank) / (observation.total_vendors - 1)
-
-
-def _observation_score(observation: Observation, config: Config) -> tuple[float, dict[str, float]]:
-    if observation.score is not None and config.metric_weights.get("score", 0) > 0:
-        return observation.score, {"score": observation.score}
-    if observation.evidence_kind == "composite":
-        raise ValueError(f"{observation.source}/{observation.vendor}: composite score missing or disabled")
-    values = {key: getattr(observation, key) for key in METRICS if key != "rank"}
-    values["rank"] = _rank_score(observation)
-    present = {k: v for k, v in values.items() if v is not None and config.metric_weights.get(k, 0) > 0}
-    denominator = sum(config.metric_weights[k] for k in present)
-    if denominator <= 0:
-        raise ValueError(f"{observation.source}/{observation.vendor}: no weighted metric is present")
-    return sum(v * config.metric_weights[k] for k, v in present.items()) / denominator, present
+from .models import Config, Observation, RankedVendor, Ranking, Source
 
 
 def observation_weight(observation: Observation, source: Source, config: Config) -> tuple[float, str]:
-    if observation.state != "valid" or observation.evidence_kind in {"ordering", "status"}:
-        return 0.0, observation.state if observation.state != "valid" else "reference"
-    stamp = observation.observed_at or source.published_at
-    if stamp is None:
-        return source.reliability * config.unknown_date_weight, "unknown_date"
-    age = (config.as_of - stamp).days
-    if age < 0:
-        return 0.0, "future_date"
-    if age > config.max_age_days:
-        return 0.0, "stale"
-    return source.reliability * 0.5 ** (age / config.half_life_days), "dated"
+    if observation.state != "valid":
+        return 0.0, observation.state
+    if observation.observed_at is None:
+        weight, quality = source.reliability * config.unknown_date_weight, "unknown_date"
+    else:
+        age = (config.as_of - observation.observed_at).days
+        if age < 0:
+            return 0.0, "future_date"
+        if age > config.max_age_days:
+            return 0.0, "stale"
+        weight, quality = source.reliability * 0.5 ** (age / config.half_life_days), "dated"
+    if observation.sample_count is not None:
+        weight *= observation.sample_count / (observation.sample_count + config.sample_prior)
+    return weight, quality
+
+
+def percentiles(scores: dict[str, float]) -> dict[str, float]:
+    """Mid-rank percentile in [0, 100]; ties share the midpoint; a lone vendor is neutral."""
+    if len(scores) == 1:
+        return dict.fromkeys(scores, 50.0)
+    ordered = sorted(scores.values())
+    span = len(ordered) - 1
+    result = {}
+    for key, value in scores.items():
+        below = bisect_left(ordered, value)
+        equal = bisect_right(ordered, value) - below
+        result[key] = 100 * (below + (equal - 1) / 2) / span
+    return result
 
 
 def aggregate(observations: list[Observation], sources: dict[str, Source], config: Config,
-              min_sources: int = 1) -> list[RankedVendor]:
+              min_sources: int | None = None) -> Ranking:
+    min_sources = config.minimum_sources if min_sources is None else min_sources
     if min_sources < 1:
         raise ValueError("min_sources must be positive")
-    by_vendor: dict[str, list[dict]] = defaultdict(list)
+    by_vendor: dict[str, list[dict[str, Any]]] = defaultdict(list)
     seen = set()
     for obs in observations:
         if obs.source not in sources:
-            raise ValueError(f"unknown source in CSV: {obs.source}")
-        key = (obs.source, obs.vendor)
-        if key in seen:
+            raise ValueError(f"unknown source: {obs.source}")
+        if (obs.source, obs.vendor) in seen:
             raise ValueError(f"duplicate observation: {obs.source}/{obs.vendor}")
-        seen.add(key)
+        seen.add((obs.source, obs.vendor))
         source = sources[obs.source]
         weight, quality = observation_weight(obs, source, config)
-        value, metrics = None, {}
-        if weight > 0:
-            try:
-                value, metrics = _observation_score(obs, config)
-            except ValueError:
-                weight, quality = 0.0, "missing_metrics"
-        issues = list(obs.issues)
-        if quality in {"unknown_date", "future_date", "stale", "missing_metrics"}:
-            issues.append(quality)
         by_vendor[obs.vendor].append({
-            "source": obs.source, "group": source.independence_group or source.name,
-            "rank": obs.rank, "total_vendors": obs.total_vendors,
-            "website_url": obs.website_url, "raw_score": value,
-            "weight": weight, "metrics": metrics, "quality": quality,
-            "state": obs.state, "evidence_kind": obs.evidence_kind,
-            "observed_at": (obs.observed_at or source.published_at).isoformat() if (obs.observed_at or source.published_at) else None,
-            "date_basis": obs.date_basis, "issues": issues, "raw_evidence": obs.raw_evidence,
+            "source": obs.source, "group": source.group, "raw_score": obs.score, "weight": weight,
+            "quality": quality, "percentile": None, "observed_at": obs.observed_at.isoformat() if obs.observed_at else None,
+            "sample_count": obs.sample_count, "state": obs.state, "domain": obs.domain,
+            "website_url": obs.website_url, "source_url": obs.source_url,
+            "issues": list(obs.issues) + ([quality] if quality in {"unknown_date", "future_date", "stale"} else []),
+            "raw_evidence": obs.raw_evidence,
         })
 
-    # Correlated observations share a maximum of one source's weight per vendor.
-    groups_by_vendor = {}
-    for vendor, details in by_vendor.items():
+    # Too few scorable vendors make percentiles meaningless (two vendors -> 0 and 100).
+    counts = defaultdict(int)
+    for entries in by_vendor.values():
+        for e in entries:
+            if e["weight"] > 0:
+                counts[e["source"]] += 1
+    scoring = {name for name in sources if counts[name] >= config.minimum_peers}
+    thin_sources = tuple(sorted(name for name in sources if name not in scoring))
+    for entries in by_vendor.values():
+        for e in entries:
+            if e["weight"] > 0 and e["source"] not in scoring:
+                e["weight"], e["quality"] = 0.0, "insufficient_peers"
+                e["issues"].append("insufficient_peers")
+
+    for name in scoring:
+        source_scores = {v: e["raw_score"] for v, entries in by_vendor.items() for e in entries
+                         if e["source"] == name and e["weight"] > 0}
+        for vendor, value in percentiles(source_scores).items():
+            next(e for e in by_vendor[vendor] if e["source"] == name)["percentile"] = value
+
+    def covering(entries: list[dict[str, Any]]) -> set[str]:
+        """Groups whose evidence is strong enough to count toward the entry threshold."""
+        totals: dict[str, float] = defaultdict(float)
+        for e in entries:
+            totals[e["group"]] = max(totals[e["group"]], e["weight"])
+        return {g for g, w in totals.items() if w >= config.coverage_weight}
+
+    coverage = {v: covering(entries) for v, entries in by_vendor.items()}
+    cohort = {v for v, groups in coverage.items() if len(groups) >= min_sources}
+
+    # Sources in one lineage group share at most one source's weight per vendor.
+    for vendor in cohort:
         groups = defaultdict(list)
-        for d in details:
-            if d["weight"] > 0:
-                groups[d["group"]].append(d)
+        for e in by_vendor[vendor]:
+            if e["weight"] > 0:
+                groups[e["group"]].append(e)
         for entries in groups.values():
-            total = sum(d["weight"] for d in entries)
-            scale = max(d["weight"] for d in entries) / total
-            for d in entries:
-                d["weight"] *= scale
-        groups_by_vendor[vendor] = groups
+            scale = max(e["weight"] for e in entries) / sum(e["weight"] for e in entries)
+            for e in entries:
+                e["weight"] *= scale
 
-    cohort = [v for v, groups in groups_by_vendor.items() if len(groups) >= min_sources
-              and not any(d["state"] == "inactive" for d in by_vendor[v])]
-
-    def calculate(vendor: str, excluded: str | None = None):
-        entries = [d for d in by_vendor[vendor] if d["weight"] > 0 and d["group"] != excluded]
-        weight = sum(d["weight"] for d in entries)
+    def calculate(vendor: str, excluded: str | None = None) -> tuple[float, float, float]:
+        entries = [e for e in by_vendor[vendor] if e["weight"] > 0 and e["group"] != excluded]
+        weight = sum(e["weight"] for e in entries)
+        total = sum(e["percentile"] * e["weight"] for e in entries)
         denominator = weight + config.prior_strength
-        score = ((sum(d["raw_score"] * d["weight"] for d in entries) + config.prior_score * config.prior_strength)
-                 / denominator) if denominator else config.prior_score
-        if weight:
-            mean = sum(d["raw_score"] * d["weight"] for d in entries) / weight
-            sigma = math.sqrt(sum(d["weight"] * (d["raw_score"] - mean) ** 2 for d in entries) / weight)
-        else:
-            sigma = 0.0
+        score = (total + config.prior_score * config.prior_strength) / denominator if denominator else config.prior_score
+        mean = total / weight if weight else 0.0
+        sigma = math.sqrt(sum(e["weight"] * (e["percentile"] - mean) ** 2 for e in entries) / weight) if weight else 0.0
         return score, weight, sigma
 
     scores = {v: calculate(v) for v in cohort}
     ordered = sorted(cohort, key=lambda v: (-scores[v][0], v.casefold()))
     ranges = {v: [i] for i, v in enumerate(ordered, 1)}
-    # Keep the same eligible cohort, remove an independent group (including clones).
-    all_groups = sorted({g for v in cohort for g in groups_by_vendor[v]})
-    if len(all_groups) > 1:
-        for excluded in all_groups:
+    groups_present = sorted({e["group"] for v in cohort for e in by_vendor[v] if e["weight"] > 0})
+    if len(groups_present) > 1:
+        # Remove one whole lineage group, keep the same cohort, and re-rank.
+        for excluded in groups_present:
             subset = sorted(cohort, key=lambda v: (-calculate(v, excluded)[0], v.casefold()))
             for rank, vendor in enumerate(subset, 1):
                 ranges[vendor].append(rank)
+
+    source_order = {name: i for i, name in enumerate(sources)}
     results = []
     for rank, vendor in enumerate(ordered, 1):
         score, weight, sigma = scores[vendor]
-        details = by_vendor[vendor]
-        count = len(groups_by_vendor[vendor])
-        issues = tuple(sorted({str(issue) for d in details for issue in d["issues"]}))
-        loss = tuple(sorted(g for g in groups_by_vendor[vendor] if count - 1 < min_sources))
+        details = sorted(by_vendor[vendor], key=lambda e: source_order[e["source"]])
+        groups = coverage[vendor]
         results.append(RankedVendor(
-            rank, vendor, score, 1 - math.exp(-weight), count, weight, sigma, 0.0,
-            min(ranges[vendor]), max(ranges[vendor]), tuple(details),
-            next((str(d["website_url"]) for d in details if d["website_url"]), ""),
-            raw_score_stddev=sigma, issues=issues, coverage_loss_groups=loss,
+            rank=rank, vendor=vendor, score=score, source_count=len(groups), effective_weight=weight,
+            score_stddev=sigma, rank_best=min(ranges[vendor]), rank_worst=max(ranges[vendor]),
+            contributions=tuple(details),
+            website_url=next((str(e["website_url"]) for e in details if e["website_url"]), ""),
+            domains=tuple(sorted({e["domain"] for e in details if e["domain"]})),
+            issues=tuple(sorted({str(issue) for e in details for issue in e["issues"]})),
+            coverage_loss_groups=tuple(sorted(groups)) if len(groups) - 1 < min_sources else (),
         ))
-    return results
+
+    evaluations = {}
+    for vendor, entries in by_vendor.items():
+        status = "ranked" if vendor in cohort else "insufficient_sources"
+        for e in entries:
+            evaluations[(e["source"], vendor)] = {
+                "weight": e["weight"], "quality": e["quality"], "percentile": e["percentile"],
+                "group": e["group"], "vendor_status": status,
+            }
+    return Ranking(results, evaluations, len(cohort), tuple(sorted(scoring)), thin_sources)

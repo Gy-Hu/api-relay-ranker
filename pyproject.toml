@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "api-relay-ranker"
-version = "0.3.0"
-description = "Evidence-aware, bias-resistant aggregation of API relay provider rankings"
+version = "0.4.0"
+description = "Composite API relay ranking from measured sources, joined by domain and normalized per source"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}

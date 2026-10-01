@@ -1,56 +1,39 @@
-# 已核验来源清单
+# 来源核验记录（2026-10-01）
 
-> 2026-09-30 v2 更新：下文包含历史取证记录，不代表当前计分契约。当前来源的有效性、旁证用途、日期限制和迁移规则见 README。APIRanking 页面顺序、TokHub 状态映射均不再计入综合质量分。
+所有判断均来自只读 HTTP GET：没有注册，没有提交 key，也没有对中转站发起探测。"重合"指和 HelpAIO 收录商家对得上的数量。
 
-本文件区分“榜单”“监测项目”和“口碑信号”。只有能够复核到完整排名或结构化指标的数据才能进入 `examples/rankings.csv`。
+## 计分来源
 
-## 目标四榜
-
-本项目需要综合的四个真实榜单已经确认：
-
-| 来源 | 原始口径 | 当前证据状态 | 聚合要求 |
+| 来源 | 数据位置 | 新鲜度证据 | 血缘 |
 |---|---|---|---|
-| HelpAIO | 商家综合分、可用率、缓存率、价格与体验 | 本地 JSONL 有 2026-07-08 完整页面快照 | 直接保留原始分数和指标 |
-| zhaotutu | 可用率、可信度、价格、缓存、服务、模型覆盖加权 | 官网仍可访问；用户保存的摘要可对上 Duck Code 94.3 等快照数据 | 保存抓取时间；历史名次不可用当前名次覆盖 |
-| APIRanking | 真假检测、价格区间、支付、起充、开票、稳定性及页面顺序 | 官网仍可访问；本地已定位 JSONL 未保存其页面正文 | 分类字段进入风险/能力维度，不伪造站点综合分 |
-| TokHub | 通道级可用率、成功率、延迟、诊断状态与评分 | 本地 JSONL 有 2026-07-09 的 16 通道 API 快照 | 先把同一商家的多个通道聚合到商家层 |
+| HelpAIO | `/transit` 卡片公式 + JSON-LD 排行 | 页面"数据更新于"日期 | 自有实测 |
+| RelayPick | `/ranking` Flight `rows[]`：`final_score`、`computed_at`、`domain` | 每行 `computed_at`；30 天窗口 | 自称自有探测，开源仓库 404，无法审计 |
+| OkkMax | `/list` Flight `rows[].score`；`/availability` `cards[].channels[].points[].t` | 每小时一个探测桶 | 自有探测；fanbidog/ai-relay-rank 是其镜像 |
+| Veridrop | `/search?q=<域名>`，以及 `/leaderboard/<端点>` 的报告历史表 | 每份报告的日期 | 社区触发；ChunduAI 复制其报告 |
 
-X/Twitter 与 Kagi/V2EX 只作为口碑、事件和风险交叉验证，不作为第五、第六张榜单参与名次计分。
+## 排除的来源
 
-## 当前已录入的默认数据
+| 来源 | 排除原因 |
+|---|---|
+| zhaotutu | 进榜商家的 `lastChecked` 停在 2026-04-30 至 05-15；431/468 条模型记录的 24h 与 3d 可用率完全相同 |
+| APIRanking | 页面顺序不是质量分；benchmark 页的实测年份/时区未知 |
+| TokHub | `score`/`uptime24h` 是状态映射值；只覆盖 9 家 |
+| ChunduAI | 报告 JSON 与 Veridrop 逐字段一致（同一时间戳、端点、耗时和错误文本） |
+| fanbidog/ai-relay-rank | OkkMax 镜像，数据只在 2026-07-08 提交过 |
+| aiapirank.github.io | Hvoy 镜像；877 家中只有 111 家有可用率数据；没有综合分 |
+| CheckFakeAPI | 近 7 天 0 条报告；68 家中 51 家只有单样本；JSON 接口只返回 35 家 |
+| BaiPiao | 主分 = 站长分 + 投票；收录收费；与 HelpAIO 收录商家无重合 |
+| GrokCode | 没有样本的商家用兜底评分；与 HelpAIO 收录商家无重合 |
+| ai-transfer | 可用率是写死在 JS 里的推广文案 |
+| Chenking api-rank | 人工打分，自动检测已关闭，链接大量带返利参数 |
+| RouterHubs | 有新鲜的每小时可达探测，但没有综合分；与 HelpAIO 收录商家只重合 1 家 |
+| apirank.ttop5.cc | 数据来自作者真实开发日志，质量不错，但快照停在 2026-08-19 |
+| APIMaket | 多次尝试均无法抓取 |
 
-### HelpAIO
+## 身份陷阱
 
-- 页面：`https://www.helpaio.com/transit`
-- Claude Code 会话抓取日期：2026-07-09
-- 页面标注数据日期：2026-07-08
-- 会话中的完整榜单抓取位置：`08d1cc66-6ea1-48f5-b461-2425b49bc53a.jsonl` 第 67 行
-- 会话总结位置：同一文件第 79 行
-
-当前 CSV 只录入能从该会话明确复核的 Micu、Packy Code、SSSAiCode 和 Duck Code 数据。
-
-## 已核验、待写适配器的榜单
-
-### TokHub
-
-TokHub 是真实充值和调用探测项目，用于检查连通性、模型列表和真实生成。另一份相邻会话 `78185bd0-7d31-4a7e-930d-ed46211d8a1e.jsonl` 第 100 行保存了 `/api/public/channels` 的 16 通道评分快照。它是有效榜单，但必须先按 `provider` 聚合，不能把一个商家的四个通道当成四家商户。
-
-### zhaotutu
-
-测评榜单现为 `https://api.zhaotutu.ai/`（2026-09-30 核验，可解析 59 家商家）。原地址 `https://zhaotutu.ai/` 已改为产品首页，并链接至新测评地址。用户保存的原始摘要包含 Duck Code 第 6（94.3）、SSSAiCode 93.4 等当时数据。榜单会动态扩容和变化，正式导入必须保存同一时刻的完整快照。
-
-### APIRanking
-
-官网为 `https://apiranking.com/`。页面提供真假检测、价格水平、支付方式、起充、赠额、开票、稳定性和模型覆盖等字段。它没有可与 HelpAIO 直接等价的统一综合分，因此适配器应保留分类证据；未检测不能当成检测失败。
-
-### X / Twitter 搜索结果
-
-对话搜索了 API 中转相关帖子、回复和特定商家口碑。这些内容可以作为风险提示或定性证据，但不是统一采样的排行榜，不能伪装成榜单名次。
-
-## 尚待恢复
-
-HelpAIO 和 TokHub 的原始时点快照已在本地 JSONL 中找到。zhaotutu 和 APIRanking 的网站已确认，但对应 2026-07-09 时点的完整页面快照尚未在已定位 JSONL 中找到。因此不得用今天的动态榜单覆盖历史数据；应先恢复历史快照，或明确从新的统一抓取时点重新开始排名。
-
-## 数据纪律
-
-任何演示数据必须放在独立的测试夹具中，名称明确包含 `synthetic`，不得参与默认排名。默认示例只允许使用可追溯的真实数据。
+- `duckcode.cn` ≠ `duckcoding.ai`（HelpAIO 链接的是后者）
+- `88api.ai` ≠ 88 Code（`88code.org`）
+- NekoAPI（`nekoapi.com`）≠ Neko Code（`nekocode.ai`）
+- `ikuncode.com` 和 `78code.top` 未确认与对应商家同属一家
+- RelayPick 把 `packyapi.com` 和 `packyapi.ai` 列为两个条目；本项目在配置中把两者合并为 Packy Code

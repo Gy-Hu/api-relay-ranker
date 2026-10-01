@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import re
+from ..identity import host_of
 from ..models import Observation, finite_number
 from .common import Document, item_list, safe_http_url, source_date
 
 SOURCE = "helpaio"
+URL = "https://www.helpaio.com/transit"
 
 
-def parse_helpaio(body: bytes, aliases: dict[str, str]) -> list[Observation]:
+def parse_helpaio(body: bytes) -> list[Observation]:
     html = body.decode("utf-8", errors="strict")
     rankings = item_list(html, "排行榜")
     doc = Document(html).root
@@ -36,9 +38,10 @@ def parse_helpaio(body: bytes, aliases: dict[str, str]) -> list[Observation]:
                 parsed = tuple(float(v) if v is not None else 1.0 for v in match.groups())
                 break
         link = next((safe_http_url(n.attrs.get("href")) for n in nodes if n.tag == "a" and n.has_class("transit-station-link")), None)
+        detail = next((n.attrs.get("href") for n in nodes if n.tag == "a" and str(n.attrs.get("href", "")).startswith("/transit/info/")), None)
         issues = []
-        score, uptime = None, None
-        raw = {"scope": "source-wide composite; not a per-model benchmark"}
+        score = None
+        raw = {"rank": rank, "total": len(rankings)}
         if parsed:
             score, base, uptime, penalty = parsed
             finite_number(base, f"HelpAIO/{name}/base_score")
@@ -50,11 +53,12 @@ def parse_helpaio(body: bytes, aliases: dict[str, str]) -> list[Observation]:
             if uptime == 0:
                 issues.append("source_zero_availability_requires_verification")
         else:
-            issues.append("missing_ranking_score")
+            issues.append("missing_composite")
         observations.append(Observation(
-            SOURCE, aliases.get(name.casefold(), name), rank, len(rankings), score=score,
-            uptime=uptime, website_url=link, state="valid" if parsed else "missing",
-            observed_at=stamp, date_basis="source_page_update" if stamp else "unknown",
+            SOURCE, name, domain=host_of(link), score=score, observed_at=stamp,
+            state="valid" if parsed else "missing",
+            website_url=safe_http_url(link, origin_only=True),
+            source_url=f"https://www.helpaio.com{detail}" if detail else URL,
             issues=tuple(issues), raw_evidence=raw,
         ))
     if len(observations) < 10 or not any(o.score is not None for o in observations):
