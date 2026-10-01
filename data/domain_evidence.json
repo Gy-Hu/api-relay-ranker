@@ -607,9 +607,7 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
-    "first": "2026-06-13",
-    "first_any": "2026-06-13"
+    "error": "HTTP 502"
    },
    "wayback": {
     "checked": "2026-10-01",
@@ -682,9 +680,7 @@
    },
    "cert": {
     "checked": "2026-10-01",
-    "basis": null,
-    "first": "2026-01-26",
-    "first_any": "2026-01-26"
+    "error": "HTTP 502"
    }
   },
   "bytonsec.com": {
@@ -1006,6 +1002,10 @@
     "basis": "2026-01-26",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "digitalcats.cc": {
@@ -1118,6 +1118,10 @@
     "basis": "2026-08-30",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "flashapi.top": {
@@ -1152,6 +1156,10 @@
     "basis": "2024-06-28",
     "first": "2024-09-04",
     "first_any": "2024-09-04"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "gpt.ge": {
@@ -1166,6 +1174,10 @@
     "basis": null,
     "first": "2026-06-26",
     "first_any": "2026-06-26"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "hao.ai": {
@@ -1412,6 +1424,10 @@
     "basis": "2025-10-11",
     "first": "2026-03-27",
     "first_any": "2026-03-27"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "linkuai.net": {
@@ -1653,6 +1669,10 @@
     "basis": "2026-06-13",
     "first": null,
     "first_any": null
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "mzlone.top": {
@@ -2164,6 +2184,10 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "HTTP 503"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "tken.lol": {
@@ -2178,6 +2202,10 @@
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
+   },
+   "cert": {
+    "checked": "2026-10-01",
+    "error": "HTTP 502"
    }
   },
   "tocodex.com": {
@@ -2546,7 +2574,7 @@
   },
   "yunwu.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-23",
+   "helpaio_listed": "2025-11-22",
    "relaypick_online": "2023-01-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
