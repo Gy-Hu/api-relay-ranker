@@ -17,6 +17,20 @@ sample_prior = 3          # Veridrop weight factor n / (n + 3)
 [longevity]
 min_operating_days = 90   # vendors without evidence of this many days are hidden by default
 
+# Owner-requested exclusions, checked 2026-10-02. Keep their observations in the
+# percentile population so removing them does not change other vendors' scores.
+[[exclusions]]
+domain = "9527.codes"
+reason = "站主指定排除（2026-10-02）：注册验证码两次发送后均未收到，含垃圾邮件复查；不代表所有用户均无法注册。"
+
+[[exclusions]]
+domain = "ggwk1.online"
+reason = "站主指定排除（2026-10-02）：两次访问均 ERR_CONNECTION_CLOSED；不据此认定永久停运。"
+
+[[exclusions]]
+domain = "tongapi.com"
+reason = "站主指定排除（2026-10-02）：注册接口明确提示管理员关闭新用户注册。"
+
 # reliability reflects what the source actually measures, not how much we like its ranking.
 [[sources]]
 name = "helpaio"

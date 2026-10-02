@@ -7,7 +7,7 @@ from pathlib import Path
 
 from . import longevity
 from .engine import aggregate
-from .io import load_config, write_audit, write_csv, write_observations, write_reports
+from .io import load_config, load_exclusions, write_audit, write_csv, write_observations, write_reports
 from .live import SOURCES, LiveCollectionError, collect_live
 from .site import write_site
 
@@ -67,8 +67,9 @@ def main(argv: list[str] | None = None) -> int:
     stats = {} if args.skip_lookups else longevity.refresh(cache, priority, config.as_of, longevity.HttpLookups())
     longevity.save_cache(args.evidence_cache, cache)
     ages = longevity.vendor_ages(domains, cache, config.as_of)
-    ranking = aggregate(observations, sources, config, min_sources=min_sources,
-                        excluded={v: a.excluded for v, a in ages.items() if a.excluded})
+    excluded = {v: a.excluded for v, a in ages.items() if a.excluded}
+    excluded.update(load_exclusions(args.config, domains))
+    ranking = aggregate(observations, sources, config, min_sources=min_sources, excluded=excluded)
     for report in reports:
         print(f"{report.name}: {'ok' if report.ok else 'FAILED'} {report.valid_count}/{report.vendor_count} scored"
               + (f" ({report.error})" if report.error else ""))

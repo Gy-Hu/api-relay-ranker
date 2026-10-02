@@ -8,12 +8,32 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from .identity import Directory, VendorSpec
+from .identity import Directory, VendorSpec, host_of, registrable_domain
 from .longevity import LongevityConfig, VendorAge
 from .models import Config, Observation, Ranking, Source
 
 ALGORITHM_VERSION = "3.1"
 _AGGREGATION_KEYS = {f.name for f in fields(Config)} - {"as_of"}
+
+
+def load_exclusions(path: str | Path, domains: dict[str, tuple[str, ...]]) -> dict[str, str]:
+    """Apply explicit owner exclusions after identity resolution, without changing peers."""
+    with Path(path).open("rb") as handle:
+        items = tomllib.load(handle).get("exclusions", [])
+    rules = {}
+    for item in items:
+        host = host_of(item.get("domain"))
+        reason = item.get("reason", "").strip()
+        if not host or not reason:
+            raise ValueError("each exclusion requires a domain and reason")
+        domain = registrable_domain(host)
+        if domain in rules:
+            raise ValueError(f"duplicate exclusion: {domain}")
+        rules[domain] = reason
+    return {vendor: "; ".join(dict.fromkeys(rules[registrable_domain(d)] for d in ds
+                                            if registrable_domain(d) in rules))
+            for vendor, ds in domains.items()
+            if any(registrable_domain(d) in rules for d in ds)}
 
 
 def load_config(path: str | Path, as_of: date) -> tuple[Config, dict[str, Source], Directory, LongevityConfig]:
