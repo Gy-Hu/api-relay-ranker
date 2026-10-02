@@ -37,8 +37,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -180,8 +180,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -323,8 +323,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -344,8 +344,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+    "checked": "2026-10-02",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -614,8 +614,8 @@
    "relaypick_online": "2026-04-01",
    "veridrop_report": "2026-06-30",
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -1152,8 +1152,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1339,8 +1339,10 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "basis": "2025-09-06",
+    "first": "2025-09-15",
+    "first_any": "2021-12-02"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1362,8 +1364,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1548,8 +1550,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1691,7 +1693,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
+    "checked": "2026-10-02",
     "error": "The read operation timed out"
    },
    "cert": {
@@ -1737,8 +1739,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1781,8 +1783,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "basis": "2026-04-22",
+    "first": "2026-07-13",
+    "first_any": "2026-07-13"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1865,8 +1869,8 @@
   "linkuai.net": {
    "first_seen": "2026-10-01",
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -2149,8 +2153,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2548,7 +2552,7 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-01",
+    "checked": "2026-10-02",
     "error": "The read operation timed out"
    },
    "cert": {
@@ -2753,8 +2757,8 @@
   "smai.ai": {
    "first_seen": "2026-10-01",
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -2806,8 +2810,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3225,8 +3229,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3366,8 +3370,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3460,8 +3464,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "HTTP 503"
+    "checked": "2026-10-02",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
