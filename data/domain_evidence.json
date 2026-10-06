@@ -37,7 +37,7 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -269,6 +269,29 @@
     "source": "ctlogs.dev"
    }
   },
+  "aiaimark.com": {
+   "first_seen": "2026-10-06",
+   "veridrop_report": "2026-09-30",
+   "rdap": {
+    "checked": "2026-10-06",
+    "registered": "2026-07-19",
+    "expires": "2027-07-19",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-06",
+    "basis": "2026-07-19",
+    "first": "2026-07-20",
+    "first_any": "2026-07-20",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-10-06",
+    "error": "<urlopen error [Errno 111] Connection refused>"
+   }
+  },
   "aiapi.world": {
    "first_seen": "2026-10-01",
    "rdap": {
@@ -327,7 +350,7 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -348,7 +371,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -369,7 +392,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -390,8 +413,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-06",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -467,7 +490,7 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
@@ -481,7 +504,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "The read operation timed out"
    },
    "cert": {
@@ -575,8 +598,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-06",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -643,7 +666,7 @@
    "relaypick_online": "2026-04-01",
    "veridrop_report": "2026-06-30",
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "rdap": {
@@ -1177,7 +1200,7 @@
    "helpaio_listed": "2025-12-22",
    "veridrop_report": "2026-06-22",
    "rdap": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "registered": "2025-11-02",
     "expires": "2026-11-02",
     "status": [
@@ -1209,8 +1232,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-02",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-06",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1314,6 +1337,26 @@
     "basis": "2025-10-08",
     "first": "2026-04-06",
     "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
+   }
+  },
+  "ddtnew.com": {
+   "first_seen": "2026-10-06",
+   "veridrop_report": "2026-08-16",
+   "rdap": {
+    "checked": "2026-10-06",
+    "registered": "2026-08-05",
+    "expires": "2027-08-05",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-06",
+    "basis": "2026-08-05",
+    "first": "2026-08-05",
+    "first_any": "2026-08-05",
     "source": "ctlogs.dev"
    }
   },
@@ -1423,8 +1466,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-02",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-06",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1980,8 +2023,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-06",
+    "basis": "2026-07-12",
+    "first": null,
+    "first_any": null
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2212,7 +2257,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -2676,7 +2721,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "registered": "2025-10-11",
     "expires": "2026-10-11",
     "status": [
@@ -2684,8 +2729,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-05",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-06",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2716,6 +2761,24 @@
     "basis": "2026-07-23",
     "first": "2026-07-23",
     "first_any": "2026-07-23",
+    "source": "ctlogs.dev"
+   }
+  },
+  "rivernexus.vip": {
+   "first_seen": "2026-10-06",
+   "rdap": {
+    "checked": "2026-10-06",
+    "registered": "2026-08-27",
+    "expires": "2027-08-27",
+    "status": [
+     "server transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-06",
+    "basis": "2026-08-27",
+    "first": "2026-08-28",
+    "first_any": "2026-08-28",
     "source": "ctlogs.dev"
    }
   },
@@ -2753,8 +2816,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-06",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3142,7 +3205,7 @@
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-12-09",
    "rdap": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "registered": "2025-08-15",
     "expires": "2026-08-15",
     "status": [
@@ -3311,7 +3374,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -3375,7 +3438,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-29",
    "rdap": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "registered": "2025-10-29",
     "expires": "2026-10-29",
     "status": [
@@ -3471,8 +3534,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-06",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3565,7 +3628,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
@@ -3610,7 +3673,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-05",
+    "checked": "2026-10-06",
     "error": "The read operation timed out"
    },
    "cert": {
