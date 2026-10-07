@@ -37,8 +37,10 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "basis": "2026-03-06",
+    "first": "2026-03-28",
+    "first_any": "2026-03-28"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -288,8 +290,8 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    }
   },
   "aiapi.world": {
@@ -350,8 +352,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -371,8 +373,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -392,8 +394,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -413,8 +415,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "HTTP 503"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -490,8 +492,8 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    }
   },
   "api2cn.com": {
@@ -504,8 +506,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "The read operation timed out"
+    "checked": "2026-10-07",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -598,8 +600,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "HTTP 503"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -666,8 +668,8 @@
    "relaypick_online": "2026-04-01",
    "veridrop_report": "2026-06-30",
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -1200,7 +1202,7 @@
    "helpaio_listed": "2025-12-22",
    "veridrop_report": "2026-06-22",
    "rdap": {
-    "checked": "2026-10-06",
+    "checked": "2026-10-07",
     "registered": "2025-11-02",
     "expires": "2026-11-02",
     "status": [
@@ -1232,8 +1234,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1466,8 +1468,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1920,7 +1922,8 @@
     "first": "2026-08-16",
     "first_any": "2026-08-16",
     "source": "ctlogs.dev"
-   }
+   },
+   "veridrop_report": "2026-10-07"
   },
   "lingsuan.top": {
    "first_seen": "2026-10-01",
@@ -2257,8 +2260,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2721,7 +2724,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
-    "checked": "2026-10-06",
+    "checked": "2026-10-07",
     "registered": "2025-10-11",
     "expires": "2026-10-11",
     "status": [
@@ -2729,8 +2732,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "The read operation timed out"
+    "checked": "2026-10-07",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2780,6 +2783,13 @@
     "first": "2026-08-28",
     "first_any": "2026-08-28",
     "source": "ctlogs.dev"
+   },
+   "veridrop_report": "2026-10-06",
+   "wayback": {
+    "checked": "2026-10-07",
+    "basis": "2026-08-27",
+    "first": null,
+    "first_any": null
    }
   },
   "rly0.com": {
@@ -2816,8 +2826,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "The read operation timed out"
+    "checked": "2026-10-07",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3205,7 +3215,7 @@
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-12-09",
    "rdap": {
-    "checked": "2026-10-06",
+    "checked": "2026-10-07",
     "registered": "2025-08-15",
     "expires": "2026-08-15",
     "status": [
@@ -3374,8 +3384,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3438,7 +3448,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-29",
    "rdap": {
-    "checked": "2026-10-06",
+    "checked": "2026-10-07",
     "registered": "2025-10-29",
     "expires": "2026-10-29",
     "status": [
@@ -3534,8 +3544,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "HTTP 503"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3628,8 +3638,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-10-07",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3673,8 +3683,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-06",
-    "error": "The read operation timed out"
+    "checked": "2026-10-07",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
