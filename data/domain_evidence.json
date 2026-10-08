@@ -77,7 +77,7 @@
   },
   "4router.net": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-08-29",
+   "helpaio_listed": "2026-08-28",
    "veridrop_report": "2026-05-26",
    "rdap": {
     "checked": "2026-10-01",
@@ -102,7 +102,7 @@
   },
   "78code.cc": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-05-05",
+   "helpaio_listed": "2026-05-04",
    "veridrop_report": "2026-05-15",
    "rdap": {
     "checked": "2026-10-01",
@@ -127,7 +127,7 @@
   },
   "88code.org": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-20",
+   "helpaio_listed": "2025-11-19",
    "rdap": {
     "checked": "2026-10-01",
     "registered": "2025-09-18",
@@ -290,8 +290,8 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "aiapi.world": {
@@ -352,8 +352,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -373,8 +373,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -394,8 +394,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -415,8 +415,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -492,8 +492,8 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "api2cn.com": {
@@ -506,8 +506,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "HTTP 503"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -568,7 +568,7 @@
   },
   "apinebula.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-07-24",
+   "helpaio_listed": "2026-07-23",
    "veridrop_report": "2026-07-26",
    "rdap": {
     "checked": "2026-10-01",
@@ -600,8 +600,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -668,8 +668,8 @@
    "relaypick_online": "2026-04-01",
    "veridrop_report": "2026-06-30",
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -872,7 +872,7 @@
   },
   "bytecatcode.org": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-06-12",
+   "helpaio_listed": "2026-06-11",
    "veridrop_report": "2026-05-16",
    "rdap": {
     "checked": "2026-10-01",
@@ -946,7 +946,7 @@
   },
   "cctq.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-04-03",
+   "helpaio_listed": "2026-04-02",
    "veridrop_report": "2026-05-17",
    "rdap": {
     "checked": "2026-10-01",
@@ -1199,10 +1199,10 @@
   },
   "cpass.cc": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-12-22",
+   "helpaio_listed": "2025-12-21",
    "veridrop_report": "2026-06-22",
    "rdap": {
-    "checked": "2026-10-07",
+    "checked": "2026-10-08",
     "registered": "2025-11-02",
     "expires": "2026-11-02",
     "status": [
@@ -1225,7 +1225,7 @@
   },
   "cubence.com": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-21",
+   "helpaio_listed": "2025-11-20",
    "veridrop_report": "2026-05-12",
    "rdap": {
     "checked": "2026-10-01",
@@ -1234,8 +1234,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1410,7 +1410,7 @@
   },
   "duckcoding.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-21",
+   "helpaio_listed": "2025-11-20",
    "veridrop_report": "2026-06-05",
    "rdap": {
     "checked": "2026-10-01",
@@ -1468,8 +1468,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1645,7 +1645,7 @@
   },
   "hongmacc.com": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-01-30",
+   "helpaio_listed": "2026-01-29",
    "veridrop_report": "2026-06-09",
    "rdap": {
     "checked": "2026-10-01",
@@ -1654,8 +1654,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-02",
-    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1713,7 +1713,7 @@
   },
   "ikuncode.cc": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-26",
+   "helpaio_listed": "2025-11-25",
    "veridrop_report": "2026-05-27",
    "rdap": {
     "checked": "2026-10-01",
@@ -1843,8 +1843,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-02",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2111,7 +2111,7 @@
   },
   "micuapi.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-01-15",
+   "helpaio_listed": "2026-01-14",
    "veridrop_report": "2026-05-12",
    "rdap": {
     "checked": "2026-10-01",
@@ -2260,8 +2260,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2370,7 +2370,7 @@
   },
   "nekocode.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-02-05",
+   "helpaio_listed": "2026-02-04",
    "veridrop_report": "2026-05-14",
    "rdap": {
     "checked": "2026-10-01",
@@ -2579,7 +2579,7 @@
   },
   "packyapi.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-19",
+   "helpaio_listed": "2025-11-18",
    "veridrop_report": "2026-07-25",
    "rdap": {
     "checked": "2026-10-01",
@@ -2724,7 +2724,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
-    "checked": "2026-10-07",
+    "checked": "2026-10-08",
     "registered": "2025-10-11",
     "expires": "2026-10-11",
     "status": [
@@ -2732,8 +2732,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "HTTP 503"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2745,7 +2745,7 @@
   },
   "rightapi.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-12-16",
+   "helpaio_listed": "2025-12-15",
    "veridrop_report": "2026-07-27",
    "rdap": {
     "checked": "2026-10-01",
@@ -2826,8 +2826,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "HTTP 503"
+    "checked": "2026-10-08",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2933,7 +2933,7 @@
   },
   "sssaicode.com": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-02-26",
+   "helpaio_listed": "2026-02-25",
    "veridrop_report": "2026-06-03",
    "rdap": {
     "checked": "2026-10-01",
@@ -3027,7 +3027,7 @@
   },
   "timicc.com": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2026-03-13",
+   "helpaio_listed": "2026-03-12",
    "veridrop_report": "2026-05-12",
    "rdap": {
     "checked": "2026-10-01",
@@ -3213,9 +3213,9 @@
   },
   "undyingapi.com": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-12-09",
+   "helpaio_listed": "2025-12-08",
    "rdap": {
-    "checked": "2026-10-07",
+    "checked": "2026-10-08",
     "registered": "2025-08-15",
     "expires": "2026-08-15",
     "status": [
@@ -3384,8 +3384,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "The read operation timed out"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3448,7 +3448,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-29",
    "rdap": {
-    "checked": "2026-10-07",
+    "checked": "2026-10-08",
     "registered": "2025-10-29",
     "expires": "2026-10-29",
     "status": [
@@ -3535,7 +3535,7 @@
   },
   "yes.vg": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-21",
+   "helpaio_listed": "2025-11-20",
    "veridrop_report": "2026-05-14",
    "rdap": {
     "checked": "2026-10-01",
@@ -3544,8 +3544,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3628,7 +3628,7 @@
   },
   "yunwu.ai": {
    "first_seen": "2026-10-01",
-   "helpaio_listed": "2025-11-21",
+   "helpaio_listed": "2025-11-20",
    "relaypick_online": "2023-01-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
@@ -3638,8 +3638,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-08",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3683,8 +3683,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-07",
-    "error": "HTTP 503"
+    "checked": "2026-10-08",
+    "error": "The read operation timed out"
    },
    "cert": {
     "checked": "2026-10-01",
