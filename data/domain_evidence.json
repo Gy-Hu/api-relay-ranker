@@ -290,8 +290,8 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-11",
+    "error": "The read operation timed out"
    }
   },
   "aiapi.world": {
@@ -352,7 +352,7 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    },
    "cert": {
@@ -373,8 +373,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-11",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -415,8 +415,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-11",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -492,7 +492,7 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    }
   },
@@ -506,8 +506,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "The read operation timed out"
+    "checked": "2026-10-11",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -600,8 +600,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "The read operation timed out"
+    "checked": "2026-10-11",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -668,7 +668,7 @@
    "relaypick_online": "2026-04-01",
    "veridrop_report": "2026-06-30",
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    },
    "rdap": {
@@ -1202,7 +1202,7 @@
    "helpaio_listed": "2025-12-21",
    "veridrop_report": "2026-06-22",
    "rdap": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "registered": "2025-11-02",
     "expires": "2026-11-02",
     "status": [
@@ -1234,7 +1234,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    },
    "cert": {
@@ -1468,7 +1468,7 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    },
    "cert": {
@@ -1845,8 +1845,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-09",
-    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    "checked": "2026-10-11",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1976,8 +1976,8 @@
   "linkuai.net": {
    "first_seen": "2026-10-01",
    "wayback": {
-    "checked": "2026-10-09",
-    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    "checked": "2026-10-11",
+    "error": "<urlopen error timed out>"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -2229,6 +2229,26 @@
     "source": "ctlogs.dev"
    }
   },
+  "muzeai.top": {
+   "first_seen": "2026-10-11",
+   "helpaio_listed": "2026-10-09",
+   "veridrop_report": "2026-08-15",
+   "rdap": {
+    "checked": "2026-10-11",
+    "registered": "2026-05-29",
+    "expires": "2027-05-29",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-10-11",
+    "basis": "2026-05-29",
+    "first": "2026-05-29",
+    "first_any": "2026-05-29",
+    "source": "ctlogs.dev"
+   }
+  },
   "mxdapi.com": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-09-04",
@@ -2262,8 +2282,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-11",
+    "basis": "2023-02-13",
+    "first": "2024-09-13",
+    "first_any": "2024-09-13"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2481,7 +2503,7 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "HTTP 503"
    }
   },
@@ -2749,7 +2771,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "registered": "2025-10-11",
     "expires": "2026-10-11",
     "status": [
@@ -2757,8 +2779,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "HTTP 503"
+    "checked": "2026-10-11",
+    "error": "<urlopen error timed out>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -2851,7 +2873,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "HTTP 503"
    },
    "cert": {
@@ -3240,7 +3262,7 @@
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-12-08",
    "rdap": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "registered": "2025-08-15",
     "expires": "2026-08-15",
     "status": [
@@ -3409,7 +3431,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    },
    "cert": {
@@ -3473,7 +3495,7 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-29",
    "rdap": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "registered": "2025-10-29",
     "expires": "2026-10-29",
     "status": [
@@ -3575,8 +3597,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-10-11",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -3669,7 +3691,7 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
+    "checked": "2026-10-11",
     "error": "<urlopen error timed out>"
    },
    "cert": {
@@ -3714,8 +3736,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-10",
-    "error": "The read operation timed out"
+    "checked": "2026-10-11",
+    "error": "HTTP 503"
    },
    "cert": {
     "checked": "2026-10-01",
