@@ -24,15 +24,11 @@ class Source:
     name: str
     reliability: float = 1.0
     group: str = ""
-    # Only Veridrop uses this: reports older than the window are ignored.
-    window_days: int | None = None
 
     def __post_init__(self) -> None:
         finite_number(self.reliability, f"source {self.name}: reliability", 0, 1)
         if not self.group:
             object.__setattr__(self, "group", self.name)
-        if self.window_days is not None and (type(self.window_days) is not int or self.window_days < 1):
-            raise ValueError(f"source {self.name}: window_days must be a positive integer")
 
 
 @dataclass(frozen=True)

@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
         raise ValueError("top, min-sources and timeout must be positive")
     output = Path(args.output_dir)
     try:
-        raw, reports = collect_live(sources, directory, config.as_of, args.snapshot_dir,
+        raw, reports = collect_live(sources, args.snapshot_dir,
                                     allow_partial=args.allow_partial, timeout=args.timeout)
     except LiveCollectionError as error:
         write_reports(output / "sources.json", error.reports)

@@ -7,12 +7,6 @@ on:
   schedule:
     - cron: "17 1 * * *"
   workflow_dispatch:
-    inputs:
-      allow_partial:
-        description: "Publish with at least two independent sources; uncheck to require all sources"
-        required: false
-        type: boolean
-        default: true
 
 permissions:
   # The build job commits data/domain_evidence.json (domain age/expiry cache) back to main.
@@ -56,7 +50,6 @@ jobs:
           --snapshot-dir build/snapshots
           --output-dir build/outputs
           --site-dir build/site
-          ${{ (github.event_name != 'workflow_dispatch' || inputs.allow_partial) && '--allow-partial' || '' }}
           --site-url https://gy-hu.github.io/api-relay-ranker/
           --og-image assets/relayrank-og.png
 

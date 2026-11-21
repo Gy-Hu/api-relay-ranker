@@ -1,17 +1,17 @@
-# 来源核验记录（2026-10-01）
+# 来源核验记录
 
 所有判断均来自只读 HTTP GET：没有注册，没有提交 key，也没有对中转站发起探测。"重合"指和 HelpAIO 收录商家对得上的数量。
 
-**2026-11-21 可访问性复核：** [当天的 Actions 运行](https://github.com/Gy-Hu/api-relay-ranker/actions/runs/44849390877) 从 HelpAIO 取得 20 条有效观测、OkkMax 83 条；RelayPick 榜单返回 522，Veridrop 域名搜索返回 403。未核实到这两家的可用公开替代数据源，保留原入口，恢复访问后再参与计分。以下为 10 月核验的数据口径，不表示当日可访问。
+**来源更换（2026-11-21）：** [旧配置的 Actions 运行](https://github.com/Gy-Hu/api-relay-ranker/actions/runs/44849390877) 取得 HelpAIO 20 条、OkkMax 83 条有效观测；RelayPick 返回 522，Veridrop 返回 403。后两者已退出当前计分，历史运营证据保留。该次运行不是新四源配置的发布验证。
 
 ## 计分来源
 
 | 来源 | 数据位置 | 新鲜度证据 | 血缘 |
 |---|---|---|---|
 | HelpAIO | `/transit` 卡片公式 + JSON-LD 排行 | 页面"数据更新于"日期 | 自有实测 |
-| RelayPick | `/ranking` Flight `rows[]`：`final_score`、`computed_at`、`domain` | 每行 `computed_at`；30 天窗口 | 自称自有探测，开源仓库 404，无法审计 |
+| [真测](https://ztest.ai/sites) | 从目录进入商家详情，取合格模型/分组的站点平均分；目录受赞助影响，不取展示顺序 | 详情页实际观测日期 | 原站实测；公开数据不足以完整复算综合分，可用性检查次数不作评分样本数 |
 | OkkMax | `/list` Flight `rows[].score`；`/availability` `cards[].channels[].points[].t` | 每小时一个探测桶 | 自有探测；fanbidog/ai-relay-rank 是其镜像 |
-| Veridrop | `/search?q=<域名>`，以及 `/leaderboard/<端点>` 的报告历史表 | 每份报告的日期 | 社区触发；ChunduAI 复制其报告 |
+| [中转查](https://zhongzhuancha.com/transit) | 从目录中选有实测的商家，取已公布的当前 /100 综合分；未测不等于零 | 72 小时窗口，取实际最近探测日期；链接商家详情供核对模型、渠道 | 原站实测；公开数据不足以完整复算综合分 |
 
 ## 排除的来源
 

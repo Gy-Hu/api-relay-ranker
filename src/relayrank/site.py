@@ -15,10 +15,8 @@ INFO = {info.name: info for info in SOURCES}
 
 ISSUE_LABELS = {
     "source_zero_availability_requires_verification": "原站可用率为零，需核验",
-    "authenticity_unsampled": "原站真伪项未抽样（该项按 0 计入原站分）",
     "missing_composite": "原站综合分缺失",
     "no_availability_series": "无可用率探测序列，日期未知",
-    "no_valid_reports_in_window": "窗口内没有有效检测报告",
     "multiple_source_entries_averaged": "同一来源多个域名条目已取平均",
     "insufficient_peers": "该来源可计分商家太少，未计分",
     "unknown_date": "日期未知（权重折减）",
@@ -26,8 +24,6 @@ ISSUE_LABELS = {
     "stale": "数据过期，未计分",
 }
 ISSUE_PREFIXES = {
-    "source_status:": "原站状态：",
-    "veridrop_detail_unavailable:": "Veridrop 详情暂不可用：",
     "name_matches_configured_vendor:": "名称与已配置商家相同但域名不同，未合并：",
 }
 
@@ -117,7 +113,7 @@ def _ranking_rows(ranking: Ranking, top: int, ages: dict[str, VendorAge], min_da
         mature = age is not None and age.mature(min_days)
         shown += mature
         hidden += not mature
-        risk = any(i.startswith("source_status:") or i == "source_zero_availability_requires_verification" for i in item.issues)
+        risk = "source_zero_availability_requires_verification" in item.issues
         label = "有风险信号" if risk else (f"{item.source_count} 源交叉" if mature else f"运营不足 {min_days} 天")
         vendor = _link(item.website_url, item.vendor, "vendor-link") if item.website_url else f"<strong>{_escape(item.vendor)}</strong>"
         coverage = ('<span>移除任一来源组后将不足入榜门槛</span>' if item.coverage_loss_groups else "")
@@ -252,7 +248,7 @@ def write_site(output_dir: str | Path, ranking: Ranking, reports: Iterable[Any],
     <div class="shell">
       <div class="eyebrow">Measured-source composite · v3</div>
       <h1>API 中转站<br>综合参考榜</h1>
-      <p class="lede">汇总 {labels} 四个自有实测的榜单。商家按域名对齐；每个来源的分数先换算成该来源内的百分位，再按可靠性、新鲜度和样本量加权合成。缺测不记零，风险信号保留。</p>
+      <p class="lede">汇总 {labels} 的公开实测数据。按域名对齐商家，把各来源的原站分换算成来源内百分位，再按可靠性与新鲜度加权。缺测不记零。</p>
       <div class="meta-strip"><span>生成时间 <strong>{_escape(_timestamp(generated_at))}</strong></span><span>来源 <strong>{healthy}/{len(SOURCES)} 已解析</strong></span><span>入榜 <strong>{ranking.cohort_size} 家（至少 {min_sources} 个来源组）</strong></span><span>默认显示 <strong>运营 ≥ {min_operating_days} 天</strong></span></div>
     </div>
   </header>
@@ -264,9 +260,9 @@ def write_site(output_dir: str | Path, ranking: Ranking, reports: Iterable[Any],
     {_excluded_rows(ranking, ages)}
     <div class="lower-grid">
       <section class="panel"><h2>来源</h2><table><thead><tr><th>来源</th><th>状态</th><th>有分/条目</th><th>可靠性 · 组</th><th>抓取时间</th></tr></thead><tbody>{_source_rows(report_dicts, sources, ranking)}</tbody></table></section>
-      <section class="panel"><h2>计算方法</h2><ol class="method"><li>各来源只取其综合分一次，换算为该来源全部可计分商家内的百分位。</li><li>权重 = 来源可靠性 × 0.5^(天数/{config.half_life_days:g})；超过 {config.max_age_days} 天退出；日期未知乘 {config.unknown_date_weight:g}；有样本数的来源再乘 n/(n+{config.sample_prior:g})。</li><li>综合分 = (Σ权重×百分位 + {config.prior_strength:g}×{config.prior_score:g}) / (Σ权重 + {config.prior_strength:g})，证据少的商家向中位收缩。</li><li>同一数据血缘的来源合计至多一票；移除整个来源组重排得到名次区间。</li><li>运营天数取最早的中转相关证据：HelpAIO 收录、Veridrop 首份报告、本站首次收录；证书、Wayback 存档和 RelayPick 上线日期早于域名注册日的视为前任域名主人，丢弃；域名曾属他人时，它自身的证书和存档全部不用。不计入综合分，只用于默认隐藏运营不足 {min_operating_days} 天的站。</li><li>商家的全部已知域名都已过期（过期日后复查仍未续费）时不进榜。</li></ol></section>
+      <section class="panel"><h2>计算方法</h2><ol class="method"><li>各来源只取其综合分一次，换算为该来源全部可计分商家内的百分位。</li><li>权重 = 来源可靠性 × 0.5^(天数/{config.half_life_days:g})；超过 {config.max_age_days} 天退出；日期未知乘 {config.unknown_date_weight:g}；有评分样本数的来源再乘 n/(n+{config.sample_prior:g})。</li><li>综合分 = (Σ权重×百分位 + {config.prior_strength:g}×{config.prior_score:g}) / (Σ权重 + {config.prior_strength:g})，证据少的商家向中位收缩。</li><li>同一数据血缘的来源合计至多一票；移除整个来源组重排得到名次区间。</li><li>运营天数取最早的中转相关证据：HelpAIO 收录、历史缓存的 Veridrop 首份报告、本站首次收录；证书、Wayback 存档和 历史缓存的 RelayPick 上线日期早于域名注册日的视为前任域名主人，丢弃；域名曾属他人时，它自身的证书和存档全部不用。不计入综合分，只用于默认隐藏运营不足 {min_operating_days} 天的站。</li><li>商家的全部已知域名都已过期（过期日后复查仍未续费）时不进榜。</li></ol></section>
     </div>
-    <aside class="warning"><strong>说明：</strong>各来源测量对象不同（可用率、价格、真伪报告），综合分是相对排序参考，不是可用性承诺。Veridrop 报告由社区触发，样本分布不均匀；RelayPick 多数站点未做真伪抽样。</aside>
+    <aside class="warning"><strong>说明：</strong>真测使用商家的站点平均分，不使用受赞助影响的目录顺序；可用性检查次数不是评分样本数。中转查只取有实测商家的当前综合分，窗口为 72 小时；点击商家卡片中的来源链接可核对模型和渠道。两站的公开明细都不足以完整复算其综合分。本站排名仅供比较，不是可用性承诺。</aside>
   </main>
   <footer><div class="shell"><span>RelayRank v3 · <a href="data/ranking.csv">ranking.csv</a> · <a href="data/audit.json">计分审计</a> · <a href="data/observations.json">全部观测与排除原因</a> · <a href="data/sources.json">来源报告</a></span><a href="https://github.com/Gy-Hu/api-relay-ranker">方法与源码</a></div></footer>
 </body>

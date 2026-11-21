@@ -52,3 +52,7 @@ def parse_okkmax(list_body: bytes, availability_body: bytes) -> list[Observation
             | {"availability_24h": probe},
         ))
     return observations
+
+
+def collect(get) -> list[Observation]:
+    return parse_okkmax(get("okkmax-list", LIST_URL), get("okkmax-availability", AVAILABILITY_URL))

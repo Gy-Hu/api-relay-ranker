@@ -1,7 +1,7 @@
 """Aggregate per-source composites into one reference ranking.
 
-Each source scores vendors on its own scale (RelayPick's leader has 63, Veridrop medians cluster
-at 90+), so raw scores are not comparable. Every source's scorable vendors are converted to
+Each source scores vendors on its own scale, so raw scores are not comparable.
+Every source's scorable vendors are converted to
 mid-rank percentiles over that source's whole list (0 = its worst, 100 = its best), then combined
 as a weighted mean shrunk toward a neutral prior. Percentiles use the source's full list, not the
 final cohort, so a vendor's per-source value does not depend on which other vendors qualify.

@@ -234,10 +234,6 @@ def record_observations(cache: dict[str, Any], observations: Iterable[Observatio
         raw = o.raw_evidence
         if o.source == "helpaio" and raw.get("listed_days") is not None and o.observed_at:
             _keep_earliest(entry, "helpaio_listed", o.observed_at - timedelta(days=raw["listed_days"]))
-        elif o.source == "veridrop":
-            _keep_earliest(entry, "veridrop_report", _day(raw.get("earliest_report_seen")))
-        elif o.source == "relaypick" and raw.get("online_since"):
-            entry["relaypick_online"] = _day(raw["online_since"]).isoformat()  # a claim: latest value wins
 
 
 def _stale(record: dict[str, Any] | None, as_of: date, every_days: int | None) -> bool:

@@ -68,3 +68,7 @@ def parse_helpaio(body: bytes) -> list[Observation]:
     if len(observations) < 10 or not any(o.score is not None for o in observations):
         raise ValueError("HelpAIO ranking formulas unavailable; refusing rank-only fallback")
     return observations
+
+
+def collect(get) -> list[Observation]:
+    return parse_helpaio(get(SOURCE, URL))

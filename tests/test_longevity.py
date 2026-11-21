@@ -147,13 +147,11 @@ class RefreshTests(unittest.TestCase):
         self.assertEqual(vendor_age(["old.org"], c, DAY).reused_domains, ("old.org",))
 
     def test_source_evidence_is_recorded_per_registrable_domain_and_only_moves_earlier(self):
-        c = cache()
+        c = cache(**{"v.com": {"veridrop_report": "2026-09-01"}})
         record_observations(c, [Observation("helpaio", "V", domain="www.v.com", score=50, observed_at=DAY,
-                                            raw_evidence={"listed_days": 100}),
-                                Observation("veridrop", "v.com", domain="v.com", score=90,
-                                            raw_evidence={"earliest_report_seen": "2026-09-01"})], DAY)
-        record_observations(c, [Observation("veridrop", "v.com", domain="v.com", score=90,
-                                            raw_evidence={"earliest_report_seen": "2026-09-20"})], DAY)
+                                            raw_evidence={"listed_days": 100})], DAY)
+        record_observations(c, [Observation("helpaio", "V", domain="v.com", score=50, observed_at=DAY,
+                                            raw_evidence={"listed_days": 80})], DAY)
         entry = c["domains"]["v.com"]
         self.assertEqual((entry["helpaio_listed"], entry["veridrop_report"]), ("2026-06-23", "2026-09-01"))
 

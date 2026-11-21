@@ -1,7 +1,6 @@
 import tempfile
 import unittest
 from datetime import date
-from pathlib import Path
 
 from relayrank.engine import aggregate
 from relayrank.live import SOURCES as SOURCE_INFO
@@ -17,6 +16,8 @@ class SiteTests(unittest.TestCase):
         rows = [Observation("helpaio", "Evil <Relay>", domain="evil.example", score=90, observed_at=DAY,
                             website_url='https://evil.example/"><script>'),
                 Observation("okkmax", "Evil <Relay>", domain="evil.example", score=70, observed_at=DAY),
+                Observation("zhongzhuancha", "Evil <Relay>", domain="evil.example", score=95, observed_at=DAY,
+                            source_url="https://zhongzhuancha.com/transit/info/evil"),
                 Observation("helpaio", "Other", domain="other.example", score=10, observed_at=DAY),
                 Observation("okkmax", "Other", domain="other.example", score=20, observed_at=DAY)]
         config = Config(DAY, minimum_peers=1)
@@ -26,6 +27,9 @@ class SiteTests(unittest.TestCase):
         self.assertIn("Evil &lt;Relay&gt;", rendered)
         self.assertNotIn("<Relay>", rendered)
         self.assertNotIn('"><script>', rendered)
+        self.assertEqual(set(sources), {"helpaio", "okkmax", "ztest", "zhongzhuancha"})
+        self.assertIn('href="https://zhongzhuancha.com/transit/info/evil"', rendered)
+        self.assertIn("72 小时", rendered)
         for info in SOURCE_INFO:
             self.assertIn(f'href="{info.homepage}"', rendered)
 

@@ -47,7 +47,7 @@ def load_config(path: str | Path, as_of: date) -> tuple[Config, dict[str, Source
     sources = {}
     for item in raw.get("sources", []):
         source = Source(name=item["name"], reliability=float(item.get("reliability", 1)),
-                        group=item.get("group", ""), window_days=item.get("window_days"))
+                        group=item.get("group", ""))
         if source.name in sources:
             raise ValueError(f"duplicate source: {source.name}")
         sources[source.name] = source
