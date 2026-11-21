@@ -1,6 +1,24 @@
 {
  "schema_version": 1,
  "domains": {
+  "000136.xyz": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2025-12-30",
+    "expires": "2035-12-30",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2025-12-30",
+    "first": "2026-01-08",
+    "first_any": "2026-01-08",
+    "source": "ctlogs.dev"
+   }
+  },
   "050602.xyz": {
    "first_seen": "2026-10-01",
    "rdap": {
@@ -75,6 +93,26 @@
     "source": "ctlogs.dev"
    }
   },
+  "39ai.me": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": null,
+    "first": "2026-05-30",
+    "first_any": "2026-05-30",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": null,
+    "first": null,
+    "first_any": null
+   }
+  },
   "4router.net": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2026-08-28",
@@ -100,6 +138,30 @@
     "first_any": "2026-05-09"
    }
   },
+  "521cgg.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-05-06",
+    "expires": "2027-05-06",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-06",
+    "first": "2026-06-23",
+    "first_any": "2026-06-23",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-06",
+    "first": null,
+    "first_any": null
+   }
+  },
   "78code.cc": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2026-05-04",
@@ -123,6 +185,24 @@
     "basis": "2026-01-28",
     "first": "2026-08-05",
     "first_any": "2026-08-05"
+   }
+  },
+  "790053500.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-07-10",
+    "expires": "2027-07-10",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-10",
+    "first": "2026-07-11",
+    "first_any": "2026-07-11",
+    "source": "ctlogs.dev"
    }
   },
   "88code.org": {
@@ -221,6 +301,30 @@
     "first_any": "2026-05-17"
    }
   },
+  "a6api.vip": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-04-26",
+    "expires": "2027-04-26",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-04-26",
+    "first": "2026-04-28",
+    "first_any": "2026-04-28",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-04-26",
+    "first": null,
+    "first_any": null
+   }
+  },
   "agentrouter.org": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-13",
@@ -244,6 +348,33 @@
     "first": "2025-12-08",
     "first_any": "2025-12-08",
     "source": "ctlogs.dev"
+   }
+  },
+  "ai-pocket.xyz": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-08",
+    "expires": "2027-09-08",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-08",
+    "first": "2026-09-08",
+    "first_any": "2026-09-08",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-08",
+    "first": null,
+    "first_any": null
    }
   },
   "ai-router.dev": {
@@ -290,8 +421,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-10-11",
-    "error": "The read operation timed out"
+    "checked": "2026-11-21",
+    "basis": "2026-07-19",
+    "first": "2026-10-22",
+    "first_any": "2026-10-22"
    }
   },
   "aiapi.world": {
@@ -450,6 +583,26 @@
     "source": "ctlogs.dev"
    }
   },
+  "aliapi.cn": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": null,
+    "first": "2026-07-13",
+    "first_any": "2026-07-13",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": null,
+    "first": "2016-06-19",
+    "first_any": "2016-06-19"
+   }
+  },
   "anpin.ai": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-27",
@@ -543,6 +696,30 @@
     "source": "ctlogs.dev"
    }
   },
+  "apikey.fan": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-07-31",
+    "expires": "2027-07-31",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-31",
+    "first": "2026-08-01",
+    "first_any": "2026-08-01",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-31",
+    "first": "2026-10-11",
+    "first_any": "2026-10-11"
+   }
+  },
   "apilio.ai": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-24",
@@ -600,8 +777,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-11",
-    "error": "HTTP 503"
+    "checked": "2026-11-21",
+    "basis": "2026-04-15",
+    "first": "2026-05-12",
+    "first_any": "2026-05-12"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -710,6 +889,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "aruhub.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-06-14",
+    "expires": "2027-06-14",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-06-14",
+    "first": "2026-06-14",
+    "first_any": "2026-06-14",
+    "source": "ctlogs.dev"
+   }
+  },
   "autorouter.io": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-08",
@@ -751,6 +948,24 @@
     "basis": "2024-07-30",
     "first": "2026-04-08",
     "first_any": "2026-04-08",
+    "source": "ctlogs.dev"
+   }
+  },
+  "bayunzi.shop": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-05-27",
+    "expires": "2027-05-27",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-27",
+    "first": "2026-06-12",
+    "first_any": "2026-06-12",
     "source": "ctlogs.dev"
    }
   },
@@ -798,6 +1013,24 @@
     "basis": "2026-06-13",
     "first": "2026-06-13",
     "first_any": "2026-06-13",
+    "source": "ctlogs.dev"
+   }
+  },
+  "beiluoxi.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-05",
+    "expires": "2027-08-05",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-05",
+    "first": "2026-08-05",
+    "first_any": "2026-08-05",
     "source": "ctlogs.dev"
    }
   },
@@ -944,6 +1177,30 @@
     "source": "ctlogs.dev"
    }
   },
+  "catbeeai.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-07-10",
+    "expires": "2027-07-10",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-10",
+    "first": "2026-07-11",
+    "first_any": "2026-07-11",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-10",
+    "first": null,
+    "first_any": null
+   }
+  },
   "cctq.ai": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2026-04-02",
@@ -988,6 +1245,55 @@
     "first": "2026-08-16",
     "first_any": "2026-08-16",
     "source": "ctlogs.dev"
+   }
+  },
+  "cheaprouter.cc": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-14",
+    "expires": "2028-08-14",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-14",
+    "first": "2026-08-14",
+    "first_any": "2026-08-14",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-14",
+    "first": "2026-10-05",
+    "first_any": "2026-10-05"
+   }
+  },
+  "chi-yu-ai.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-09",
+    "expires": "2027-10-09",
+    "status": [
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-09",
+    "first": "2026-10-09",
+    "first_any": "2026-10-09",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-09",
+    "first": "2026-10-11",
+    "first_any": "2026-10-11"
    }
   },
   "chintao.ai": {
@@ -1202,9 +1508,9 @@
    "helpaio_listed": "2025-12-21",
    "veridrop_report": "2026-06-22",
    "rdap": {
-    "checked": "2026-10-11",
+    "checked": "2026-11-21",
     "registered": "2025-11-02",
-    "expires": "2026-11-02",
+    "expires": "2027-11-02",
     "status": [
      "active"
     ]
@@ -1223,6 +1529,31 @@
     "source": "ctlogs.dev"
    }
   },
+  "cubence.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-21",
+    "expires": "2028-09-21",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-21",
+    "first": "2026-09-21",
+    "first_any": "2026-09-21",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-21",
+    "first": "2026-09-21",
+    "first_any": "2026-09-21"
+   }
+  },
   "cubence.com": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-11-20",
@@ -1234,8 +1565,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-11",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-11-21",
+    "basis": "2025-10-06",
+    "first": "2025-11-17",
+    "first_any": "2004-04-15"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -1382,6 +1715,24 @@
     "basis": "2026-01-26",
     "first": "2026-04-07",
     "first_any": "2026-04-07",
+    "source": "ctlogs.dev"
+   }
+  },
+  "diegeai.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-05-06",
+    "expires": "2027-05-06",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-06",
+    "first": "2026-06-22",
+    "first_any": "2026-06-22",
     "source": "ctlogs.dev"
    }
   },
@@ -1575,6 +1926,78 @@
     "source": "ctlogs.dev"
    }
   },
+  "flashcoding.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-17",
+    "expires": "2028-09-17",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-17",
+    "first": "2026-09-17",
+    "first_any": "2026-09-17",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-17",
+    "first": "2026-09-18",
+    "first_any": "2026-09-18"
+   }
+  },
+  "foxrouter.org": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-04-03",
+    "expires": "2027-04-03",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-04-03",
+    "first": "2026-06-01",
+    "first_any": "2026-06-01",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-04-03",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "fuelapi.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-17",
+    "expires": "2027-10-17",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-17",
+    "first": "2026-10-17",
+    "first_any": "2026-10-17",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-17",
+    "first": "2026-10-18",
+    "first_any": "2026-10-18"
+   }
+  },
   "ggwk1.online": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-23",
@@ -1598,6 +2021,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "gpt-buss.xyz": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-05-21",
+    "expires": "2027-05-21",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-21",
+    "first": "2026-09-20",
+    "first_any": "2026-09-20",
+    "source": "ctlogs.dev"
+   }
+  },
   "gpt.ge": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-07-07",
@@ -1617,6 +2058,30 @@
     "first": "2026-04-06",
     "first_any": "2026-04-06",
     "source": "ctlogs.dev"
+   }
+  },
+  "grooroute.pro": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-11",
+    "expires": "2028-10-11",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-11",
+    "first": "2026-10-11",
+    "first_any": "2026-10-11",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-11",
+    "first": "2026-10-11",
+    "first_any": "2026-10-11"
    }
   },
   "hao.ai": {
@@ -1711,6 +2176,28 @@
     "first": "2026-05-26",
     "first_any": "2026-05-26",
     "source": "ctlogs.dev"
+   }
+  },
+  "ikun.love": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-05-11",
+    "expires": "2027-05-11",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-11",
+    "first": "2026-06-18",
+    "first_any": "2026-06-18",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "ikuncode.cc": {
@@ -1879,6 +2366,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "kuafushe.cc": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-03",
+    "expires": "2027-08-03",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-03",
+    "first": "2026-08-03",
+    "first_any": "2026-08-03",
+    "source": "ctlogs.dev"
+   }
+  },
   "kuaipao.pro": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-07-21",
@@ -1899,6 +2404,24 @@
     "basis": "2026-04-22",
     "first": "2026-04-30",
     "first_any": "2026-04-30",
+    "source": "ctlogs.dev"
+   }
+  },
+  "kx-api.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-11-01",
+    "expires": "2027-11-01",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-11-01",
+    "first": "2026-11-03",
+    "first_any": "2026-10-31",
     "source": "ctlogs.dev"
    }
   },
@@ -1993,6 +2516,30 @@
     "first": "2026-05-08",
     "first_any": "2026-05-08",
     "source": "ctlogs.dev"
+   }
+  },
+  "linyiapi.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-11-06",
+    "expires": "2028-11-06",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-11-06",
+    "first": "2026-11-06",
+    "first_any": "2026-11-06",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "basis": "2026-11-06",
+    "first": "2026-11-07",
+    "first_any": "2026-11-07"
    }
   },
   "lmuai.ai": {
@@ -2111,6 +2658,27 @@
     "source": "ctlogs.dev"
    }
   },
+  "meapi.space": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-05-16",
+    "expires": "2027-05-16",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-05-16",
+    "first": "2026-05-16",
+    "first_any": "2026-05-16",
+    "source": "ctlogs.dev"
+   }
+  },
   "micuapi.ai": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2026-01-14",
@@ -2133,6 +2701,28 @@
     "first": "2026-05-07",
     "first_any": "2026-05-07",
     "source": "ctlogs.dev"
+   }
+  },
+  "midalo.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-15",
+    "expires": "2028-09-15",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-15",
+    "first": "2026-09-15",
+    "first_any": "2026-09-15",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-21",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "modcon.top": {
@@ -2229,6 +2819,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "mumumix.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-25",
+    "expires": "2027-10-25",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-25",
+    "first": "2026-10-25",
+    "first_any": "2026-10-25",
+    "source": "ctlogs.dev"
+   }
+  },
   "muzeai.top": {
    "first_seen": "2026-10-11",
    "helpaio_listed": "2026-10-09",
@@ -2246,6 +2854,24 @@
     "basis": "2026-05-29",
     "first": "2026-05-29",
     "first_any": "2026-05-29",
+    "source": "ctlogs.dev"
+   }
+  },
+  "mxcwyq.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-05",
+    "expires": "2027-09-05",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-05",
+    "first": "2026-09-05",
+    "first_any": "2026-09-05",
     "source": "ctlogs.dev"
    }
   },
@@ -2392,6 +3018,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "nekocloud.vip": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-18",
+    "expires": "2027-09-18",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-18",
+    "first": "2026-09-18",
+    "first_any": "2026-09-18",
+    "source": "ctlogs.dev"
+   }
+  },
   "nekocode.ai": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2026-02-04",
@@ -2416,11 +3060,29 @@
     "source": "ctlogs.dev"
    }
   },
+  "nexotoken.net": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-06-11",
+    "expires": "2027-06-11",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-06-11",
+    "first": "2026-06-11",
+    "first_any": "2026-06-11",
+    "source": "ctlogs.dev"
+   }
+  },
   "niccom.com.cn": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-08-08",
    "rdap": {
-    "checked": "2026-10-01",
+    "checked": "2026-11-21",
     "error": "no_rdap"
    },
    "wayback": {
@@ -2624,6 +3286,79 @@
     "source": "ctlogs.dev"
    }
   },
+  "openlux.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-06-13",
+    "expires": "2028-06-13",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-06-13",
+    "first": "2026-06-13",
+    "first_any": "2026-06-13",
+    "source": "ctlogs.dev"
+   }
+  },
+  "openox.tech": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-04-05",
+    "expires": "2027-04-05",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-04-05",
+    "first": "2026-06-03",
+    "first_any": "2026-06-03",
+    "source": "ctlogs.dev"
+   }
+  },
+  "oranexa.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-09-03",
+    "expires": "2027-09-03",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-09-03",
+    "first": "2026-09-03",
+    "first_any": "2026-09-03",
+    "source": "ctlogs.dev"
+   }
+  },
+  "orbiorbi.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-10",
+    "expires": "2027-10-10",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-10",
+    "first": "2026-10-10",
+    "first_any": "2026-10-10",
+    "source": "ctlogs.dev"
+   }
+  },
   "packyapi.ai": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-11-18",
@@ -2742,6 +3477,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "queqiaoapi.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-14",
+    "expires": "2027-10-14",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-14",
+    "first": "2026-10-14",
+    "first_any": "2026-10-14",
+    "source": "ctlogs.dev"
+   }
+  },
   "rcouyi.com": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-12",
@@ -2771,9 +3524,9 @@
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
-    "checked": "2026-10-11",
+    "checked": "2026-11-21",
     "registered": "2025-10-11",
-    "expires": "2026-10-11",
+    "expires": "2027-10-11",
     "status": [
      "client transfer prohibited"
     ]
@@ -2955,6 +3708,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "soflash.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-22",
+    "expires": "2027-08-22",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-22",
+    "first": "2026-08-23",
+    "first_any": "2026-08-23",
+    "source": "ctlogs.dev"
+   }
+  },
   "sparkcode.top": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-04",
@@ -3069,6 +3840,25 @@
     "basis": "2026-04-28",
     "first": "2026-04-28",
     "first_any": "2026-04-28",
+    "source": "ctlogs.dev"
+   }
+  },
+  "taufran.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-02",
+    "expires": "2027-10-02",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-02",
+    "first": "2026-10-02",
+    "first_any": "2026-10-02",
     "source": "ctlogs.dev"
    }
   },
@@ -3235,6 +4025,42 @@
     "source": "ctlogs.dev"
    }
   },
+  "totkn.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-11",
+    "expires": "2027-08-11",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-11",
+    "first": "2026-08-11",
+    "first_any": "2026-08-11",
+    "source": "ctlogs.dev"
+   }
+  },
+  "ttgptapi.top": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-10-14",
+    "expires": "2027-10-14",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-10-14",
+    "first": "2026-10-14",
+    "first_any": "2026-10-14",
+    "source": "ctlogs.dev"
+   }
+  },
   "umiluxury.com": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-08-16",
@@ -3262,20 +4088,16 @@
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-12-08",
    "rdap": {
-    "checked": "2026-10-11",
-    "registered": "2025-08-15",
-    "expires": "2026-08-15",
-    "status": [
-     "redemption period"
-    ]
+    "checked": "2026-11-21",
+    "error": "no_rdap"
    },
    "wayback": {
     "checked": "2026-10-01",
     "error": "The read operation timed out"
    },
    "cert": {
-    "checked": "2026-10-01",
-    "basis": "2025-08-15",
+    "checked": "2026-11-21",
+    "basis": null,
     "first": "2026-04-29",
     "first_any": "2026-04-29",
     "source": "ctlogs.dev"
@@ -3348,6 +4170,24 @@
     "basis": "2023-04-01",
     "first": "2026-04-13",
     "first_any": "2026-04-13",
+    "source": "ctlogs.dev"
+   }
+  },
+  "wukong.support": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-03-04",
+    "expires": "2027-03-04",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-03-04",
+    "first": "2026-03-24",
+    "first_any": "2026-03-24",
     "source": "ctlogs.dev"
    }
   },
@@ -3658,6 +4498,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "yomiapi.com": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-07-17",
+    "expires": "2027-07-17",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-17",
+    "first": "2026-07-17",
+    "first_any": "2026-07-17",
+    "source": "ctlogs.dev"
+   }
+  },
   "yourapi.cn": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-08-31",
@@ -3685,10 +4543,12 @@
    "relaypick_online": "2023-01-01",
    "veridrop_report": "2026-05-09",
    "rdap": {
-    "checked": "2026-10-01",
+    "checked": "2026-11-21",
     "registered": "2024-12-03",
-    "expires": "2026-12-03",
-    "status": []
+    "expires": "2028-12-03",
+    "status": [
+     "client transfer prohibited"
+    ]
    },
    "wayback": {
     "checked": "2026-10-11",
@@ -3699,6 +4559,42 @@
     "basis": "2024-12-03",
     "first": "2025-06-10",
     "first_any": "2025-06-10",
+    "source": "ctlogs.dev"
+   }
+  },
+  "yusr.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-07-16",
+    "expires": "2028-07-16",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-07-16",
+    "first": "2026-09-29",
+    "first_any": "2026-03-06",
+    "source": "ctlogs.dev"
+   }
+  },
+  "z0000api.site": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-20",
+    "expires": "2027-08-20",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-20",
+    "first": "2026-08-20",
+    "first_any": "2026-08-20",
     "source": "ctlogs.dev"
    }
   },
@@ -3723,6 +4619,24 @@
     "basis": "2023-10-26",
     "first": "2026-04-10",
     "first_any": "2026-04-10",
+    "source": "ctlogs.dev"
+   }
+  },
+  "zerouter.ai": {
+   "first_seen": "2026-11-21",
+   "rdap": {
+    "checked": "2026-11-21",
+    "registered": "2026-08-28",
+    "expires": "2028-08-28",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-21",
+    "basis": "2026-08-28",
+    "first": "2026-08-28",
+    "first_any": "2026-08-28",
     "source": "ctlogs.dev"
    }
   },
