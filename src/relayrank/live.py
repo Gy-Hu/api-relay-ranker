@@ -4,7 +4,9 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 from pathlib import Path
+from threading import Event
 from typing import Callable
+from urllib.error import HTTPError
 
 from .adapters import parse_helpaio, parse_okkmax, parse_relaypick
 from .adapters import helpaio, okkmax, relaypick, veridrop
@@ -122,12 +124,18 @@ def _veridrop_domain(session: _Session, domain: str, as_of: date, window_days: i
 def _veridrop(session: _Session, domains: list[str], as_of: date, window_days: int):
     report = SourceReport("veridrop", False)
     rows, failures = [], []
+    search_blocked = Event()
 
     def lookup(domain: str):
         pages: list[dict] = []
+        if search_blocked.is_set():
+            return domain, None, pages, None
         try:
             return domain, _veridrop_domain(session, domain, as_of, window_days, pages), pages, None
         except Exception as error:  # noqa: BLE001 - per-domain failure is reported, not fatal
+            if (isinstance(error, HTTPError) and error.code in (401, 403, 429)
+                    and error.url == veridrop.search_url(domain)):
+                search_blocked.set()
             return domain, None, pages, str(error)
 
     with ThreadPoolExecutor(max_workers=VERIDROP_WORKERS) as executor:
@@ -137,6 +145,10 @@ def _veridrop(session: _Session, domains: list[str], as_of: date, window_days: i
                 failures.append(f"{domain}: {error}")
             elif observation is not None:
                 rows.append(observation)
+    if search_blocked.is_set():
+        report.error = "Veridrop search denied or rate limited; stopped domain lookups"
+        report.warnings = failures
+        return [], report
     if failures and len(failures) == len(domains):
         report.error = "every Veridrop lookup failed: " + "; ".join(failures[:3])
         return [], report
@@ -167,6 +179,6 @@ def collect_live(sources: dict[str, Source], directory: Directory, as_of: date, 
     failed = [r for r in ordered if not r.ok]
     if failed and not allow_partial:
         raise LiveCollectionError("aborted, every source is required: " + "; ".join(f"{r.name}: {r.error}" for r in failed), ordered)
-    if len({sources[r.name].group for r in ordered if r.ok}) < 2:
-        raise LiveCollectionError("need at least two successfully parsed source groups", ordered)
+    if len({sources[r.name].group for r in ordered if r.valid_count}) < 2:
+        raise LiveCollectionError("need valid observations from at least two source groups", ordered)
     return observations, ordered

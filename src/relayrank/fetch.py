@@ -25,7 +25,6 @@ class FetchResult:
 
 def fetch(source: str, url: str, timeout: float = 30, retries: int = 2) -> FetchResult:
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/json"})
-    last_error: Exception | None = None
     for attempt in range(retries + 1):
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -38,11 +37,12 @@ def fetch(source: str, url: str, timeout: float = 30, retries: int = 2) -> Fetch
                     content_type=response.headers.get_content_type(),
                     sha256=hashlib.sha256(body).hexdigest(),
                 )
-        except (urllib.error.URLError, TimeoutError, OSError) as error:
-            last_error = error
-            if attempt < retries:
-                time.sleep(0.5 * (2**attempt))
-    raise RuntimeError(f"failed to fetch {source} from {url}: {last_error}")
+        except OSError as error:
+            if isinstance(error, urllib.error.HTTPError) and 400 <= error.code < 500:
+                raise
+            if attempt == retries:
+                raise RuntimeError(f"failed to fetch {source} from {url}: {error}") from error
+            time.sleep(0.5 * (2**attempt))
 
 
 def save_snapshot(result: FetchResult, root: str | Path, run_id: str | None = None) -> tuple[Path, Path]:

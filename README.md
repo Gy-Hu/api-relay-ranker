@@ -79,17 +79,17 @@ OkkMax 的服务条款禁止"抓取数据用于商业目的"。本项目仅供�
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
-relayrank live --config examples/config.toml --top 30 --site-dir build/site
+relayrank live --config examples/config.toml --allow-partial --top 30 --site-dir build/site
 ```
 
-不安装也可以运行：`PYTHONPATH=src python3 -m relayrank live --config examples/config.toml`。
+不安装也可以运行：`PYTHONPATH=src python3 -m relayrank live --config examples/config.toml --allow-partial`。
 
-- HelpAIO、RelayPick、OkkMax 任一抓取或解析失败，就不发布，返回非零退出码，GitHub Pages 保留上一版。
-- Veridrop 单个域名查询失败只记录警告，全部失败才算该来源失败。
-- `--allow-partial` 可以接受缺站，但仍要求至少两个来源组成功。
-- 没有商家满足门槛时，发布明确的"证据不足"页面。
+- `--allow-partial` 与每日发布策略一致：至少两个独立来源组各自返回有效观测才继续。失败来源在页面和 `sources.json` 标为失败，不补零，也不沿用上次的分数。
+- 去掉 `--allow-partial` 即为严格模式：任一来源失败都返回非零退出码，不生成新页面。
+- Veridrop 单个端点详情失败只记警告；搜索接口返回 401、403 或 429 时，本轮停止发起新的域名查询，整个来源不计分。
+- 来源达到发布门槛、但没有商家满足交叉计分条件时，发布明确的“证据不足”页面；来源不足则保留上一版。
 
-GitHub Actions 每天按 cron `17 1 * * *` 运行，推送 main 和手动触发也会运行。测试与构建通过后才部署；原始响应和审计数据作为 artifact 保存 30 天。工作流需要 `contents: write`，只用于提交 `data/domain_evidence.json`。
+GitHub Actions 按 UTC `17 1 * * *` 定时运行，推送 main 也会发布。手动触发时可取消 `allow_partial` 要求全部来源成功。PR 只跑离线快照测试，不依赖站点在线。发布运行的原始响应和审计数据保存为 artifact 30 天，包括抓取失败的运行。工作流用 `contents: write` 提交 `data/domain_evidence.json`。
 
 `--skip-lookups` 只使用缓存、不做 RDAP/证书/Wayback 查询；`--evidence-cache` 可指定缓存路径。
 
