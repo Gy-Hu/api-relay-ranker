@@ -537,6 +537,30 @@
     "first_any": "2021-11-25"
    }
   },
+  "aicod.uk": {
+   "first_seen": "2026-11-22",
+   "rdap": {
+    "checked": "2026-11-22",
+    "registered": "2026-09-24",
+    "expires": "2028-09-24",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-22",
+    "basis": "2026-09-24",
+    "first": "2026-09-24",
+    "first_any": "2026-09-24",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-09-24",
+    "first": null,
+    "first_any": null
+   }
+  },
   "aicost.me": {
    "first_seen": "2026-11-21",
    "rdap": {
@@ -1039,6 +1063,30 @@
     "first_any": null
    }
   },
+  "auralink.top": {
+   "first_seen": "2026-11-22",
+   "rdap": {
+    "checked": "2026-11-22",
+    "registered": "2026-06-15",
+    "expires": "2027-06-15",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-22",
+    "basis": "2026-06-15",
+    "first": "2026-09-08",
+    "first_any": "2026-09-08",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-06-15",
+    "first": null,
+    "first_any": "2025-07-10"
+   }
+  },
   "autorouter.io": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-08",
@@ -1245,8 +1293,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-21",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-22",
+    "basis": "2026-07-12",
+    "first": null,
+    "first_any": "2025-07-10"
    }
   },
   "bobdong.cn": {
@@ -1503,8 +1553,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-21",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-22",
+    "basis": "2026-07-31",
+    "first": null,
+    "first_any": null
    }
   },
   "cheaprouter.cc": {
@@ -1638,8 +1690,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-21",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-22",
+    "basis": "2026-07-06",
+    "first": null,
+    "first_any": null
    }
   },
   "clauddy.com": {
@@ -1754,8 +1808,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-21",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-22",
+    "basis": "2026-05-15",
+    "first": null,
+    "first_any": null
    }
   },
   "codekey.ai": {
@@ -1774,6 +1830,12 @@
     "first": "2026-07-02",
     "first_any": "2026-07-02",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-05-02",
+    "first": null,
+    "first_any": null
    }
   },
   "coderelay.cn": {
@@ -1812,6 +1874,12 @@
     "first": "2026-05-27",
     "first_any": "2026-05-27",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-04-16",
+    "first": "2026-09-16",
+    "first_any": "2026-09-16"
    }
   },
   "comeu.ai": {
@@ -1903,6 +1971,12 @@
     "first": "2026-04-02",
     "first_any": "2026-04-02",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-04-01",
+    "first": null,
+    "first_any": null
    }
   },
   "cubence.ai": {
@@ -2289,12 +2363,16 @@
   "feiniu-ai.top": {
    "first_seen": "2026-11-21",
    "rdap": {
-    "checked": "2026-11-21",
-    "error": "HTTP 429"
+    "checked": "2026-11-22",
+    "registered": "2026-05-14",
+    "expires": "2027-05-14",
+    "status": [
+     "active"
+    ]
    },
    "cert": {
-    "checked": "2026-11-21",
-    "basis": null,
+    "checked": "2026-11-22",
+    "basis": "2026-05-14",
     "first": "2026-08-11",
     "first_any": "2026-08-11",
     "source": "ctlogs.dev"
@@ -2412,6 +2490,12 @@
     "first": "2026-08-25",
     "first_any": "2026-08-25",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-08-25",
+    "first": null,
+    "first_any": null
    }
   },
   "fuelapi.top": {
@@ -2472,6 +2556,12 @@
     "first": "2026-07-07",
     "first_any": "2026-07-07",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-07-07",
+    "first": null,
+    "first_any": null
    }
   },
   "gewei.xyz": {
@@ -2576,6 +2666,12 @@
     "first": "2026-10-30",
     "first_any": "2026-10-30",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-10-29",
+    "first": "2026-10-30",
+    "first_any": "2026-10-30"
    }
   },
   "grooroute.pro": {
@@ -2751,8 +2847,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-21",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-22",
+    "basis": "2026-05-11",
+    "first": null,
+    "first_any": "2024-12-25"
    }
   },
   "ikuncode.cc": {
@@ -3056,6 +3154,12 @@
     "first": "2026-09-01",
     "first_any": "2026-09-01",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-09-01",
+    "first": null,
+    "first_any": null
    }
   },
   "laob.top": {
@@ -3074,6 +3178,12 @@
     "first": "2026-09-04",
     "first_any": "2026-05-28",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-09-04",
+    "first": null,
+    "first_any": null
    }
   },
   "leverai.net": {
@@ -3206,6 +3316,12 @@
     "first": "2026-10-26",
     "first_any": "2026-10-26",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-10-26",
+    "first": "2026-10-26",
+    "first_any": "2026-10-26"
    }
   },
   "linyiapi.ai": {
@@ -3295,6 +3411,12 @@
     "first": "2026-11-07",
     "first_any": "2026-11-07",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "basis": "2026-11-07",
+    "first": "2026-11-07",
+    "first_any": "2026-11-07"
    }
   },
   "logitstoken.com": {
@@ -3360,6 +3482,10 @@
     "first": "2026-10-08",
     "first_any": "2026-10-08",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "magic666.top": {
@@ -3422,6 +3548,10 @@
     "first": "2026-07-27",
     "first_any": "2026-07-27",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "mianelle.xyz": {
@@ -3440,6 +3570,10 @@
     "first": "2026-10-23",
     "first_any": "2026-10-23",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-22",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "miaoniuai.cn": {
@@ -4782,6 +4916,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "serainetwork.com": {
+   "first_seen": "2026-11-22",
+   "rdap": {
+    "checked": "2026-11-22",
+    "registered": "2026-02-28",
+    "expires": "2027-02-28",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-22",
+    "basis": "2026-02-28",
+    "first": "2026-05-28",
+    "first_any": "2026-05-28",
+    "source": "ctlogs.dev"
+   }
+  },
   "shimaiapi.com": {
    "first_seen": "2026-10-01",
    "wayback": {
@@ -5440,6 +5592,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "vsoui.com": {
+   "first_seen": "2026-11-22",
+   "rdap": {
+    "checked": "2026-11-22",
+    "registered": "2015-09-01",
+    "expires": "2027-09-01",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-22",
+    "basis": "2015-09-01",
+    "first": "2026-07-09",
+    "first_any": "2026-07-09",
+    "source": "ctlogs.dev"
+   }
+  },
   "vxvxvx.top": {
    "first_seen": "2026-11-21",
    "rdap": {
@@ -5548,12 +5718,16 @@
   "xdcn.top": {
    "first_seen": "2026-11-21",
    "rdap": {
-    "checked": "2026-11-21",
-    "error": "HTTP 429"
+    "checked": "2026-11-22",
+    "registered": "2026-06-18",
+    "expires": "2027-06-18",
+    "status": [
+     "client transfer prohibited"
+    ]
    },
    "cert": {
-    "checked": "2026-11-21",
-    "basis": null,
+    "checked": "2026-11-22",
+    "basis": "2026-06-18",
     "first": "2026-06-18",
     "first_any": "2026-06-18",
     "source": "ctlogs.dev"
@@ -5941,12 +6115,16 @@
   "yunjingapi.top": {
    "first_seen": "2026-11-21",
    "rdap": {
-    "checked": "2026-11-21",
-    "error": "HTTP 429"
+    "checked": "2026-11-22",
+    "registered": "2026-08-05",
+    "expires": "2027-08-05",
+    "status": [
+     "client transfer prohibited"
+    ]
    },
    "cert": {
-    "checked": "2026-11-21",
-    "basis": null,
+    "checked": "2026-11-22",
+    "basis": "2026-08-05",
     "first": "2026-08-05",
     "first_any": "2026-08-05",
     "source": "ctlogs.dev"
@@ -6028,6 +6206,27 @@
     "basis": "2026-07-16",
     "first": "2026-09-29",
     "first_any": "2026-03-06",
+    "source": "ctlogs.dev"
+   }
+  },
+  "yuzuapi.com": {
+   "first_seen": "2026-11-22",
+   "rdap": {
+    "checked": "2026-11-22",
+    "registered": "2026-11-17",
+    "expires": "2027-11-17",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-22",
+    "basis": "2026-11-17",
+    "first": "2026-11-18",
+    "first_any": "2026-11-18",
     "source": "ctlogs.dev"
    }
   },
