@@ -1557,12 +1557,16 @@
   "chaowen.xyz": {
    "first_seen": "2026-11-23",
    "rdap": {
-    "checked": "2026-11-23",
-    "error": "HTTP 403"
+    "checked": "2026-11-24",
+    "registered": "2026-11-02",
+    "expires": "2027-11-02",
+    "status": [
+     "server transfer prohibited"
+    ]
    },
    "cert": {
-    "checked": "2026-11-23",
-    "basis": null,
+    "checked": "2026-11-24",
+    "basis": "2026-11-02",
     "first": "2026-11-02",
     "first_any": "2026-11-02",
     "source": "ctlogs.dev"
@@ -1845,6 +1849,30 @@
     "basis": "2026-05-15",
     "first": null,
     "first_any": null
+   }
+  },
+  "codecat.fun": {
+   "first_seen": "2026-11-24",
+   "rdap": {
+    "checked": "2026-11-24",
+    "registered": "2026-11-14",
+    "expires": "2027-11-14",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-24",
+    "basis": "2026-11-14",
+    "first": "2026-11-15",
+    "first_any": "2026-11-15",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-11-14",
+    "first": null,
+    "first_any": "2025-07-13"
    }
   },
   "codekey.ai": {
@@ -2555,6 +2583,24 @@
     "first_any": "2026-10-18"
    }
   },
+  "fullcupai.com": {
+   "first_seen": "2026-11-24",
+   "rdap": {
+    "checked": "2026-11-24",
+    "registered": "2026-03-09",
+    "expires": "2027-03-09",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-24",
+    "basis": "2026-03-09",
+    "first": "2026-05-29",
+    "first_any": "2026-05-29",
+    "source": "ctlogs.dev"
+   }
+  },
   "g-aisc.com": {
    "first_seen": "2026-11-21",
    "rdap": {
@@ -2680,6 +2726,24 @@
     "basis": null,
     "first": "2026-04-06",
     "first_any": "2026-04-06",
+    "source": "ctlogs.dev"
+   }
+  },
+  "gptpro.live": {
+   "first_seen": "2026-11-24",
+   "rdap": {
+    "checked": "2026-11-24",
+    "registered": "2026-06-15",
+    "expires": "2027-06-15",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-24",
+    "basis": "2026-06-15",
+    "first": "2026-06-15",
+    "first_any": "2026-02-10",
     "source": "ctlogs.dev"
    }
   },
@@ -4571,8 +4635,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-23",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-24",
+    "basis": "2025-10-21",
+    "first": null,
+    "first_any": "2024-04-26"
    }
   },
   "oxcodex.com": {
@@ -4675,8 +4741,10 @@
     ]
    },
    "wayback": {
-    "checked": "2026-11-23",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-24",
+    "basis": "2025-07-01",
+    "first": "2025-10-07",
+    "first_any": "2021-09-26"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -4768,8 +4836,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-23",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-24",
+    "basis": "2026-06-05",
+    "first": null,
+    "first_any": null
    }
   },
   "rapidapi.cc": {
@@ -4788,6 +4858,12 @@
     "first": "2026-07-06",
     "first_any": "2026-07-06",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-07-06",
+    "first": null,
+    "first_any": null
    }
   },
   "rcouyi.com": {
@@ -4831,6 +4907,12 @@
     "first": "2026-06-12",
     "first_any": "2026-06-12",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-06-12",
+    "first": null,
+    "first_any": null
    }
   },
   "right.codes": {
@@ -4845,8 +4927,8 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-11",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-11-24",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -4892,6 +4974,12 @@
     "first": "2026-10-29",
     "first_any": "2026-10-29",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": null,
+    "first": "2026-10-29",
+    "first_any": "2026-10-29"
    }
   },
   "rivernexus.vip": {
@@ -4935,6 +5023,12 @@
     "first": "2026-08-18",
     "first_any": "2026-08-18",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-08-18",
+    "first": null,
+    "first_any": null
    }
   },
   "rly0.com": {
@@ -4998,6 +5092,12 @@
     "first": "2026-08-05",
     "first_any": "2026-08-05",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-08-05",
+    "first": null,
+    "first_any": null
    }
   },
   "ruoli.dev": {
@@ -5064,6 +5164,12 @@
     "first": "2026-05-28",
     "first_any": "2026-05-28",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-02-28",
+    "first": "2026-03-09",
+    "first_any": "2026-03-09"
    }
   },
   "shimaiapi.com": {
@@ -5104,6 +5210,12 @@
     "first": "2026-10-02",
     "first_any": "2026-10-02",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-10-02",
+    "first": "2026-10-02",
+    "first_any": "2026-10-02"
    }
   },
   "siliconflow.cn": {
@@ -5123,8 +5235,10 @@
   "smai.ai": {
    "first_seen": "2026-10-01",
    "wayback": {
-    "checked": "2026-10-02",
-    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    "checked": "2026-11-24",
+    "basis": "2025-12-02",
+    "first": null,
+    "first_any": "2021-12-17"
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -5182,6 +5296,12 @@
     "first": "2026-08-23",
     "first_any": "2026-08-23",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-08-22",
+    "first": null,
+    "first_any": null
    }
   },
   "sparkcode.top": {
@@ -5218,8 +5338,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-02",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-11-24",
+    "basis": "2025-07-03",
+    "first": "2025-07-13",
+    "first_any": "2025-07-13"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -5518,6 +5640,10 @@
     "first": "2026-11-02",
     "first_any": "2026-11-02",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "tongapi.com": {
@@ -5577,6 +5703,10 @@
     "first": "2026-08-13",
     "first_any": "2026-08-13",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "ttgptapi.top": {
@@ -5595,6 +5725,12 @@
     "first": "2026-10-14",
     "first_any": "2026-10-14",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "basis": "2026-10-14",
+    "first": "2026-10-14",
+    "first_any": "2026-10-14"
    }
   },
   "umiluxury.com": {
@@ -5628,8 +5764,8 @@
     "error": "no_rdap"
    },
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "The read operation timed out"
+    "checked": "2026-11-24",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-11-21",
@@ -5679,6 +5815,10 @@
     "first": "2026-04-25",
     "first_any": "2026-04-25",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-24",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "v3.cm": {
@@ -5784,6 +5924,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "woofapi.com": {
+   "first_seen": "2026-11-24",
+   "rdap": {
+    "checked": "2026-11-24",
+    "registered": "2026-04-18",
+    "expires": "2028-04-18",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-24",
+    "basis": "2026-04-18",
+    "first": "2026-06-17",
+    "first_any": "2026-06-17",
+    "source": "ctlogs.dev"
+   }
+  },
   "wukong.support": {
    "first_seen": "2026-11-21",
    "rdap": {
@@ -5827,6 +5985,24 @@
     "basis": "2026-09-16",
     "first": "2026-09-16",
     "first_any": "2026-09-16",
+    "source": "ctlogs.dev"
+   }
+  },
+  "xbenefitapi.xyz": {
+   "first_seen": "2026-11-24",
+   "rdap": {
+    "checked": "2026-11-24",
+    "registered": "2026-07-14",
+    "expires": "2027-07-14",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-24",
+    "basis": "2026-07-14",
+    "first": "2026-07-14",
+    "first_any": "2026-07-14",
     "source": "ctlogs.dev"
    }
   },
