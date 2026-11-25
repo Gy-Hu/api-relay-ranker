@@ -573,6 +573,10 @@
     "first": "2026-07-27",
     "first_any": "2026-07-27",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "aigcbest.top": {
@@ -1988,6 +1992,10 @@
     "first": "2026-04-28",
     "first_any": "2026-04-28",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "cpass.cc": {
@@ -2599,6 +2607,10 @@
     "first": "2026-05-29",
     "first_any": "2026-05-29",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "g-aisc.com": {
@@ -2745,6 +2757,10 @@
     "first": "2026-06-15",
     "first_any": "2026-02-10",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "gquick.top": {
@@ -4927,8 +4943,10 @@
     ]
    },
    "wayback": {
-    "checked": "2026-11-24",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-25",
+    "basis": "2025-10-11",
+    "first": "2025-12-12",
+    "first_any": "2023-08-29"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -5601,6 +5619,24 @@
     "source": "ctlogs.dev"
    }
   },
+  "tokenlynk.online": {
+   "first_seen": "2026-11-25",
+   "rdap": {
+    "checked": "2026-11-25",
+    "registered": "2026-11-08",
+    "expires": "2027-11-08",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-25",
+    "basis": "2026-11-08",
+    "first": "2026-11-08",
+    "first_any": "2026-11-08",
+    "source": "ctlogs.dev"
+   }
+  },
   "tokentaken.org": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-07-02",
@@ -5642,8 +5678,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-24",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-25",
+    "basis": "2026-11-02",
+    "first": null,
+    "first_any": null
    }
   },
   "tongapi.com": {
@@ -5705,8 +5743,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-24",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-25",
+    "basis": "2026-08-13",
+    "first": null,
+    "first_any": null
    }
   },
   "ttgptapi.top": {
@@ -5764,8 +5804,10 @@
     "error": "no_rdap"
    },
    "wayback": {
-    "checked": "2026-11-24",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-25",
+    "basis": null,
+    "first": "2026-01-18",
+    "first_any": "2026-01-18"
    },
    "cert": {
     "checked": "2026-11-21",
@@ -5817,8 +5859,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-24",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-25",
+    "basis": "2026-04-25",
+    "first": "2026-05-30",
+    "first_any": "2005-12-17"
    }
   },
   "v3.cm": {
@@ -5868,6 +5912,12 @@
     "first": "2026-07-19",
     "first_any": "2026-07-19",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "basis": "2026-05-17",
+    "first": null,
+    "first_any": null
    }
   },
   "vsoui.com": {
@@ -5904,6 +5954,12 @@
     "first": "2026-07-04",
     "first_any": "2026-07-04",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "basis": "2026-07-03",
+    "first": null,
+    "first_any": "2021-12-30"
    }
   },
   "wkapi.pro": {
@@ -5940,6 +5996,12 @@
     "first": "2026-06-17",
     "first_any": "2026-06-17",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "basis": "2026-04-18",
+    "first": null,
+    "first_any": "2023-01-26"
    }
   },
   "wukong.support": {
@@ -5969,8 +6031,10 @@
   "xag-api.com": {
    "first_seen": "2026-10-01",
    "wayback": {
-    "checked": "2026-10-01",
-    "error": "HTTP 503"
+    "checked": "2026-11-25",
+    "basis": "2026-09-16",
+    "first": null,
+    "first_any": null
    },
    "rdap": {
     "checked": "2026-10-01",
@@ -6150,6 +6214,12 @@
     "first": "2026-06-09",
     "first_any": "2026-06-09",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "basis": "2026-05-12",
+    "first": null,
+    "first_any": null
    }
   },
   "xingkongig.cc": {
@@ -6186,6 +6256,12 @@
     "first": "2026-10-17",
     "first_any": "2026-10-17",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "basis": "2026-10-17",
+    "first": null,
+    "first_any": "2013-07-14"
    }
   },
   "xjai.cc": {
@@ -6338,8 +6414,8 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-10-11",
-    "error": "HTTP 503"
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -6512,14 +6588,34 @@
     ]
    },
    "wayback": {
-    "checked": "2026-10-11",
-    "error": "<urlopen error timed out>"
+    "checked": "2026-11-25",
+    "basis": "2024-12-03",
+    "first": "2024-12-03",
+    "first_any": "2024-12-03"
    },
    "cert": {
     "checked": "2026-10-01",
     "basis": "2024-12-03",
     "first": "2025-06-10",
     "first_any": "2025-06-10",
+    "source": "ctlogs.dev"
+   }
+  },
+  "yunzhouapi.com": {
+   "first_seen": "2026-11-25",
+   "rdap": {
+    "checked": "2026-11-25",
+    "registered": "2026-04-19",
+    "expires": "2027-04-19",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-25",
+    "basis": "2026-04-19",
+    "first": "2026-06-18",
+    "first_any": "2026-06-18",
     "source": "ctlogs.dev"
    }
   },
@@ -6539,6 +6635,12 @@
     "first": "2026-09-29",
     "first_any": "2026-03-06",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "basis": "2026-07-16",
+    "first": null,
+    "first_any": "2024-04-14"
    }
   },
   "yuzuapi.com": {
@@ -6602,6 +6704,10 @@
     "first": "2026-08-20",
     "first_any": "2026-08-20",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "zen-ai.top": {
@@ -6668,6 +6774,10 @@
     "first": "2026-11-15",
     "first_any": "2026-11-15",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-25",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "zhiduapi.cc": {
