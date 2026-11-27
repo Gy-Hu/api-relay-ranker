@@ -575,8 +575,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": null,
+    "first": null,
+    "first_any": null
    }
   },
   "aigcbest.top": {
@@ -1536,6 +1538,26 @@
     "first_any": "2026-10-13"
    }
   },
+  "cecat.cn": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "error": "no_rdap"
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": null,
+    "first": "2026-06-07",
+    "first_any": "2026-06-07",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": null,
+    "first": "2012-07-06",
+    "first_any": "2012-07-06"
+   }
+  },
   "chaiai.cc": {
    "first_seen": "2026-10-01",
    "wayback": {
@@ -1994,8 +2016,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": "2025-12-31",
+    "first": null,
+    "first_any": null
    }
   },
   "cpass.cc": {
@@ -2310,6 +2334,30 @@
     "source": "ctlogs.dev"
    }
   },
+  "doufuapi.com": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "registered": "2026-07-28",
+    "expires": "2027-07-28",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": "2026-07-28",
+    "first": "2026-07-28",
+    "first_any": "2026-07-28",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-07-28",
+    "first": null,
+    "first_any": null
+   }
+  },
   "duckcoding.ai": {
    "first_seen": "2026-10-01",
    "helpaio_listed": "2025-11-20",
@@ -2470,6 +2518,31 @@
     "source": "ctlogs.dev"
    }
   },
+  "fishxcode.com": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "registered": "2026-02-11",
+    "expires": "2027-02-11",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": "2026-02-11",
+    "first": "2026-06-07",
+    "first_any": "2026-06-07",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-02-11",
+    "first": "2026-03-27",
+    "first_any": "2026-03-27"
+   }
+  },
   "flashapi.top": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-07-15",
@@ -2609,8 +2682,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": "2026-03-09",
+    "first": null,
+    "first_any": null
    }
   },
   "g-aisc.com": {
@@ -2629,6 +2704,12 @@
     "first": "2026-05-29",
     "first_any": "2026-05-29",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-04-27",
+    "first": null,
+    "first_any": null
    }
   },
   "geteapi.com": {
@@ -2759,8 +2840,34 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": "2026-06-15",
+    "first": null,
+    "first_any": "2025-02-20"
+   }
+  },
+  "gptzzz.ai": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "registered": "2026-08-28",
+    "expires": "2028-08-28",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": "2026-08-28",
+    "first": "2026-08-28",
+    "first_any": "2026-08-28",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-08-28",
+    "first": "2026-10-12",
+    "first_any": "2026-10-12"
    }
   },
   "gquick.top": {
@@ -2828,6 +2935,12 @@
     "first": "2026-10-28",
     "first_any": "2026-10-28",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-10-28",
+    "first": "2026-10-28",
+    "first_any": "2026-10-28"
    }
   },
   "hao.ai": {
@@ -3959,6 +4072,12 @@
     "first": "2026-09-05",
     "first_any": "2026-09-05",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-09-05",
+    "first": null,
+    "first_any": null
    }
   },
   "mxdapi.com": {
@@ -4211,6 +4330,12 @@
     "first": "2026-07-16",
     "first_any": "2026-07-16",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-07-16",
+    "first": null,
+    "first_any": null
    }
   },
   "nftai.fun": {
@@ -4633,6 +4758,28 @@
     "first_any": "2026-10-05"
    }
   },
+  "originraft.com": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "registered": "2026-07-27",
+    "expires": "2027-07-27",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": "2026-07-27",
+    "first": "2026-07-27",
+    "first_any": "2026-07-27",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "error": "<urlopen error [Errno 111] Connection refused>"
+   }
+  },
   "owlai.tech": {
    "first_seen": "2026-11-21",
    "rdap": {
@@ -4673,6 +4820,12 @@
     "first": "2026-06-06",
     "first_any": "2026-06-06",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-04-30",
+    "first": null,
+    "first_any": null
    }
   },
   "packyapi.ai": {
@@ -4721,6 +4874,30 @@
     "first": "2025-10-25",
     "first_any": "2025-10-25",
     "source": "ctlogs.dev"
+   }
+  },
+  "peroai.cc": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "registered": "2026-11-15",
+    "expires": "2027-11-15",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": "2026-11-15",
+    "first": "2026-11-15",
+    "first_any": "2026-11-15",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-11-15",
+    "first": "2026-11-15",
+    "first_any": "2026-11-15"
    }
   },
   "portdan.com": {
@@ -5089,6 +5266,10 @@
     "first": "2026-08-06",
     "first_any": "2026-08-06",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "runapi.host": {
@@ -5439,6 +5620,31 @@
     "basis": "2026-06-03",
     "first": null,
     "first_any": null
+   }
+  },
+  "sublyx.org": {
+   "first_seen": "2026-11-27",
+   "rdap": {
+    "checked": "2026-11-27",
+    "registered": "2026-05-01",
+    "expires": "2027-05-01",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-27",
+    "basis": "2026-05-01",
+    "first": "2026-06-29",
+    "first_any": "2026-06-29",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-27",
+    "basis": "2026-05-01",
+    "first": "2026-05-04",
+    "first_any": "2026-05-04"
    }
   },
   "sudocode.chat": {
@@ -6414,8 +6620,10 @@
     "status": []
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": "2024-05-07",
+    "first": "2024-05-07",
+    "first_any": "2013-07-21"
    },
    "cert": {
     "checked": "2026-10-01",
@@ -6706,8 +6914,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": "2026-08-20",
+    "first": null,
+    "first_any": null
    }
   },
   "zen-ai.top": {
@@ -6776,8 +6986,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-25",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-27",
+    "basis": "2026-11-15",
+    "first": null,
+    "first_any": null
    }
   },
   "zhiduapi.cc": {
