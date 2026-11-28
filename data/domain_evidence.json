@@ -17,6 +17,12 @@
     "first": "2026-01-08",
     "first_any": "2026-01-08",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2025-12-30",
+    "first": null,
+    "first_any": "2021-11-22"
    }
   },
   "050602.xyz": {
@@ -666,6 +672,30 @@
     "first": "2026-05-28",
     "first_any": "2026-05-28",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-05-24",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "aiwkapi.com": {
+   "first_seen": "2026-11-28",
+   "rdap": {
+    "checked": "2026-11-28",
+    "registered": "2026-11-10",
+    "expires": "2027-11-10",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-28",
+    "basis": "2026-11-10",
+    "first": "2026-11-10",
+    "first_any": "2026-11-10",
+    "source": "ctlogs.dev"
    }
   },
   "aixor.org": {
@@ -1172,6 +1202,12 @@
     "first": "2026-08-15",
     "first_any": "2026-08-15",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-08-15",
+    "first": null,
+    "first_any": null
    }
   },
   "bayunzi.shop": {
@@ -1255,6 +1291,12 @@
     "first": "2026-08-05",
     "first_any": "2026-08-05",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-08-05",
+    "first": null,
+    "first_any": null
    }
   },
   "beiluoxi.xyz": {
@@ -1273,6 +1315,12 @@
     "first": "2026-09-08",
     "first_any": "2026-09-08",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-09-08",
+    "first": "2026-11-09",
+    "first_any": "2026-11-09"
    }
   },
   "bestswifter.com": {
@@ -2822,6 +2870,30 @@
     "source": "ctlogs.dev"
    }
   },
+  "gpteamservices.com": {
+   "first_seen": "2026-11-28",
+   "rdap": {
+    "checked": "2026-11-28",
+    "registered": "2026-01-31",
+    "expires": "2027-01-31",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-28",
+    "basis": "2026-01-31",
+    "first": "2026-06-07",
+    "first_any": "2026-06-07",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-01-31",
+    "first": null,
+    "first_any": null
+   }
+  },
   "gptpro.live": {
    "first_seen": "2026-11-24",
    "rdap": {
@@ -3229,6 +3301,10 @@
     "first": "2026-08-03",
     "first_any": "2026-05-25",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "error": "<urlopen error [Errno 111] Connection refused>"
    }
   },
   "kfcv50.link": {
@@ -3344,6 +3420,12 @@
     "first": "2026-11-07",
     "first_any": "2026-11-07",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": null,
+    "first": null,
+    "first_any": null
    }
   },
   "kx-api.top": {
@@ -3410,6 +3492,30 @@
     "basis": "2026-09-04",
     "first": null,
     "first_any": null
+   }
+  },
+  "layso.ai": {
+   "first_seen": "2026-11-28",
+   "rdap": {
+    "checked": "2026-11-28",
+    "registered": "2026-09-12",
+    "expires": "2028-09-12",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-28",
+    "basis": "2026-09-12",
+    "first": "2026-09-12",
+    "first_any": "2026-09-12",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-09-12",
+    "first": "2026-10-09",
+    "first_any": "2026-10-09"
    }
   },
   "leverai.net": {
@@ -3804,6 +3910,30 @@
    "wayback": {
     "checked": "2026-11-23",
     "basis": "2026-10-22",
+    "first": null,
+    "first_any": null
+   }
+  },
+  "miaoha.xyz": {
+   "first_seen": "2026-11-28",
+   "rdap": {
+    "checked": "2026-11-28",
+    "registered": "2026-07-29",
+    "expires": "2027-07-29",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-28",
+    "basis": "2026-07-29",
+    "first": "2026-09-30",
+    "first_any": "2026-09-30",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-07-29",
     "first": null,
     "first_any": null
    }
@@ -4776,8 +4906,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-27",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-28",
+    "basis": "2026-07-27",
+    "first": null,
+    "first_any": null
    }
   },
   "owlai.tech": {
@@ -5268,8 +5400,10 @@
     "source": "ctlogs.dev"
    },
    "wayback": {
-    "checked": "2026-11-27",
-    "error": "<urlopen error [Errno 111] Connection refused>"
+    "checked": "2026-11-28",
+    "basis": "2026-08-06",
+    "first": null,
+    "first_any": null
    }
   },
   "runapi.host": {
@@ -5318,6 +5452,30 @@
     "first": "2026-04-06",
     "first_any": "2026-04-06",
     "source": "ctlogs.dev"
+   }
+  },
+  "safeapi.vip": {
+   "first_seen": "2026-11-28",
+   "rdap": {
+    "checked": "2026-11-28",
+    "registered": "2026-04-19",
+    "expires": "2027-04-19",
+    "status": [
+     "client transfer prohibited"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-28",
+    "basis": "2026-04-19",
+    "first": "2026-07-07",
+    "first_any": "2026-07-07",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-04-19",
+    "first": null,
+    "first_any": null
    }
   },
   "sbgpt.site": {
@@ -5929,6 +6087,12 @@
     "first": "2026-08-11",
     "first_any": "2026-08-11",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-08-11",
+    "first": null,
+    "first_any": null
    }
   },
   "ttapi.store": {
@@ -6274,6 +6438,12 @@
     "first": "2026-07-14",
     "first_any": "2026-07-14",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-07-14",
+    "first": null,
+    "first_any": null
    }
   },
   "xcode.best": {
@@ -6658,6 +6828,28 @@
     "source": "ctlogs.dev"
    }
   },
+  "yixo.com": {
+   "first_seen": "2026-11-28",
+   "rdap": {
+    "checked": "2026-11-28",
+    "registered": "2002-09-13",
+    "expires": "2027-09-13",
+    "status": [
+     "active"
+    ]
+   },
+   "cert": {
+    "checked": "2026-11-28",
+    "basis": "2002-09-13",
+    "first": "2026-07-17",
+    "first_any": "2026-07-17",
+    "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "error": "<urlopen error [Errno 111] Connection refused>"
+   }
+  },
   "ykh.ai": {
    "first_seen": "2026-10-01",
    "veridrop_report": "2026-06-12",
@@ -6744,6 +6936,12 @@
     "first": "2026-08-05",
     "first_any": "2026-08-05",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-08-05",
+    "first": null,
+    "first_any": null
    }
   },
   "yunmeng.sale": {
@@ -6762,6 +6960,12 @@
     "first": "2026-08-31",
     "first_any": "2026-08-31",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-08-31",
+    "first": null,
+    "first_any": null
    }
   },
   "yunrealm.cc": {
@@ -6780,6 +6984,12 @@
     "first": "2026-11-08",
     "first_any": "2026-11-08",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-11-08",
+    "first": "2026-11-08",
+    "first_any": "2026-11-08"
    }
   },
   "yunwu.ai": {
@@ -6825,6 +7035,12 @@
     "first": "2026-06-18",
     "first_any": "2026-06-18",
     "source": "ctlogs.dev"
+   },
+   "wayback": {
+    "checked": "2026-11-28",
+    "basis": "2026-04-19",
+    "first": null,
+    "first_any": null
    }
   },
   "yusr.ai": {
